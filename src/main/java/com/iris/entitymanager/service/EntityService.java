@@ -16,6 +16,7 @@ public class EntityService {
 
     //create new entity entry
     public ResponseEntity<?> createNewEntity(Entityentity entityentity){
+        System.out.println("Received entityShortName: " + entityentity.getEntityShortName());
         entityRepository.save(entityentity);
         return new ResponseEntity<>(entityentity, HttpStatus.OK);
     }

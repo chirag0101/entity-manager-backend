@@ -1,5 +1,7 @@
 package com.iris.entitymanager.entity;
 
+import jakarta.persistence.Entity;
+
 public class ErrorResponseEntity {
     private boolean status;
     private String statusCode;
