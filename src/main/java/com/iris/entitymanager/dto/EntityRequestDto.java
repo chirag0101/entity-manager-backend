@@ -1,10 +1,15 @@
 package com.iris.entitymanager.dto;
 
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.util.Date;
 
-public class EntityDto {
-
+public class EntityRequestDto {
+    @Pattern(regexp = "^[a-zA-Z1-9.&]{200}$")
+    @Size(min=1, max=200)
     private String entityName;
+
     private String entityShortname;
     private String entityCode;
     private String ifscCode;
