@@ -1,4 +1,4 @@
-package com.iris.entitymanager.dto;
-
-public class EntityResponeDto {
-}
+//package com.iris.entitymanager.dto;
+//
+//public class EntityResponeDto {
+//}

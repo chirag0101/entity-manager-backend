@@ -7,17 +7,34 @@ import java.util.Date;
 @Entity
 @Table(name = "TBL_ENTITY")
 public class Entityentity {
+    public Entityentity(String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, String categoryId, String subCategoryId, String entityEmailId, boolean isActive, int createdBy, int lastModifiedBy, String entityPhoneNo, String entityNameBil, String entityShortNameBil, int bankType) {
+        this.entityName = entityName;
+        this.entityShortName = entityShortName;
+        this.entityCode = entityCode;
+        this.ifscCode = ifscCode;
+        this.comTypeId = comTypeId;
+        this.categoryId = categoryId;
+        this.subCategoryId = subCategoryId;
+        this.entityEmailId = entityEmailId;
+        this.isActive = isActive;
+        this.createdBy = createdBy;
+        this.lastModifiedBy = lastModifiedBy;
+        this.entityPhoneNo = entityPhoneNo;
+        this.entityNameBil = entityNameBil;
+        this.entityShortNameBil = entityShortNameBil;
+        this.bankType = bankType;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private int id;
+    private Integer id;
 
     @Column(name = "ENTITY_NAME")
     private String entityName;
 
     @Column(name = "ENTITY_SHORT_NAME")
-    private String entityShortname;
+    private String entityShortName;
 
     @Column(name = "ENTITY_CODE")
     private String entityCode;
@@ -44,42 +61,34 @@ public class Entityentity {
     private int createdBy;
 
     @Column(name = "CREATED_ON")
-    private Date createdOn;
+    private Date createdOn=new Date();
 
     @Column(name = "LAST_MODIFIED_BY")
     private int lastModifiedBy;
 
     @Column(name = "LAST_MODIFIED_ON")
-    private Date lastModifiedOn;
+    private Date lastModifiedOn=new Date();
 
     @Column(name = "ENTITY_PHONE_NO")
     private String entityPhoneNo;
 
     @Column(name = "UPDATED_ON")
-    private Date updatedOn;
+    private Date updatedOn=new Date();
 
     @Column(name = "ENTITY_NAME_BIL")
     private String entityNameBil;
 
     @Column(name = "ENTITY_SHORT_NAME_BIL")
-    private String entityShortName;
+    private String entityShortNameBil;
 
     @Column(name = "BANK_TYPE")
     private int bankType;
 
-    public String getComTypeId() {
-        return comTypeId;
-    }
-
-    public void setComTypeId(String comTypeId) {
-        this.comTypeId = comTypeId;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -91,12 +100,12 @@ public class Entityentity {
         this.entityName = entityName;
     }
 
-    public String getEntityShortname() {
-        return entityShortname;
+    public String getEntityShortName() {
+        return entityShortName;
     }
 
-    public void setEntityShortname(String entityShortname) {
-        this.entityShortname = entityShortname;
+    public void setEntityShortName(String entityShortName) {
+        this.entityShortName = entityShortName;
     }
 
     public String getEntityCode() {
@@ -113,6 +122,14 @@ public class Entityentity {
 
     public void setIfscCode(String ifscCode) {
         this.ifscCode = ifscCode;
+    }
+
+    public String getComTypeId() {
+        return comTypeId;
+    }
+
+    public void setComTypeId(String comTypeId) {
+        this.comTypeId = comTypeId;
     }
 
     public String getCategoryId() {
@@ -159,9 +176,9 @@ public class Entityentity {
         return createdOn;
     }
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
+//    public void setCreatedOn(Date createdOn) {
+//        this.createdOn = createdOn;
+//    }
 
     public int getLastModifiedBy() {
         return lastModifiedBy;
@@ -175,9 +192,9 @@ public class Entityentity {
         return lastModifiedOn;
     }
 
-    public void setLastModifiedOn(Date lastModifiedOn) {
-        this.lastModifiedOn = lastModifiedOn;
-    }
+//    public void setLastModifiedOn(Date lastModifiedOn) {
+//        this.lastModifiedOn = lastModifiedOn;
+//    }
 
     public String getEntityPhoneNo() {
         return entityPhoneNo;
@@ -191,9 +208,9 @@ public class Entityentity {
         return updatedOn;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
+//    public void setUpdatedOn(Date updatedOn) {
+//        this.updatedOn = updatedOn;
+//    }
 
     public String getEntityNameBil() {
         return entityNameBil;
@@ -203,12 +220,12 @@ public class Entityentity {
         this.entityNameBil = entityNameBil;
     }
 
-    public String getEntityShortName() {
-        return entityShortName;
+    public String getEntityShortNameBil() {
+        return entityShortNameBil;
     }
 
-    public void setEntityShortName(String entityShortName) {
-        this.entityShortName = entityShortName;
+    public void setEntityShortNameBil(String entityShortNameBil) {
+        this.entityShortNameBil = entityShortNameBil;
     }
 
     public int getBankType() {
