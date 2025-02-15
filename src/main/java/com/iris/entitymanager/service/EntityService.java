@@ -14,8 +14,14 @@ public class EntityService {
     @Autowired
     private EntityRepository entityRepository;
 
+    //create new entity entry
     public ResponseEntity<?> createNewEntity(Entityentity entityentity){
         entityRepository.save(entityentity);
         return new ResponseEntity<>(entityentity, HttpStatus.OK);
+    }
+
+    //get entities
+    public ResponseEntity<?> getEntries(){
+        return new ResponseEntity<>(entityRepository.findAll(),HttpStatus.OK);
     }
 }
