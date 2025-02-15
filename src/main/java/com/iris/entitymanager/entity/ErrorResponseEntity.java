@@ -3,9 +3,9 @@ package com.iris.entitymanager.entity;
 import jakarta.persistence.Entity;
 
 public class ErrorResponseEntity {
-    private boolean status;
-    private String statusCode;
-    private String statusMessage;
+    private boolean status=true;
+    private String statusCode="00";
+    private String statusMessage="Success";
     private String response=null;
 
     public boolean isStatus() {

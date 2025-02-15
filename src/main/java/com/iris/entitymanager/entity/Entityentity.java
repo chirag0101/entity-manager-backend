@@ -1,7 +1,6 @@
 package com.iris.entitymanager.entity;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity
