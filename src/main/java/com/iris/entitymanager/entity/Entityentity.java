@@ -6,6 +6,11 @@ import java.util.Date;
 @Entity
 @Table(name = "TBL_ENTITY")
 public class Entityentity {
+
+    public Entityentity(){
+
+    }
+
     public Entityentity(String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, String categoryId, String subCategoryId, String entityEmailId, boolean isActive, int createdBy, int lastModifiedBy, String entityPhoneNo, String entityNameBil, String entityShortNameBil, int bankType) {
         this.entityName = entityName;
         this.entityShortName = entityShortName;
