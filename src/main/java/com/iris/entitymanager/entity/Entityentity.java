@@ -7,11 +7,70 @@ import java.util.Date;
 @Table(name = "TBL_ENTITY")
 public class Entityentity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Integer id;
+
+    @Column(name = "ENTITY_NAME")
+    private String entityName;
+
+    @Column(name = "ENTITY_SHORT_NAME")
+    private String entityShortName;
+
+    @Column(name = "ENTITY_CODE")
+    private String entityCode;
+
+    @Column(name = "IFSC_CODE")
+    private String ifscCode;
+
+    @Column(name = "COM_TYPE_ID")
+    private String comTypeId;
+
+    @Column(name = "CATEGORY_ID")
+    private int categoryId;
+
+    @Column(name = "SUB_CATEGORY_ID")
+    private int subCategoryId;
+
+    @Column(name = "ENTITY_EMAIL_ID")
+    private String entityEmailId;
+
+    @Column(name = "IS_ACTIVE")
+    private boolean isActive=true;
+
+    @Column(name = "CREATED_BY")
+    private int createdBy;
+
+    @Column(name = "CREATED_ON")
+    private Date createdOn=new Date();
+
+    @Column(name = "LAST_MODIFIED_BY")
+    private int lastModifiedBy;
+
+    @Column(name = "LAST_MODIFIED_ON")
+    private Date lastModifiedOn=new Date();
+
+    @Column(name = "ENTITY_PHONE_NO")
+    private String entityPhoneNo;
+
+    @Column(name = "UPDATED_ON")
+    private Date updatedOn=new Date();
+
+    @Column(name = "ENTITY_NAME_BIL")
+    private String entityNameBil;
+
+    @Column(name = "ENTITY_SHORT_NAME_BIL")
+    private String entityShortNameBil;
+
+    @Column(name = "BANK_TYPE")
+    private int bankType;
+
     public Entityentity(){
 
     }
 
-    public Entityentity(Integer id, String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, String categoryId, String subCategoryId, String entityEmailId, boolean isActive, int createdBy, Date createdOn, int lastModifiedBy, Date lastModifiedOn, String entityPhoneNo, Date updatedOn, String entityNameBil, String entityShortNameBil, int bankType) {
+    public Entityentity(Integer id, String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, int categoryId, int subCategoryId, String entityEmailId, boolean isActive, int createdBy, Date createdOn, int lastModifiedBy, Date lastModifiedOn, String entityPhoneNo, Date updatedOn, String entityNameBil, String entityShortNameBil, int bankType) {
         this.id = id;
         this.entityName = entityName;
         this.entityShortName = entityShortName;
@@ -50,65 +109,6 @@ public class Entityentity {
 //        this.entityShortNameBil = entityShortNameBil;
 //        this.bankType = bankType;
 //    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Integer id;
-
-    @Column(name = "ENTITY_NAME")
-    private String entityName;
-
-    @Column(name = "ENTITY_SHORT_NAME")
-    private String entityShortName;
-
-    @Column(name = "ENTITY_CODE")
-    private String entityCode;
-
-    @Column(name = "IFSC_CODE")
-    private String ifscCode;
-
-    @Column(name = "COM_TYPE_ID")
-    private String comTypeId;
-
-    @Column(name = "CATEGORY_ID")
-    private String categoryId;
-
-    @Column(name = "SUB_CATEGORY_ID")
-    private String subCategoryId;
-
-    @Column(name = "ENTITY_EMAIL_ID")
-    private String entityEmailId;
-
-    @Column(name = "IS_ACTIVE")
-    private boolean isActive;
-
-    @Column(name = "CREATED_BY")
-    private int createdBy;
-
-    @Column(name = "CREATED_ON")
-    private Date createdOn=new Date();
-
-    @Column(name = "LAST_MODIFIED_BY")
-    private int lastModifiedBy;
-
-    @Column(name = "LAST_MODIFIED_ON")
-    private Date lastModifiedOn=new Date();
-
-    @Column(name = "ENTITY_PHONE_NO")
-    private String entityPhoneNo;
-
-    @Column(name = "UPDATED_ON")
-    private Date updatedOn=new Date();
-
-    @Column(name = "ENTITY_NAME_BIL")
-    private String entityNameBil;
-
-    @Column(name = "ENTITY_SHORT_NAME_BIL")
-    private String entityShortNameBil;
-
-    @Column(name = "BANK_TYPE")
-    private int bankType;
 
     public Integer getId() {
         return id;
@@ -158,19 +158,19 @@ public class Entityentity {
         this.comTypeId = comTypeId;
     }
 
-    public String getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
-    public String getSubCategoryId() {
+    public int getSubCategoryId() {
         return subCategoryId;
     }
 
-    public void setSubCategoryId(String subCategoryId) {
+    public void setSubCategoryId(int subCategoryId) {
         this.subCategoryId = subCategoryId;
     }
 

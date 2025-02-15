@@ -2,8 +2,6 @@ package com.iris.entitymanager.dto;
 
 import jakarta.validation.constraints.*;
 
-import java.util.Date;
-
 public class EntityRequestDto {
 
     @NotEmpty
@@ -60,9 +58,7 @@ public class EntityRequestDto {
     @NotEmpty
     private int bankType;
 
-    public EntityRequestDto(){
-
-    }
+    public EntityRequestDto(){}
 
     public EntityRequestDto(String entityName, String entityShortname, String entityCode, String ifscCode, String comTypeId, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, String entityNameBil, String entityShortName, int bankType) {
         this.entityName = entityName;
@@ -137,4 +133,59 @@ public class EntityRequestDto {
         this.bankType = bankType;
     }
 
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public String getEntityShortname() {
+        return entityShortname;
+    }
+
+    public String getEntityCode() {
+        return entityCode;
+    }
+
+    public String getIfscCode() {
+        return ifscCode;
+    }
+
+    public String getComTypeId() {
+        return comTypeId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public int getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public String getEntityEmailId() {
+        return entityEmailId;
+    }
+
+    public int getCreatedBy() {
+        return createdBy;
+    }
+
+    public int getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public String getEntityPhoneNo() {
+        return entityPhoneNo;
+    }
+
+    public String getEntityNameBil() {
+        return entityNameBil;
+    }
+
+    public String getEntityShortName() {
+        return entityShortName;
+    }
+
+    public int getBankType() {
+        return bankType;
+    }
 }

@@ -23,7 +23,26 @@ public class EntityController {
 
     @GetMapping("/entities")
     public ResponseEntity<?> viewEntities(){
-        return entityService.getEntries();
+        return entityService.getEntities();
+    }
+
+    @GetMapping("/entity/{entityName}")
+    public ResponseEntity<?> viewEntity(@PathVariable String entityName){
+        try{
+            return entityService.getEntity(entityName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @DeleteMapping("/entity/{entityName}")
+    public ResponseEntity<?> deleteEntity(@PathVariable String entityName){
+        return entityService.deleteEntity(entityName);
+    }
+
+    @DeleteMapping("/entities")
+    public ResponseEntity<?> deleteEntities(){
+        return entityService.deleteEntities();
     }
 
 }
