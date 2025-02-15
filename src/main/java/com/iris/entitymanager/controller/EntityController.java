@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 //checking validations
+//returning response in ErrorResponseEntity
 @RestController
 @RequestMapping("/entitymanager")
 public class EntityController {

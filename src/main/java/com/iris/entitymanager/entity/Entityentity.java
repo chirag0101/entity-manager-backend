@@ -1,5 +1,6 @@
 package com.iris.entitymanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -164,7 +165,7 @@ public class Entityentity {
         this.entityEmailId = entityEmailId;
     }
 
-    public boolean isActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
