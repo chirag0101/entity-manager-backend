@@ -1,5 +1,6 @@
 package com.iris.entitymanager.service;
 
+import com.iris.entitymanager.dto.EntityRequestDto;
 import com.iris.entitymanager.entity.Entityentity;
 import com.iris.entitymanager.entity.ErrorResponseEntity;
 import com.iris.entitymanager.repository.EntityRepository;
@@ -27,5 +28,9 @@ public class EntityService {
 
     //delete entity
 //    public ResponseEntity<?>
+
+    public EntityRequestDto convertToDto(Entityentity entityentity){
+        return new EntityRequestDto(entityentity.);
+    }
 
 }

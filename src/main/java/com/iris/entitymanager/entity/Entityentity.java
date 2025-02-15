@@ -11,7 +11,8 @@ public class Entityentity {
 
     }
 
-    public Entityentity(String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, String categoryId, String subCategoryId, String entityEmailId, boolean isActive, int createdBy, int lastModifiedBy, String entityPhoneNo, String entityNameBil, String entityShortNameBil, int bankType) {
+    public Entityentity(Integer id, String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, String categoryId, String subCategoryId, String entityEmailId, boolean isActive, int createdBy, Date createdOn, int lastModifiedBy, Date lastModifiedOn, String entityPhoneNo, Date updatedOn, String entityNameBil, String entityShortNameBil, int bankType) {
+        this.id = id;
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
@@ -22,12 +23,33 @@ public class Entityentity {
         this.entityEmailId = entityEmailId;
         this.isActive = isActive;
         this.createdBy = createdBy;
+        this.createdOn = createdOn;
         this.lastModifiedBy = lastModifiedBy;
+        this.lastModifiedOn = lastModifiedOn;
         this.entityPhoneNo = entityPhoneNo;
+        this.updatedOn = updatedOn;
         this.entityNameBil = entityNameBil;
         this.entityShortNameBil = entityShortNameBil;
         this.bankType = bankType;
     }
+
+    //    public Entityentity(String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, String categoryId, String subCategoryId, String entityEmailId, boolean isActive, int createdBy, int lastModifiedBy, String entityPhoneNo, String entityNameBil, String entityShortNameBil, int bankType) {
+//        this.entityName = entityName;
+//        this.entityShortName = entityShortName;
+//        this.entityCode = entityCode;
+//        this.ifscCode = ifscCode;
+//        this.comTypeId = comTypeId;
+//        this.categoryId = categoryId;
+//        this.subCategoryId = subCategoryId;
+//        this.entityEmailId = entityEmailId;
+//        this.isActive = isActive;
+//        this.createdBy = createdBy;
+//        this.lastModifiedBy = lastModifiedBy;
+//        this.entityPhoneNo = entityPhoneNo;
+//        this.entityNameBil = entityNameBil;
+//        this.entityShortNameBil = entityShortNameBil;
+//        this.bankType = bankType;
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -180,9 +202,9 @@ public class Entityentity {
         return createdOn;
     }
 
-//    public void setCreatedOn(Date createdOn) {
-//        this.createdOn = createdOn;
-//    }
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
 
     public int getLastModifiedBy() {
         return lastModifiedBy;
@@ -196,9 +218,9 @@ public class Entityentity {
         return lastModifiedOn;
     }
 
-//    public void setLastModifiedOn(Date lastModifiedOn) {
-//        this.lastModifiedOn = lastModifiedOn;
-//    }
+    public void setLastModifiedOn(Date lastModifiedOn) {
+        this.lastModifiedOn = lastModifiedOn;
+    }
 
     public String getEntityPhoneNo() {
         return entityPhoneNo;
@@ -212,9 +234,9 @@ public class Entityentity {
         return updatedOn;
     }
 
-//    public void setUpdatedOn(Date updatedOn) {
-//        this.updatedOn = updatedOn;
-//    }
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
 
     public String getEntityNameBil() {
         return entityNameBil;
