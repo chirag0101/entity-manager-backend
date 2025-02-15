@@ -92,24 +92,6 @@ public class Entityentity {
         this.bankType = bankType;
     }
 
-    //    public Entityentity(String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, String categoryId, String subCategoryId, String entityEmailId, boolean isActive, int createdBy, int lastModifiedBy, String entityPhoneNo, String entityNameBil, String entityShortNameBil, int bankType) {
-//        this.entityName = entityName;
-//        this.entityShortName = entityShortName;
-//        this.entityCode = entityCode;
-//        this.ifscCode = ifscCode;
-//        this.comTypeId = comTypeId;
-//        this.categoryId = categoryId;
-//        this.subCategoryId = subCategoryId;
-//        this.entityEmailId = entityEmailId;
-//        this.isActive = isActive;
-//        this.createdBy = createdBy;
-//        this.lastModifiedBy = lastModifiedBy;
-//        this.entityPhoneNo = entityPhoneNo;
-//        this.entityNameBil = entityNameBil;
-//        this.entityShortNameBil = entityShortNameBil;
-//        this.bankType = bankType;
-//    }
-
     public Integer getId() {
         return id;
     }
@@ -186,8 +168,8 @@ public class Entityentity {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public int getCreatedBy() {
