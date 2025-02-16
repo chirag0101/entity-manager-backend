@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 //checking validations
@@ -20,8 +21,8 @@ public class EntityController {
     private EntityService entityService;
 
     @PostMapping("/newentity")
-    public ResponseEntity<?> createEntity(@Valid @RequestBody Entityentity entityentity){
-        return entityService.createNewEntity(entityentity);
+    public ResponseEntity<?> createEntity(@Valid @RequestBody EntityRequestDto entityRequestDto, BindingResult bindingResult){
+        return entityService.createNewEntity(entityRequestDto);
     }
 
     @GetMapping("/entities")

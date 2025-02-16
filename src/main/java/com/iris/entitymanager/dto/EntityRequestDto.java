@@ -4,7 +4,8 @@ import jakarta.validation.constraints.*;
 
 public class EntityRequestDto {
 
-    @NotEmpty
+    @NotEmpty(message = "Entity Name Can't be Empty")
+    @Size(min = 1, max = 200, message = "Entity Name size must be between 1 and 200")
     @Pattern(regexp = "^[a-zA-Z1-9.&]{200}$",message = "Invalid Entity Name")
     @Size(min=1, max=200)
     private String entityName;
@@ -15,7 +16,7 @@ public class EntityRequestDto {
     private String entityShortname;
 
     @NotEmpty
-    @Pattern(regexp = "^[a-zA-Z0-9.&]$",message = "Invalid Entitiy Code")
+    @Pattern(regexp = "^[a-zA-Z0-9.&]{1,200}$", message = "Invalid Entity Code")
     @Size(min=4, max=24)
     private String entityCode;
 
@@ -27,26 +28,27 @@ public class EntityRequestDto {
     @NotEmpty
     private String comTypeId="3";
 
-    @NotEmpty
+    @NotNull
     @Min(0)
     @Max(99)
     private int categoryId;
 
-    @NotEmpty
+    @NotNull
     @Min(0)
     @Max(99)
     private int subCategoryId;
 
-    @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,7}$",message = "Invalid Email id")
+//  @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", message = "Invalid Email id")
+    @Email(message = "Invalid Email!")
     private String entityEmailId;
 
-    @NotEmpty
+    @NotNull
     private int createdBy;
 
-    @NotEmpty
+    @NotNull
     private int lastModifiedBy;
 
-    @Pattern(regexp = "^(\\\\+\\\\d{1,4})?\\\\d{10,15}$")
+    @Pattern(regexp = "^(\\+\\d{1,4})?\\d{10,15}$", message = "Invalid Phone Number")
     private String entityPhoneNo;
 
     @NotEmpty
@@ -55,7 +57,7 @@ public class EntityRequestDto {
     @NotEmpty
     private String entityShortName=entityShortname;
 
-    @NotEmpty
+    @NotNull
     private int bankType;
 
     public EntityRequestDto(){}

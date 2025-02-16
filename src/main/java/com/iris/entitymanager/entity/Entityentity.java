@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TBL_ENTITY")
+//@SequenceGenerator(name = "my_sequence", sequenceName = "MY_SEQ", allocationSize = 1)
 public class Entityentity {
 
     @Id

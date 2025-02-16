@@ -3,13 +3,13 @@
     import com.iris.entitymanager.dto.EntityRequestDto;
     import com.iris.entitymanager.entity.Entityentity;
     import com.iris.entitymanager.entity.ErrorResponseEntity;
-    import com.iris.entitymanager.exceptions.InvalidEntityNameException;
+    import com.iris.entitymanager.exceptions.GlobalException;
     import com.iris.entitymanager.repository.EntityRepository;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
     import org.springframework.stereotype.Service;
-
+    import org.springframework.transaction.annotation.Transactional;
     import java.util.ArrayList;
     import java.util.List;
     import java.util.Optional;
@@ -21,8 +21,10 @@
         private EntityRepository entityRepository;
 
         //create new entity entry
-        public ResponseEntity<?> createNewEntity(Entityentity entityentity){
-            entityRepository.save(entityentity);
+        @Transactional
+        public ResponseEntity<?> createNewEntity(EntityRequestDto entityRequestDto){
+            Entityentity entity=convertToEntity(entityRequestDto);
+            entityRepository.save(entity);
             return new ResponseEntity<>(new ErrorResponseEntity(), HttpStatus.OK);
         }
 
@@ -39,35 +41,39 @@
         }
 
         public ResponseEntity<?> getEntity(String entityName) throws Exception{
-            Optional<Entityentity> entity=entityRepository.findByEntityName(entityName);
-            if(entity.isEmpty()){
-                throw new InvalidEntityNameException("Entity Not Found!");
+            Optional<Entityentity> entityInDb=entityRepository.findByEntityName(entityName);
+            if(entityInDb.isEmpty()){
+                throw new GlobalException("Entity Not Found!");
             }
-            return new ResponseEntity<>(entity.get(),HttpStatus.FOUND);
+            Entityentity entity=entityInDb.get();
+            return new ResponseEntity<>(new ErrorResponseEntity(convertToDto(entity)),HttpStatus.FOUND);
         }
 
         //delete entity
+        @Transactional
         public ResponseEntity<?> deleteEntity(String entityName){
             Optional<Entityentity> entity=entityRepository.findByEntityName(entityName);
             if(entity.isEmpty()){
-                throw new InvalidEntityNameException("Entity Not Found!");
+                throw new GlobalException("Entity Not Found!");
             }
             entityRepository.delete(entity.get());
             return new ResponseEntity<>(new ErrorResponseEntity(),HttpStatus.OK);
         }
 
         //delete all entities
+        @Transactional
         public ResponseEntity<?> deleteEntities(){
             entityRepository.deleteAll();
             return new ResponseEntity<>(new ErrorResponseEntity(),HttpStatus.OK);
         }
 
         //update entity
+        @Transactional
         public ResponseEntity<?> updateEntity(String entityName,EntityRequestDto entityDto){
             Optional<Entityentity> entity=entityRepository.findByEntityName(entityName);
 
             if(entity.isEmpty()){
-                throw new InvalidEntityNameException("Entry Not Found!");
+                throw new GlobalException("Entry Not Found!");
             }
 
             Entityentity entityInDb=entity.get();
@@ -94,8 +100,25 @@
         public EntityRequestDto convertToDto(Entityentity entity){
             return new EntityRequestDto(entity.getEntityName(),entity.getEntityShortName(),entity.getEntityCode(),entity.getIfscCode(),entity.getComTypeId(),entity.getCategoryId(),entity.getSubCategoryId(),entity.getEntityEmailId(),entity.getCreatedBy(),entity.getLastModifiedBy(),entity.getEntityPhoneNo(),entity.getEntityNameBil(),entity.getEntityShortName(),entity.getBankType());
         }
-    //    public EntityRequestDto convertToEntity(EntityRequestDto entity){
-    //        Optional
-    //        return new Entityentity();
-    //    }
+
+        public Entityentity convertToEntity(EntityRequestDto entityDto){
+            Entityentity entity = new Entityentity();
+
+            // Map the fields from the DTO to the entity
+            entity.setEntityName(entityDto.getEntityName());
+            entity.setEntityShortName(entityDto.getEntityShortName());
+            entity.setEntityCode(entityDto.getEntityCode());
+            entity.setIfscCode(entityDto.getIfscCode());
+            entity.setComTypeId(entityDto.getComTypeId());
+            entity.setCategoryId(entityDto.getCategoryId());
+            entity.setSubCategoryId(entityDto.getSubCategoryId());
+            entity.setEntityEmailId(entityDto.getEntityEmailId());
+            entity.setCreatedBy(entityDto.getCreatedBy());
+            entity.setLastModifiedBy(entityDto.getLastModifiedBy());
+            entity.setEntityPhoneNo(entityDto.getEntityPhoneNo());
+            entity.setEntityNameBil(entityDto.getEntityNameBil());
+            entity.setBankType(entityDto.getBankType());
+
+            return entity;
+        }
     }
