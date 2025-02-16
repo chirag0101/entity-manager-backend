@@ -88,7 +88,8 @@
             entityInDb.setCreatedBy(entityDto.getCreatedBy());
             entityInDb.setLastModifiedBy(entityDto.getLastModifiedBy());
             entityInDb.setEntityPhoneNo(entityDto.getEntityPhoneNo());
-            entityInDb.setEntityNameBil(entityDto.getEntityNameBil());
+            entityInDb.setEntityNameBil(entityDto.getEntityName());
+            entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
             entityInDb.setBankType(entityDto.getBankType());
 
             entityRepository.save(entityInDb);
@@ -98,7 +99,7 @@
 
         //converting to dto
         public EntityRequestDto convertToDto(Entityentity entity){
-            return new EntityRequestDto(entity.getEntityName(),entity.getEntityShortName(),entity.getEntityCode(),entity.getIfscCode(),entity.getComTypeId(),entity.getCategoryId(),entity.getSubCategoryId(),entity.getEntityEmailId(),entity.getCreatedBy(),entity.getLastModifiedBy(),entity.getEntityPhoneNo(),entity.getEntityNameBil(),entity.getEntityShortName(),entity.getBankType());
+            return new EntityRequestDto(entity.getEntityName(),entity.getEntityShortName(),entity.getEntityCode(),entity.getIfscCode(),entity.getComTypeId(),entity.getCategoryId(),entity.getSubCategoryId(),entity.getEntityEmailId(),entity.getCreatedBy(),entity.getLastModifiedBy(),entity.getEntityPhoneNo(),entity.getBankType());
         }
 
         public Entityentity convertToEntity(EntityRequestDto entityDto){
@@ -116,7 +117,7 @@
             entity.setCreatedBy(entityDto.getCreatedBy());
             entity.setLastModifiedBy(entityDto.getLastModifiedBy());
             entity.setEntityPhoneNo(entityDto.getEntityPhoneNo());
-            entity.setEntityNameBil(entityDto.getEntityNameBil());
+//            entity.setEntityNameBil(entityDto.getEntityNameBil());
             entity.setBankType(entityDto.getBankType());
 
             return entity;

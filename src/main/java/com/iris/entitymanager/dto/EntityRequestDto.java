@@ -13,7 +13,7 @@ public class EntityRequestDto {
     @NotEmpty
     @Pattern(regexp = "^[a-zA-Z1-9.&]{100}$",message = "Invalid Entity Short Name")
     @Size(min=1, max=100)
-    private String entityShortname;
+    private String entityShortName;
 
     @NotEmpty
     @Pattern(regexp = "^[a-zA-Z0-9.&]{1,200}$", message = "Invalid Entity Code")
@@ -52,19 +52,19 @@ public class EntityRequestDto {
     private String entityPhoneNo;
 
     @NotEmpty
-    private String entityNameBil=entityName;
+    private String entityNameBil;
 
     @NotEmpty
-    private String entityShortName=entityShortname;
+    private String entityShortNameBil;
 
     @NotNull
     private int bankType;
 
     public EntityRequestDto(){}
 
-    public EntityRequestDto(String entityName, String entityShortname, String entityCode, String ifscCode, String comTypeId, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, String entityNameBil, String entityShortName, int bankType) {
+    public EntityRequestDto(String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType) {
         this.entityName = entityName;
-        this.entityShortname = entityShortname;
+        this.entityShortName = entityShortName;
         this.entityCode = entityCode;
         this.ifscCode = ifscCode;
         this.comTypeId = comTypeId;
@@ -74,64 +74,8 @@ public class EntityRequestDto {
         this.createdBy = createdBy;
         this.lastModifiedBy = lastModifiedBy;
         this.entityPhoneNo = entityPhoneNo;
-        this.entityNameBil = entityNameBil;
-        this.entityShortName = entityShortName;
-        this.bankType = bankType;
-    }
-
-    public void setEntityName(String entityName) {
-        this.entityName = entityName;
-    }
-
-    public void setEntityShortname(String entityShortname) {
-        this.entityShortname = entityShortname;
-    }
-
-    public void setEntityCode(String entityCode) {
-        this.entityCode = entityCode;
-    }
-
-    public void setIfscCode(String ifscCode) {
-        this.ifscCode = ifscCode;
-    }
-
-    public void setComTypeId(String comTypeId) {
-        this.comTypeId = comTypeId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public void setSubCategoryId(int subCategoryId) {
-        this.subCategoryId = subCategoryId;
-    }
-
-    public void setEntityEmailId(String entityEmailId) {
-        this.entityEmailId = entityEmailId;
-    }
-
-    public void setCreatedBy(int createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public void setLastModifiedBy(int lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public void setEntityPhoneNo(String entityPhoneNo) {
-        this.entityPhoneNo = entityPhoneNo;
-    }
-
-    public void setEntityNameBil(String entityNameBil) {
-        this.entityNameBil = entityNameBil;
-    }
-
-    public void setEntityShortName(String entityShortName) {
-        this.entityShortName = entityShortName;
-    }
-
-    public void setBankType(int bankType) {
+        this.entityNameBil = entityName;
+        this.entityShortNameBil = entityShortName;
         this.bankType = bankType;
     }
 
@@ -139,55 +83,111 @@ public class EntityRequestDto {
         return entityName;
     }
 
-    public String getEntityShortname() {
-        return entityShortname;
-    }
-
-    public String getEntityCode() {
-        return entityCode;
-    }
-
-    public String getIfscCode() {
-        return ifscCode;
-    }
-
-    public String getComTypeId() {
-        return comTypeId;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public int getSubCategoryId() {
-        return subCategoryId;
-    }
-
-    public String getEntityEmailId() {
-        return entityEmailId;
-    }
-
-    public int getCreatedBy() {
-        return createdBy;
-    }
-
-    public int getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public String getEntityPhoneNo() {
-        return entityPhoneNo;
-    }
-
-    public String getEntityNameBil() {
-        return entityNameBil;
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
     }
 
     public String getEntityShortName() {
         return entityShortName;
     }
 
+    public void setEntityShortName(String entityShortName) {
+        this.entityShortName = entityShortName;
+    }
+
+    public String getEntityCode() {
+        return entityCode;
+    }
+
+    public void setEntityCode(String entityCode) {
+        this.entityCode = entityCode;
+    }
+
+    public String getIfscCode() {
+        return ifscCode;
+    }
+
+    public void setIfscCode(String ifscCode) {
+        this.ifscCode = ifscCode;
+    }
+
+    public String getComTypeId() {
+        return comTypeId;
+    }
+
+    public void setComTypeId(String comTypeId) {
+        this.comTypeId = comTypeId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(int subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
+
+    public String getEntityEmailId() {
+        return entityEmailId;
+    }
+
+    public void setEntityEmailId(String entityEmailId) {
+        this.entityEmailId = entityEmailId;
+    }
+
+    public int getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(int createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public int getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(int lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public String getEntityPhoneNo() {
+        return entityPhoneNo;
+    }
+
+    public void setEntityPhoneNo(String entityPhoneNo) {
+        this.entityPhoneNo = entityPhoneNo;
+    }
+
+//    public String getEntityNameBil() {
+//        return entityNameBil;
+//    }
+//
+//    public void setEntityNameBil(String entityNameBil) {
+//        this.entityNameBil = entityNameBil;
+//    }
+//
+//    public String getEntityShortNameBil() {
+//        return entityShortNameBil;
+//    }
+//
+//    public void setEntityShortNameBil(String entityShortNameBil) {
+//        this.entityShortNameBil = entityShortNameBil;
+//    }
+
     public int getBankType() {
         return bankType;
+    }
+
+    public void setBankType(int bankType) {
+        this.bankType = bankType;
     }
 }
