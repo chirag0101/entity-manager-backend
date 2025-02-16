@@ -1,17 +1,14 @@
-package com.iris.entitymanager.entity;
+package com.iris.entitymanager.dto;
 
-import com.iris.entitymanager.dto.EntityRequestDto;
-import jakarta.persistence.Entity;
-
-public class ErrorResponseEntity {
+public class ApiResponse {
     private boolean status=true;
     private String statusCode="00";
     private String statusMessage="Success";
     private EntityRequestDto response=null;
 
-    public ErrorResponseEntity(){}
+    public ApiResponse(){}
 
-    public ErrorResponseEntity(EntityRequestDto entityRequestDto){
+    public ApiResponse(EntityRequestDto entityRequestDto){
         this.response=entityRequestDto;
     }
 

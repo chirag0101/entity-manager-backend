@@ -2,7 +2,7 @@
 
     import com.iris.entitymanager.dto.EntityRequestDto;
     import com.iris.entitymanager.entity.Entityentity;
-    import com.iris.entitymanager.entity.ErrorResponseEntity;
+    import com.iris.entitymanager.dto.ApiResponse;
     import com.iris.entitymanager.exceptions.GlobalException;
     import com.iris.entitymanager.repository.EntityRepository;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@
         public ResponseEntity<?> createNewEntity(EntityRequestDto entityRequestDto){
             Entityentity entity=convertToEntity(entityRequestDto);
             entityRepository.save(entity);
-            return new ResponseEntity<>(new ErrorResponseEntity(), HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
         }
 
         //get entities
@@ -47,7 +47,7 @@
                 throw new GlobalException("Entity Not Found!");
             }
             Entityentity entity=entityInDb.get();
-            return new ResponseEntity<>(new ErrorResponseEntity(convertToDto(entity)),HttpStatus.FOUND);
+            return new ResponseEntity<>(new ApiResponse(convertToDto(entity)),HttpStatus.FOUND);
         }
 
         //delete entity
@@ -58,14 +58,14 @@
                 throw new GlobalException("Entity Not Found!");
             }
             entityRepository.delete(entity.get());
-            return new ResponseEntity<>(new ErrorResponseEntity(),HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponse(),HttpStatus.OK);
         }
 
         //delete all entities
         @Transactional
         public ResponseEntity<?> deleteEntities(){
             entityRepository.deleteAll();
-            return new ResponseEntity<>(new ErrorResponseEntity(),HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponse(),HttpStatus.OK);
         }
 
         //update entity
@@ -96,7 +96,7 @@
             entityInDb.setBankType(entityDto.getBankType());
 
             entityRepository.save(entityInDb);
-            return new ResponseEntity<>(new ErrorResponseEntity(),HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponse(),HttpStatus.OK);
         }
 
 

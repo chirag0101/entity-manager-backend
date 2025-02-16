@@ -1,6 +1,6 @@
 package com.iris.entitymanager.controller;
 
-import com.iris.entitymanager.entity.ErrorResponseEntity;
+import com.iris.entitymanager.dto.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ErrorHandlerController {
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorResponseEntity> handleException(ConstraintViolationException e) {
-        ErrorResponseEntity errorResponse=new ErrorResponseEntity();
+    public ResponseEntity<ApiResponse> handleException(ConstraintViolationException e) {
+        ApiResponse errorResponse=new ApiResponse();
         errorResponse.setStatus(false);
         errorResponse.setStatusCode("E001");
         String errorMessage = e.getConstraintViolations().stream()
@@ -28,45 +28,46 @@ public class ErrorHandlerController {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErrorResponseEntity> handleDatabaseException(DataIntegrityViolationException e) {
-        ErrorResponseEntity errorResponse = new ErrorResponseEntity();
+    public ResponseEntity<ApiResponse> handleDatabaseException(DataIntegrityViolationException e) {
+        ApiResponse errorResponse = new ApiResponse();
         errorResponse.setStatus(false);
         errorResponse.setStatusCode("E001");
 
-        if(e.getMessage().toUpperCase().contains("ENTITY_NAME") ) {
-            errorResponse.setStatusMessage(e.getMessage());
-        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("ENTITY_SHORT_NAME") ){
-            errorResponse.setStatusMessage("Invalid Entity Short Name!");
-        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("ENTITY_CODE") ){
-            errorResponse.setStatusMessage("Invalid Entity Code!");
-        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().contains("COM_TYPE_ID")){
-            errorResponse.setStatusMessage("Invalid Com Type Id!");
-        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("CATEGORY_ID")){
-            errorResponse.setStatusMessage("Invalid Category Id!");
-        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("SUB_CATEGORY_ID") ){
-            errorResponse.setStatusMessage("Invalid Sub Category Id!");
-        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("ENTITY_EMAIL_ID") ){
-            errorResponse.setStatusMessage("Invalid Email Id!");
-        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("CREATED_BY") ){
-            errorResponse.setStatusMessage("Invalid Entry for Created By");
-        }else if(e.getMessage().contains("LAST_MODIFIED_BY")){
-            errorResponse.setStatusMessage("Invalid Entry for Last Modified By!");
-        }else if(e.getMessage().contains("ENTITY_PHONE_NO")){
-            errorResponse.setStatusMessage("Invalid Entity Phone No. !");
-        }else if(e.getMessage().contains("BANK_TYPE")){
-            errorResponse.setStatusMessage("Invalid Bank Type!");
-        }else {
-            // Avoid returning low-level DB details; show user-friendly message
-            errorResponse.setStatusMessage(e.getMessage());
-        }
+//        if(e.getMessage().toUpperCase().contains("ENTITY_NAME") ) {
+//            errorResponse.setStatusMessage(e.getMessage());
+//        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("ENTITY_SHORT_NAME") ){
+//            errorResponse.setStatusMessage("Invalid Entity Short Name!");
+//        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("ENTITY_CODE") ){
+//            errorResponse.setStatusMessage("Invalid Entity Code!");
+//        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().contains("COM_TYPE_ID")){
+//            errorResponse.setStatusMessage("Invalid Com Type Id!");
+//        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("CATEGORY_ID")){
+//            errorResponse.setStatusMessage("Invalid Category Id!");
+//        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("SUB_CATEGORY_ID") ){
+//            errorResponse.setStatusMessage("Invalid Sub Category Id!");
+//        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("ENTITY_EMAIL_ID") ){
+//            errorResponse.setStatusMessage("Invalid Email Id!");
+//        }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("CREATED_BY") ){
+//            errorResponse.setStatusMessage("Invalid Entry for Created By");
+//        }else if(e.getMessage().contains("LAST_MODIFIED_BY")){
+//            errorResponse.setStatusMessage("Invalid Entry for Last Modified By!");
+//        }else if(e.getMessage().contains("ENTITY_PHONE_NO")){
+//            errorResponse.setStatusMessage("Invalid Entity Phone No. !");
+//        }else if(e.getMessage().contains("BANK_TYPE")){
+//            errorResponse.setStatusMessage("Invalid Bank Type!");
+//        }else {
+//            // Avoid returning low-level DB details; show user-friendly message
+//            errorResponse.setStatusMessage(e.getMessage());
+//        }
+        errorResponse.setStatusMessage(e.getMessage());
         errorResponse.setResponse(null);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseEntity> handleException(Exception e) {
-        ErrorResponseEntity errorResponse = new ErrorResponseEntity();
+    public ResponseEntity<ApiResponse> handleException(Exception e) {
+        ApiResponse errorResponse = new ApiResponse();
         errorResponse.setStatus(false);
         errorResponse.setStatusCode("E001");
         errorResponse.setStatusMessage("An error occurred: " + e.getMessage());

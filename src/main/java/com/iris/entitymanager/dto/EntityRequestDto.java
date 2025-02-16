@@ -10,12 +10,12 @@ public class EntityRequestDto {
     @Size(min=1, max=200)
     private String entityName;
 
-    @NotEmpty
+    @NotEmpty(message = "Entity Short Name can't be empty")
     @Pattern(regexp = "^[a-zA-Z1-9.&]{1,100}$")
     @Size(min=1, max=100)
     private String entityShortName;
 
-    @NotEmpty
+    @NotEmpty(message = "Entity Code can't be empty")
     @Pattern(regexp = "^[a-zA-Z0-9.&]{1,200}$")
     @Size(min=4, max=24)
     private String entityCode;
@@ -32,8 +32,7 @@ public class EntityRequestDto {
     @Max(99)
     private int subCategoryId;
 
-    @NotEmpty
-    @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")
+    @Email(message = "Invalid Email Format")
     private String entityEmailId;
 
     @NotNull
