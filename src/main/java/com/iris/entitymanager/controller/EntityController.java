@@ -1,5 +1,6 @@
 package com.iris.entitymanager.controller;
 
+import com.iris.entitymanager.dto.EntityRequestDto;
 import com.iris.entitymanager.entity.Entityentity;
 import com.iris.entitymanager.service.EntityService;
 import jakarta.persistence.Entity;
@@ -47,4 +48,12 @@ public class EntityController {
         return entityService.deleteEntities();
     }
 
+    @PutMapping("/entity/{entityName}")
+    public ResponseEntity<?> updateEntity(@PathVariable String entityName,@RequestBody EntityRequestDto entityDto){
+        try{
+            return entityService.updateEntity(entityName,entityDto);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
