@@ -33,8 +33,8 @@ public class ErrorHandlerController {
         errorResponse.setStatus(false);
         errorResponse.setStatusCode("E001");
 
-        if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("ENTITY_NAME") ) {
-            errorResponse.setStatusMessage("Invalid Entity Name!");
+        if(e.getMessage().toUpperCase().contains("ENTITY_NAME") ) {
+            errorResponse.setStatusMessage(e.getMessage());
         }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("ENTITY_SHORT_NAME") ){
             errorResponse.setStatusMessage("Invalid Entity Short Name!");
         }else if(e.getMessage().contains("ORA-02290") && e.getMessage().toUpperCase().contains("ENTITY_CODE") ){
