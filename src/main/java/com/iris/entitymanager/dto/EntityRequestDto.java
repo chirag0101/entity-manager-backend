@@ -6,31 +6,25 @@ public class EntityRequestDto {
 
     @NotEmpty(message = "Entity Name Can't be Empty")
     @Size(min = 1, max = 200, message = "Entity Name size must be between 1 and 200")
-    @Pattern(regexp = "^[a-zA-Z1-9.&]{200}$",message = "Invalid Entity Name")
+    @Pattern(regexp = "^[a-zA-Z1-9.&]{200}$")
     @Size(min=1, max=200)
     private String entityName;
 
     @NotEmpty
-    @Pattern(regexp = "^[a-zA-Z1-9.&]{100}$",message = "Invalid Entity Short Name")
+    @Pattern(regexp = "^[a-zA-Z1-9.&]{100}$")
     @Size(min=1, max=100)
     private String entityShortName;
 
     @NotEmpty
-    @Pattern(regexp = "^[a-zA-Z0-9.&]{1,200}$", message = "Invalid Entity Code")
+    @Pattern(regexp = "^[a-zA-Z0-9.&]{1,200}$")
     @Size(min=4, max=24)
     private String entityCode;
 
-    @NotEmpty
-    @Pattern(regexp = "^[a-zA-Z0-9.&]$",message = "Invalid IFSC Code")
-    @Size(min=4, max=24)
-    private String ifscCode;
-
-    @NotEmpty
-    private String comTypeId="3";
+    private int comTypeId=3;
 
     @NotNull
-    @Min(0)
-    @Max(99)
+    @Min(value = 0, message = "CATEGORY_ID")
+    @Max(value=99,message = "CATEGORY_ID")
     private int categoryId;
 
     @NotNull
@@ -38,7 +32,7 @@ public class EntityRequestDto {
     @Max(99)
     private int subCategoryId;
 
-//  @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", message = "Invalid Email id")
+    //@Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", message = "Invalid Email id")
     @Email(message = "Invalid Email!")
     private String entityEmailId;
 
@@ -51,22 +45,15 @@ public class EntityRequestDto {
     @Pattern(regexp = "^(\\+\\d{1,4})?\\d{10,15}$", message = "Invalid Phone Number")
     private String entityPhoneNo;
 
-    @NotEmpty
-    private String entityNameBil;
-
-    @NotEmpty
-    private String entityShortNameBil;
-
     @NotNull
     private int bankType;
 
     public EntityRequestDto(){}
 
-    public EntityRequestDto(String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType) {
+    public EntityRequestDto(String entityName, String entityShortName, String entityCode, int comTypeId, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType) {
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
-        this.ifscCode = ifscCode;
         this.comTypeId = comTypeId;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
@@ -74,8 +61,6 @@ public class EntityRequestDto {
         this.createdBy = createdBy;
         this.lastModifiedBy = lastModifiedBy;
         this.entityPhoneNo = entityPhoneNo;
-        this.entityNameBil = entityName;
-        this.entityShortNameBil = entityShortName;
         this.bankType = bankType;
     }
 
@@ -103,19 +88,11 @@ public class EntityRequestDto {
         this.entityCode = entityCode;
     }
 
-    public String getIfscCode() {
-        return ifscCode;
-    }
-
-    public void setIfscCode(String ifscCode) {
-        this.ifscCode = ifscCode;
-    }
-
-    public String getComTypeId() {
+    public int getComTypeId() {
         return comTypeId;
     }
 
-    public void setComTypeId(String comTypeId) {
+    public void setComTypeId(int comTypeId) {
         this.comTypeId = comTypeId;
     }
 
@@ -166,22 +143,6 @@ public class EntityRequestDto {
     public void setEntityPhoneNo(String entityPhoneNo) {
         this.entityPhoneNo = entityPhoneNo;
     }
-
-//    public String getEntityNameBil() {
-//        return entityNameBil;
-//    }
-//
-//    public void setEntityNameBil(String entityNameBil) {
-//        this.entityNameBil = entityNameBil;
-//    }
-//
-//    public String getEntityShortNameBil() {
-//        return entityShortNameBil;
-//    }
-//
-//    public void setEntityShortNameBil(String entityShortNameBil) {
-//        this.entityShortNameBil = entityShortNameBil;
-//    }
 
     public int getBankType() {
         return bankType;

@@ -12,7 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 //checking validations
-//returning response in ErrorResponseEntity
+
 @RestController
 @RequestMapping("/entitymanager")
 public class EntityController {
@@ -50,7 +50,7 @@ public class EntityController {
     }
 
     @PutMapping("/entity/{entityName}")
-    public ResponseEntity<?> updateEntity(@PathVariable String entityName,@RequestBody EntityRequestDto entityDto){
+    public ResponseEntity<?> updateEntity(@PathVariable String entityName,@Valid @RequestBody EntityRequestDto entityDto){
         try{
             return entityService.updateEntity(entityName,entityDto);
         } catch (Exception e) {

@@ -11,6 +11,7 @@
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
     import java.util.ArrayList;
+    import java.util.Date;
     import java.util.List;
     import java.util.Optional;
 
@@ -80,14 +81,16 @@
             entityInDb.setEntityName(entityDto.getEntityName());
             entityInDb.setEntityShortName(entityDto.getEntityShortName());
             entityInDb.setEntityCode(entityDto.getEntityCode());
-            entityInDb.setIfscCode(entityDto.getIfscCode());
+            entityInDb.setIfscCode(entityDto.getEntityCode());
             entityInDb.setComTypeId(entityDto.getComTypeId());
             entityInDb.setCategoryId(entityDto.getCategoryId());
             entityInDb.setSubCategoryId(entityDto.getSubCategoryId());
             entityInDb.setEntityEmailId(entityDto.getEntityEmailId());
             entityInDb.setCreatedBy(entityDto.getCreatedBy());
             entityInDb.setLastModifiedBy(entityDto.getLastModifiedBy());
+            entityInDb.setLastModifiedOn(new Date());
             entityInDb.setEntityPhoneNo(entityDto.getEntityPhoneNo());
+            entityInDb.setUpdatedOn(new Date());
             entityInDb.setEntityNameBil(entityDto.getEntityName());
             entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
             entityInDb.setBankType(entityDto.getBankType());
@@ -99,7 +102,7 @@
 
         //converting to dto
         public EntityRequestDto convertToDto(Entityentity entity){
-            return new EntityRequestDto(entity.getEntityName(),entity.getEntityShortName(),entity.getEntityCode(),entity.getIfscCode(),entity.getComTypeId(),entity.getCategoryId(),entity.getSubCategoryId(),entity.getEntityEmailId(),entity.getCreatedBy(),entity.getLastModifiedBy(),entity.getEntityPhoneNo(),entity.getBankType());
+            return new EntityRequestDto(entity.getEntityName(),entity.getEntityShortName(),entity.getEntityCode(),entity.getComTypeId(),entity.getCategoryId(),entity.getSubCategoryId(),entity.getEntityEmailId(),entity.getCreatedBy(),entity.getLastModifiedBy(),entity.getEntityPhoneNo(),entity.getBankType());
         }
 
         public Entityentity convertToEntity(EntityRequestDto entityDto){
@@ -109,7 +112,7 @@
             entity.setEntityName(entityDto.getEntityName());
             entity.setEntityShortName(entityDto.getEntityShortName());
             entity.setEntityCode(entityDto.getEntityCode());
-            entity.setIfscCode(entityDto.getIfscCode());
+            entity.setIfscCode(entityDto.getEntityCode());
             entity.setComTypeId(entityDto.getComTypeId());
             entity.setCategoryId(entityDto.getCategoryId());
             entity.setSubCategoryId(entityDto.getSubCategoryId());
@@ -117,7 +120,8 @@
             entity.setCreatedBy(entityDto.getCreatedBy());
             entity.setLastModifiedBy(entityDto.getLastModifiedBy());
             entity.setEntityPhoneNo(entityDto.getEntityPhoneNo());
-//            entity.setEntityNameBil(entityDto.getEntityNameBil());
+            entity.setEntityNameBil(entityDto.getEntityName());
+            entity.setEntityShortNameBil(entityDto.getEntityShortName());
             entity.setBankType(entityDto.getBankType());
 
             return entity;

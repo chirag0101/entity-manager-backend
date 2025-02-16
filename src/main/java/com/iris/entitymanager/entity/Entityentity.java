@@ -27,7 +27,7 @@ public class Entityentity {
     private String ifscCode;
 
     @Column(name = "COM_TYPE_ID")
-    private String comTypeId;
+    private int comTypeId;
 
     @Column(name = "CATEGORY_ID")
     private int categoryId;
@@ -72,12 +72,12 @@ public class Entityentity {
 
     }
 
-    public Entityentity(Integer id, String entityName, String entityShortName, String entityCode, String ifscCode, String comTypeId, int categoryId, int subCategoryId, String entityEmailId, boolean isActive, int createdBy, Date createdOn, int lastModifiedBy, Date lastModifiedOn, String entityPhoneNo, Date updatedOn, String entityNameBil, String entityShortNameBil, int bankType) {
+    public Entityentity(Integer id, String entityName, String entityShortName, String entityCode, int comTypeId, int categoryId, int subCategoryId, String entityEmailId, boolean isActive, int createdBy, Date createdOn, int lastModifiedBy, Date lastModifiedOn, String entityPhoneNo, Date updatedOn, int bankType) {
         this.id = id;
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
-        this.ifscCode = ifscCode;
+        this.ifscCode = entityCode;
         this.comTypeId = comTypeId;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
@@ -89,8 +89,8 @@ public class Entityentity {
         this.lastModifiedOn = lastModifiedOn;
         this.entityPhoneNo = entityPhoneNo;
         this.updatedOn = updatedOn;
-        this.entityNameBil = entityNameBil;
-        this.entityShortNameBil = entityShortNameBil;
+        this.entityNameBil = entityName;
+        this.entityShortNameBil = entityShortName;
         this.bankType = bankType;
     }
 
@@ -134,11 +134,11 @@ public class Entityentity {
         this.ifscCode = ifscCode;
     }
 
-    public String getComTypeId() {
+    public int getComTypeId() {
         return comTypeId;
     }
 
-    public void setComTypeId(String comTypeId) {
+    public void setComTypeId(int comTypeId) {
         this.comTypeId = comTypeId;
     }
 
