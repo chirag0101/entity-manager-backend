@@ -1,6 +1,5 @@
 package com.iris.entitymanager.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -11,7 +10,7 @@ public class Entityentity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ENTITY_ID")
     private Integer id;
 
     @Column(name = "ENTITY_NAME")
@@ -26,7 +25,7 @@ public class Entityentity {
     @Column(name = "IFSC_CODE")
     private String ifscCode;
 
-    @Column(name = "COM_TYPE_ID")
+    @Column(name = "COMP_TYPE_ID")
     private int comTypeId;
 
     @Column(name = "CATEGORY_ID")
@@ -39,25 +38,25 @@ public class Entityentity {
     private String entityEmailId;
 
     @Column(name = "IS_ACTIVE")
-    private boolean isActive=true;
+    private boolean isActive;
 
     @Column(name = "CREATED_BY")
     private int createdBy;
 
     @Column(name = "CREATED_ON")
-    private Date createdOn=new Date();
+    private Date createdOn;
 
     @Column(name = "LAST_MODIFIED_BY")
     private int lastModifiedBy;
 
     @Column(name = "LAST_MODIFIED_ON")
-    private Date lastModifiedOn=new Date();
+    private Date lastModifiedOn;
 
     @Column(name = "ENTITY_PHONE_NO")
     private String entityPhoneNo;
 
     @Column(name = "UPDATED_ON")
-    private Date updatedOn=new Date();
+    private Date updatedOn;
 
     @Column(name = "ENTITY_NAME_BIL")
     private String entityNameBil;

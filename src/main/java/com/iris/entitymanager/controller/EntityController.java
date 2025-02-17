@@ -1,34 +1,30 @@
 package com.iris.entitymanager.controller;
 
-import com.iris.entitymanager.dto.EntityRequestDto;
-import com.iris.entitymanager.entity.Entityentity;
+import com.iris.entitymanager.dto.EntityDto;
 import com.iris.entitymanager.service.EntityService;
-import jakarta.persistence.Entity;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-//checking validations
-//email validation to fix
+//done: validations checking!
 
 @RestController
-@RequestMapping("/entitymanager")
+@RequestMapping("/entityService")
 public class EntityController {
 
     @Autowired
     private EntityService entityService;
 
-    @PostMapping("/newentity")
-    public ResponseEntity<?> createEntity(@Valid @RequestBody EntityRequestDto entityRequestDto, BindingResult bindingResult){
-        return entityService.createNewEntity(entityRequestDto);
+    @PostMapping("/addEntity")
+    public ResponseEntity<?> createEntity(@Valid @RequestBody EntityDto EntityDto){
+        return entityService.createNewEntity(EntityDto);
     }
 
     @GetMapping("/entities")
     public ResponseEntity<?> viewEntities(){
-        return entityService.getEntities();
+        return new ResponseEntity<>(entityService.getEntities(),HttpStatus.OK);
     }
 
     @GetMapping("/entity/{entityName}")
@@ -51,7 +47,7 @@ public class EntityController {
     }
 
     @PutMapping("/entity/{entityName}")
-    public ResponseEntity<?> updateEntity(@Valid @RequestBody EntityRequestDto entityDto,@PathVariable String entityName){
+    public ResponseEntity<?> updateEntity(@Valid @RequestBody EntityDto entityDto,@PathVariable String entityName){
         try{
             return entityService.updateEntity(entityName,entityDto);
         } catch (Exception e) {

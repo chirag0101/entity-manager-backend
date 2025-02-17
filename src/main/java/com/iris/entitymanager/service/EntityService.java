@@ -1,6 +1,6 @@
     package com.iris.entitymanager.service;
 
-    import com.iris.entitymanager.dto.EntityRequestDto;
+    import com.iris.entitymanager.dto.EntityDto;
     import com.iris.entitymanager.entity.Entityentity;
     import com.iris.entitymanager.dto.ApiResponse;
     import com.iris.entitymanager.exceptions.GlobalException;
@@ -21,24 +21,66 @@
         @Autowired
         private EntityRepository entityRepository;
 
-        //create new entity entry
+        //create new entity entry - done
         @Transactional
-        public ResponseEntity<?> createNewEntity(EntityRequestDto entityRequestDto){
-            Entityentity entity=convertToEntity(entityRequestDto);
-            entityRepository.save(entity);
+        public ResponseEntity<?> createNewEntity(EntityDto EntityDto){
+            try{
+                Entityentity entity=new Entityentity();
+
+                entity.setEntityName(EntityDto.getEntityName());
+                entity.setEntityShortName(EntityDto.getEntityShortName());
+                entity.setEntityCode(EntityDto.getEntityCode());
+                entity.setIfscCode(EntityDto.getEntityCode());
+                entity.setComTypeId(EntityDto.getComTypeId());
+                entity.setCategoryId(EntityDto.getCategoryId());
+                entity.setSubCategoryId(EntityDto.getSubCategoryId());
+                entity.setEntityEmailId(EntityDto.getEntityEmailId());
+                entity.setIsActive(true);
+                entity.setCreatedBy(EntityDto.getCreatedBy());
+                entity.setCreatedOn(new Date());
+                entity.setLastModifiedBy(EntityDto.getLastModifiedBy());
+                entity.setLastModifiedOn(new Date());
+                entity.setEntityPhoneNo(EntityDto.getEntityPhoneNo());
+                entity.setUpdatedOn(new Date());
+                entity.setEntityNameBil(EntityDto.getEntityName());
+                entity.setEntityShortNameBil(EntityDto.getEntityShortName());
+                entity.setBankType(EntityDto.getBankType());
+
+                entityRepository.save(entity);
+            }catch (Exception e){
+                throw new GlobalException(e.getMessage());
+            }
             return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
         }
 
-        //get entities
-        public ResponseEntity<?> getEntities(){
-            List<Entityentity> entitiesList=entityRepository.findAll();
-            List<EntityRequestDto> entityRequestDtos=new ArrayList<>();
+        //get entities-done
+        public List<EntityDto> getEntities() {
+            List<Entityentity> entitiesList = entityRepository.findAll();
 
-            for(Entityentity entity:entitiesList){
-                entityRequestDtos.add(convertToDto(entity));
+            if(entitiesList.isEmpty()){
+                throw new GlobalException("No Users Found!");
             }
 
-            return new ResponseEntity<>(entityRequestDtos,HttpStatus.OK);
+            List<EntityDto> EntityDtos = new ArrayList<>();
+
+            for (Entityentity entity : entitiesList) {
+                EntityDto entityDto = new EntityDto();
+
+                entityDto.setEntityName(entity.getEntityName());
+                entityDto.setEntityShortName(entity.getEntityShortName());
+                entityDto.setEntityCode(entity.getEntityCode());
+                entityDto.setComTypeId(entity.getComTypeId());
+                entityDto.setCategoryId(entity.getCategoryId());
+                entityDto.setSubCategoryId(entity.getSubCategoryId());
+                entityDto.setEntityEmailId(entity.getEntityEmailId());
+                entityDto.setCreatedBy(entity.getCreatedBy());
+                entityDto.setLastModifiedBy(entity.getLastModifiedBy());
+                entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
+                entityDto.setBankType(entity.getBankType());
+
+                EntityDtos.add(entityDto);
+            }
+            return EntityDtos;
         }
 
         public ResponseEntity<?> getEntity(String entityName) throws Exception{
@@ -47,10 +89,28 @@
                 throw new GlobalException("Entity Not Found!");
             }
             Entityentity entity=entityInDb.get();
-            return new ResponseEntity<>(new ApiResponse(convertToDto(entity)),HttpStatus.FOUND);
+
+            EntityDto entityDto = getEntityDto(entity);
+
+            return new ResponseEntity<>(new ApiResponse(entityDto),HttpStatus.OK);
         }
 
-        //delete entity
+        //method to get EntityDto from an entiity
+        private static EntityDto getEntityDto(Entityentity entity) {
+            EntityDto entityDto=new EntityDto();
+
+            entityDto.setEntityName(entity.getEntityName());
+            entityDto.setEntityShortName(entity.getEntityShortName());
+            entityDto.setEntityCode(entity.getEntityCode());
+            entityDto.setComTypeId(entity.getComTypeId());
+            entityDto.setCategoryId(entity.getCategoryId());
+            entityDto.setSubCategoryId(entity.getSubCategoryId());
+            entityDto.setEntityEmailId(entity.getEntityEmailId());
+            entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
+            return entityDto;
+        }
+
+        //delete entity-done
         @Transactional
         public ResponseEntity<?> deleteEntity(String entityName){
             Optional<Entityentity> entity=entityRepository.findByEntityName(entityName);
@@ -61,16 +121,20 @@
             return new ResponseEntity<>(new ApiResponse(),HttpStatus.OK);
         }
 
-        //delete all entities
+        //delete all entities-done
         @Transactional
         public ResponseEntity<?> deleteEntities(){
-            entityRepository.deleteAll();
+            try{
+                entityRepository.deleteAll();
+            } catch (Exception e) {
+                throw new GlobalException("Unable to Delete Entities!");
+            }
             return new ResponseEntity<>(new ApiResponse(),HttpStatus.OK);
         }
 
         //update entity
         @Transactional
-        public ResponseEntity<?> updateEntity(String entityName,EntityRequestDto entityDto){
+        public ResponseEntity<?> updateEntity(String entityName,EntityDto entityDto){
             Optional<Entityentity> entity=entityRepository.findByEntityName(entityName);
 
             if(entity.isEmpty()){
@@ -97,33 +161,5 @@
 
             entityRepository.save(entityInDb);
             return new ResponseEntity<>(new ApiResponse(),HttpStatus.OK);
-        }
-
-
-        //converting to dto
-        public EntityRequestDto convertToDto(Entityentity entity){
-            return new EntityRequestDto(entity.getEntityName(),entity.getEntityShortName(),entity.getEntityCode(),entity.getComTypeId(),entity.getCategoryId(),entity.getSubCategoryId(),entity.getEntityEmailId(),entity.getCreatedBy(),entity.getLastModifiedBy(),entity.getEntityPhoneNo(),entity.getBankType());
-        }
-
-        public Entityentity convertToEntity(EntityRequestDto entityDto){
-            Entityentity entity = new Entityentity();
-
-            // Map the fields from the DTO to the entity
-            entity.setEntityName(entityDto.getEntityName());
-            entity.setEntityShortName(entityDto.getEntityShortName());
-            entity.setEntityCode(entityDto.getEntityCode());
-            entity.setIfscCode(entityDto.getEntityCode());
-            entity.setComTypeId(entityDto.getComTypeId());
-            entity.setCategoryId(entityDto.getCategoryId());
-            entity.setSubCategoryId(entityDto.getSubCategoryId());
-            entity.setEntityEmailId(entityDto.getEntityEmailId());
-            entity.setCreatedBy(entityDto.getCreatedBy());
-            entity.setLastModifiedBy(entityDto.getLastModifiedBy());
-            entity.setEntityPhoneNo(entityDto.getEntityPhoneNo());
-            entity.setEntityNameBil(entityDto.getEntityName());
-            entity.setEntityShortNameBil(entityDto.getEntityShortName());
-            entity.setBankType(entityDto.getBankType());
-
-            return entity;
         }
     }

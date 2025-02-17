@@ -4,12 +4,12 @@ public class ApiResponse {
     private boolean status=true;
     private String statusCode="00";
     private String statusMessage="Success";
-    private EntityRequestDto response=null;
+    private EntityDto response=null;
 
     public ApiResponse(){}
 
-    public ApiResponse(EntityRequestDto entityRequestDto){
-        this.response=entityRequestDto;
+    public ApiResponse(EntityDto EntityDto){
+        this.response=EntityDto;
     }
 
     public boolean isStatus() {
@@ -36,11 +36,11 @@ public class ApiResponse {
         this.statusMessage = statusMessage;
     }
 
-    public EntityRequestDto getResponse() {
+    public EntityDto getResponse() {
         return response;
     }
 
-    public void setResponse(EntityRequestDto response) {
+    public void setResponse(EntityDto response) {
         this.response = response;
     }
 }

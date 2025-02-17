@@ -1,0 +1,21 @@
+CREATE TABLE tbl_entity (
+    entity_id           INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    entity_name         VARCHAR2(200) NOT NULL,
+    entity_short_name   VARCHAR2(100) NOT NULL,
+    entity_code         VARCHAR2(20) NOT NULL,
+    ifsc_code           VARCHAR2(20)  NOT NULL,
+    comp_type_id        NUMBER NOT NULL,
+    category_id         NUMBER NOT NULL,
+    sub_category_id     NUMBER NOT NULL,
+    entity_email_id     VARCHAR2(200),
+    is_active           char(1) NOT NULL,
+    created_by          NUMBER NOT NULL,
+    created_on          TIMESTAMP NOT NULL,
+    last_modified_by    NUMBER NOT NULL,
+    last_modified_on    TIMESTAMP NOT NULL,
+    entity_phone_no     VARCHAR2(20),
+    updated_on          TIMESTAMP,
+    entity_name_BIL     VARCHAR2(200) NOT NULL,
+    entity_short_name_BIL VARCHAR2(100) NOT NULL,
+    bank_type           INT NOT NULL
+);

@@ -2,55 +2,73 @@ package com.iris.entitymanager.dto;
 
 import jakarta.validation.constraints.*;
 
-public class EntityRequestDto {
+public class EntityDto {
 
-    @NotEmpty(message = "Entity Name Can't be Empty")
-    @Size(min = 1, max = 200, message = "Entity Name size must be between 1 and 200")
-    @Pattern(regexp = "^[a-zA-Z1-9.&]{1,200}$")
-    @Size(min=1, max=200)
+    /*error codes:
+        notEmpty:
+            E001
+            E002
+            E003
+        pattern:
+            P001
+            P002
+            P003
+        notNull:
+            N001
+            N002
+            N003
+            N004
+            N005
+            N006
+            N007
+    */
+//    @NotEmpty(message = "Entity Name Can't be Empty")
+    @NotEmpty(message = "E001")
+    @Pattern(regexp = "^[a-zA-Z1-9.&]{1,200}$",message = "P001")
     private String entityName;
 
-    @NotEmpty(message = "Entity Short Name can't be empty")
-    @Pattern(regexp = "^[a-zA-Z1-9.&]{1,100}$")
-    @Size(min=1, max=100)
+//    @NotEmpty(message = "Entity Short Name can't be empty")
+    @NotEmpty(message = "E002")
+    @Pattern(regexp = "^[a-zA-Z1-9.&]{1,100}$", message = "P002")
     private String entityShortName;
 
-    @NotEmpty(message = "Entity Code can't be empty")
-    @Pattern(regexp = "^[a-zA-Z0-9.&]{1,200}$")
-    @Size(min=4, max=24)
+//    @NotEmpty(message = "Entity Code can't be empty")
+    @NotEmpty(message = "E003")
+    @Pattern(regexp = "^[a-zA-Z0-9.&]{4,24}$",message = "P003!")
     private String entityCode;
 
+    @NotNull(message = "N001")
     private int comTypeId=3;
 
-    @NotNull
-    @Min(value = 0, message = "CATEGORY_ID")
-    @Max(value=99,message = "CATEGORY_ID")
+    @NotNull(message="N002")
+    @Min(value = 0, message = "Category Id less than 0!")
+    @Max(value=99,message = "Category Id more than 99!")
     private int categoryId;
 
-    @NotNull
-    @Min(0)
-    @Max(99)
+    @NotNull(message="N003")
+    @Min(value=0,message = "Category Id less than 0!")
+    @Max(value=99,message = "Category Id more than 99!")
     private int subCategoryId;
 
-    @Email(message = "Invalid Email Format")
+    @Email(message = "Invalid Email Format!")
     private String entityEmailId;
 
-    @NotNull
-    @Min(0)
+    @NotNull(message="N004")
+    @Min(value=0, message = "Created By should be greater than 0!")
     private int createdBy;
 
-    @NotNull
+    @NotNull(message="N005")
     private int lastModifiedBy;
 
-    @Pattern(regexp = "^(\\+\\d{1,4})?\\d{10,15}$", message = "Invalid Phone Number")
+    @Pattern(regexp = "^(\\+\\d{1,4})?\\d{10,15}$", message = "N006")
     private String entityPhoneNo;
 
-    @NotNull
+    @NotNull(message="N007")
     private int bankType;
 
-    public EntityRequestDto(){}
+    public EntityDto(){}
 
-    public EntityRequestDto(String entityName, String entityShortName, String entityCode, int comTypeId, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType) {
+    public EntityDto(String entityName, String entityShortName, String entityCode, int comTypeId, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType) {
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
