@@ -22,17 +22,18 @@ public class EntityDto {
             N006
             N007
     */
-//    @NotEmpty(message = "Entity Name Can't be Empty")
+
+//  @NotEmpty(message = "Entity Name Can't be Empty")
     @NotEmpty(message = "E001")
     @Pattern(regexp = "^[a-zA-Z1-9.&]{1,200}$",message = "P001")
     private String entityName;
 
-//    @NotEmpty(message = "Entity Short Name can't be empty")
+//  @NotEmpty(message = "Entity Short Name can't be empty")
     @NotEmpty(message = "E002")
     @Pattern(regexp = "^[a-zA-Z1-9.&]{1,100}$", message = "P002")
     private String entityShortName;
 
-//    @NotEmpty(message = "Entity Code can't be empty")
+//  @NotEmpty(message = "Entity Code can't be empty")
     @NotEmpty(message = "E003")
     @Pattern(regexp = "^[a-zA-Z0-9.&]{4,24}$",message = "P003!")
     private String entityCode;
