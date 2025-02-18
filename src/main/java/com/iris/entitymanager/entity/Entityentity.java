@@ -1,6 +1,7 @@
 package com.iris.entitymanager.entity;
 
 import jakarta.persistence.*;
+
 import java.util.Date;
 
 @Entity
@@ -67,7 +68,7 @@ public class Entityentity {
     @Column(name = "BANK_TYPE")
     private int bankType;
 
-    public Entityentity(){
+    public Entityentity() {
 
     }
 

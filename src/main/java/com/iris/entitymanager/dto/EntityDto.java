@@ -28,15 +28,15 @@ public class EntityDto {
     private int categoryId;
 
     @NotNull(message = "N003")
-    @Min(value = 0, message = "Sub Category Id less than 0!")
-    @Max(value = 99, message = "Sub Category Id more than 99!")
+    @Min(value = 0, message = "P007")
+    @Max(value = 99, message = "P008")
     private int subCategoryId;
 
     @Email(message = "P004")
     private String entityEmailId;
 
     @NotNull(message = "N004")
-    @Min(value = 0, message = "Created By should be greater than 0!")
+    @Min(value = 0, message = "P006")
     private int createdBy;
 
     @NotNull(message = "N005")

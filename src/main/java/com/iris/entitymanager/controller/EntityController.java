@@ -18,38 +18,38 @@ public class EntityController {
     private EntityService entityService;
 
     @PostMapping("/addEntity")
-    public ResponseEntity<?> createEntity(@Valid @RequestBody EntityDto EntityDto){
+    public ResponseEntity<?> createEntity(@Valid @RequestBody EntityDto EntityDto) {
         return entityService.createNewEntity(EntityDto);
     }
 
-    @GetMapping("/entities")
-    public ResponseEntity<?> viewEntities(){
-        return new ResponseEntity<>(entityService.getEntities(),HttpStatus.OK);
+    @GetMapping("/viewEntries")
+    public ResponseEntity<?> viewEntities() {
+        return new ResponseEntity<>(entityService.getEntities(), HttpStatus.OK);
     }
 
-    @GetMapping("/entity/{entityName}")
-    public ResponseEntity<?> viewEntity(@PathVariable String entityName){
-        try{
+    @GetMapping("/viewEntry/{entityName}")
+    public ResponseEntity<?> viewEntity(@PathVariable String entityName) {
+        try {
             return entityService.getEntity(entityName);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    @DeleteMapping("/entity/{entityName}")
-    public ResponseEntity<?> deleteEntity(@PathVariable String entityName){
+    @DeleteMapping("/deleteEntry/{entityName}")
+    public ResponseEntity<?> deleteEntity(@PathVariable String entityName) {
         return entityService.deleteEntity(entityName);
     }
 
-    @DeleteMapping("/entities")
-    public ResponseEntity<?> deleteEntities(){
+    @DeleteMapping("/deleteEntries")
+    public ResponseEntity<?> deleteEntities() {
         return entityService.deleteEntities();
     }
 
-    @PutMapping("/entity/{entityName}")
-    public ResponseEntity<?> updateEntity(@Valid @RequestBody EntityDto entityDto,@PathVariable String entityName){
-        try{
-            return entityService.updateEntity(entityName,entityDto);
+    @PutMapping("/modifyEntry/{entityName}")
+    public ResponseEntity<?> updateEntity(@Valid @RequestBody EntityDto entityDto, @PathVariable String entityName) {
+        try {
+            return entityService.updateEntity(entityName, entityDto);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
