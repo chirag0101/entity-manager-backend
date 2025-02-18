@@ -13,6 +13,10 @@ public class ApiResponse {
         this.response = EntityDto;
     }
 
+    public ApiResponse(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
     public boolean isStatus() {
         return status;
     }

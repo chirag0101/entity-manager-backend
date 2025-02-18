@@ -22,12 +22,12 @@ public class EntityController {
         return entityService.createNewEntity(EntityDto);
     }
 
-    @GetMapping("/viewEntries")
+    @GetMapping("/viewEntities")
     public ResponseEntity<?> viewEntities() {
         return new ResponseEntity<>(entityService.getEntities(), HttpStatus.OK);
     }
 
-    @GetMapping("/viewEntry/{entityId}")
+    @GetMapping("/viewEntity/{entityId}")
     public ResponseEntity<?> viewEntity(@PathVariable int entityId) {
         try {
             return entityService.getEntity(entityId);
@@ -36,17 +36,17 @@ public class EntityController {
         }
     }
 
-    @DeleteMapping("/deleteEntry/{entityId}")
+    @DeleteMapping("/deleteEntity/{entityId}")
     public ResponseEntity<?> deleteEntity(@PathVariable int entityId) {
         return entityService.deleteEntity(entityId);
     }
 
-    @DeleteMapping("/deleteEntries")
+    @DeleteMapping("/deleteEntities")
     public ResponseEntity<?> deleteEntities() {
         return entityService.deleteEntities();
     }
 
-    @PutMapping("/modifyEntry/{entityId}")
+    @PutMapping("/modifyEntity/{entityId}")
     public ResponseEntity<?> updateEntity(@Valid @RequestBody EntityDto entityDto, @PathVariable int entityId) {
         try {
             return entityService.updateEntity(entityId, entityDto);

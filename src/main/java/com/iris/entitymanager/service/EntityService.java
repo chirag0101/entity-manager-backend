@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,34 +66,40 @@ public class EntityService {
         List<EntityDto> entityDtos = new ArrayList<>();
 
         for (Entityentity entity : entitiesList) {
-            EntityDto entityDto = new EntityDto();
+            if(entity.getIsActive()){
+                EntityDto entityDto = new EntityDto();
 
-            entityDto.setEntityName(entity.getEntityName());
-            entityDto.setEntityShortName(entity.getEntityShortName());
-            entityDto.setEntityCode(entity.getEntityCode());
-            entityDto.setCategoryId(entity.getCategoryId());
-            entityDto.setSubCategoryId(entity.getSubCategoryId());
-            entityDto.setEntityEmailId(entity.getEntityEmailId());
-            entityDto.setCreatedBy(entity.getCreatedBy());
-            entityDto.setLastModifiedBy(entity.getLastModifiedBy());
-            entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
-            entityDto.setBankType(entity.getBankType());
+                entityDto.setEntityName(entity.getEntityName());
+                entityDto.setEntityShortName(entity.getEntityShortName());
+                entityDto.setEntityCode(entity.getEntityCode());
+                entityDto.setCategoryId(entity.getCategoryId());
+                entityDto.setSubCategoryId(entity.getSubCategoryId());
+                entityDto.setEntityEmailId(entity.getEntityEmailId());
+                entityDto.setCreatedBy(entity.getCreatedBy());
+                entityDto.setLastModifiedBy(entity.getLastModifiedBy());
+                entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
+                entityDto.setBankType(entity.getBankType());
 
-            entityDtos.add(entityDto);
+                entityDtos.add(entityDto);
+            }
         }
         return entityDtos;
     }
 
     public ResponseEntity<?> getEntity(int entityId) throws GlobalException {
         Optional<Entityentity> entityInDb = entityRepository.findById(entityId);
+
         if (entityInDb.isEmpty()) {
             throw new GlobalException("E404");
         }
+
         Entityentity entity = entityInDb.get();
+        if(entity.getIsActive()){
+            EntityDto entityDto = getEntityDto(entity);
+            return new ResponseEntity<>(new ApiResponse(entityDto), HttpStatus.OK);
+        }
 
-        EntityDto entityDto = getEntityDto(entity);
-
-        return new ResponseEntity<>(new ApiResponse(entityDto), HttpStatus.OK);
+        throw new GlobalException("E404");
     }
 
     //method to get EntityDto from an entity
@@ -119,7 +126,17 @@ public class EntityService {
         if (entity.isEmpty()) {
             throw new GlobalException("E404");
         }
-        entityRepository.delete(entity.get());
+
+//        entityRepository.set(entity.get());
+
+        Entityentity entityInDb=entity.get();
+
+        if(entityInDb.getIsActive()){
+            entityInDb.setIsActive(false);
+        }else{
+            throw new GlobalException("E004");
+        }
+
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
     }
 
@@ -127,7 +144,13 @@ public class EntityService {
     @Transactional
     public ResponseEntity<?> deleteEntities() {
         try {
-            entityRepository.deleteAll();
+//            entityRepository.deleteAll();
+            List<Entityentity> entities=entityRepository.findAll();
+
+            for(Entityentity entity:entities){
+                entity.setIsActive(false);
+            }
+
         } catch (Exception e) {
             throw new GlobalException("Unable to Delete Entities!");
         }
