@@ -95,7 +95,7 @@ public class EntityService {
         return new ResponseEntity<>(new ApiResponse(entityDto), HttpStatus.OK);
     }
 
-    //method to get EntityDto from an entiity
+    //method to get EntityDto from an entity
     private static EntityDto getEntityDto(Entityentity entity) {
         EntityDto entityDto = new EntityDto();
 

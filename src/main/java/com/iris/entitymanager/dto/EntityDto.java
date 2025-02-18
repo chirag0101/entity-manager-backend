@@ -1,7 +1,6 @@
 package com.iris.entitymanager.dto;
 
 import jakarta.validation.constraints.*;
-import org.springframework.format.annotation.NumberFormat;
 
 public class EntityDto {
 
@@ -19,10 +18,6 @@ public class EntityDto {
     @NotEmpty(message = "E003")
     @Pattern(regexp = "^[a-zA-Z0-9.&\\s]{4,24}$", message = "P003!")    //change
     private String entityCode;
-
-//    @NotNull(message = "N001")
-//    @Min(value = 0, message = "P004")
-//    private int compTypeId=3;
 
     @NotNull(message = "N002")
     @Min(value = 0, message = "P005")
@@ -55,7 +50,7 @@ public class EntityDto {
     public EntityDto() {
     }
 
-    public EntityDto(String entityName, String entityShortName, String entityCode, int compTypeId, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType) {
+    public EntityDto(String entityName, String entityShortName, String entityCode, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType) {
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
