@@ -28,6 +28,10 @@ public class ErrorHandlerController {
             errorResponse.setStatusMessage("Invalid Entity Short Name!");
         }else if(e.getMessage().contains("P003")){
             errorResponse.setStatusMessage("Invalid Entity Code!");
+        }else if(e.getMessage().contains("P004")){
+            errorResponse.setStatusMessage("Invalid Email Id!");
+        }else if(e.getMessage().contains("P004")){
+            errorResponse.setStatusMessage("Invalid Phone No.!");
         }else{
             errorResponse.setStatusMessage(e.getMessage());
         }
