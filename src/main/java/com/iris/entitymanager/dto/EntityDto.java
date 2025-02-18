@@ -1,6 +1,7 @@
 package com.iris.entitymanager.dto;
 
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.NumberFormat;
 
 public class EntityDto {
 

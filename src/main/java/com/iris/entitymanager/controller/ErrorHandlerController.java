@@ -15,7 +15,6 @@ public class ErrorHandlerController {
         errorResponse.setStatus(false);
         errorResponse.setStatusCode("E001");
 
-
         if (e.getMessage().contains("E001")) {
             errorResponse.setStatusMessage("Entity Name can't be empty!");
         } else if (e.getMessage().contains("E002")) {
@@ -27,7 +26,7 @@ public class ErrorHandlerController {
         } else if (e.getMessage().contains("P002")) {
             errorResponse.setStatusMessage("Invalid Entity Short Name!");
         } else if (e.getMessage().contains("P003")) {
-            errorResponse.setStatusMessage("Invalid Entity Code!");
+            errorResponse.setStatusMessage("Invalid Entity Code-range(4-20)!");
         } else if (e.getMessage().contains("P004")) {
             errorResponse.setStatusMessage("Invalid Email Id!");
         } else if (e.getMessage().contains("P005")) {
@@ -36,6 +35,8 @@ public class ErrorHandlerController {
             errorResponse.setStatusMessage("Created by should be greater than or equal to 0!");
         } else if ((e.getMessage().contains("P007")) || (e.getMessage().contains("P008"))) {
             errorResponse.setStatusMessage("Sub Category Id should be min 0 or max 99");
+        } else if ((e.getMessage().contains("E404"))) {
+            errorResponse.setStatusMessage("Entity Not Found!");
         } else {
             errorResponse.setStatusMessage(e.getMessage());
         }

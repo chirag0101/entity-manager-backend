@@ -87,7 +87,7 @@ public class EntityService {
     public ResponseEntity<?> getEntity(String entityName) throws Exception {
         Optional<Entityentity> entityInDb = entityRepository.findByEntityName(entityName);
         if (entityInDb.isEmpty()) {
-            throw new GlobalException("Entity Not Found!");
+            throw new GlobalException("E404");
         }
         Entityentity entity = entityInDb.get();
 
@@ -107,7 +107,10 @@ public class EntityService {
         entityDto.setCategoryId(entity.getCategoryId());
         entityDto.setSubCategoryId(entity.getSubCategoryId());
         entityDto.setEntityEmailId(entity.getEntityEmailId());
+        entityDto.setCreatedBy(entity.getCreatedBy());
+        entityDto.setLastModifiedBy(entity.getLastModifiedBy());
         entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
+        entityDto.setBankType(entity.getBankType());
         return entityDto;
     }
 
@@ -116,7 +119,7 @@ public class EntityService {
     public ResponseEntity<?> deleteEntity(String entityName) {
         Optional<Entityentity> entity = entityRepository.findByEntityName(entityName);
         if (entity.isEmpty()) {
-            throw new GlobalException("Entity Not Found!");
+            throw new GlobalException("E404");
         }
         entityRepository.delete(entity.get());
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
@@ -135,11 +138,11 @@ public class EntityService {
 
     //update entity
     @Transactional
-    public ResponseEntity<?> updateEntity(String entityName, EntityDto entityDto) {
+    public ResponseEntity<?> updateEntity(String entityName, EntityDto entityDto) throws Exception{
         Optional<Entityentity> entity = entityRepository.findByEntityName(entityName);
 
         if (entity.isEmpty()) {
-            throw new GlobalException("Entry Not Found!");
+            throw new GlobalException("E404");
         }
 
         Entityentity entityInDb = entity.get();
