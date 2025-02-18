@@ -20,9 +20,9 @@ public class EntityDto {
     @Pattern(regexp = "^[a-zA-Z0-9.&\\s]{4,24}$", message = "P003!")    //change
     private String entityCode;
 
-    @NotNull(message = "N001")
-    @Min(value = 0, message = "P004")
-    private int compTypeId = 3;
+//    @NotNull(message = "N001")
+//    @Min(value = 0, message = "P004")
+//    private int compTypeId=3;
 
     @NotNull(message = "N002")
     @Min(value = 0, message = "P005")
@@ -59,7 +59,6 @@ public class EntityDto {
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
-        this.compTypeId = compTypeId;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
         this.entityEmailId = entityEmailId;
@@ -91,14 +90,6 @@ public class EntityDto {
 
     public void setEntityCode(String entityCode) {
         this.entityCode = entityCode;
-    }
-
-    public int getCompTypeId() {
-        return compTypeId;
-    }
-
-    public void setCompTypeId(int compTypeId) {
-        this.compTypeId = compTypeId;
     }
 
     public int getCategoryId() {

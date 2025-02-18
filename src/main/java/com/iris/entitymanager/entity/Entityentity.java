@@ -12,7 +12,7 @@ public class Entityentity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ENTITY_ID")
-    private Integer id;
+    private int id;
 
     @Column(name = "ENTITY_NAME")
     private String entityName;

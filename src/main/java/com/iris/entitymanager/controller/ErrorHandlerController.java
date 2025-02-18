@@ -27,21 +27,21 @@ public class ErrorHandlerController {
             errorResponse.setStatusMessage("Invalid Entity Short Name!");
         } else if (e.getMessage().contains("P003")) {
             errorResponse.setStatusMessage("Invalid Entity Code!");
-        } else if (e.getMessage().contains("P004")) {
+        } else if (e.getMessage().contains("N001") || e.getMessage().contains("P004")) {
             errorResponse.setStatusMessage("Invalid Comp Type Id!");
-        } else if (e.getMessage().contains("P005")) {
+        } else if (e.getMessage().contains("P005") || e.getMessage().contains("N002")) {
             errorResponse.setStatusMessage("Invalid Category Id!");
-        } else if (e.getMessage().contains("P006")) {
+        } else if (e.getMessage().contains("P006") || e.getMessage().contains("N003")) {
             errorResponse.setStatusMessage("Invalid Sub Category Id!");
         } else if (e.getMessage().contains("P007")) {
             errorResponse.setStatusMessage("Invalid Email Id!");
-        }else if (e.getMessage().contains("P008")) {
+        } else if (e.getMessage().contains("P008") || e.getMessage().contains("N004")) {
             errorResponse.setStatusMessage("Invalid Created By value!");
-        }else if (e.getMessage().contains("P009")) {
+        } else if (e.getMessage().contains("P009") || e.getMessage().contains("N005")) {
             errorResponse.setStatusMessage("Invalid Last Modified By value!");
-        }else if (e.getMessage().contains("P0010")) {
+        } else if (e.getMessage().contains("P0010")) {
             errorResponse.setStatusMessage("Invalid Entity Phone No.!");
-        }else if (e.getMessage().contains("P0011")) {
+        } else if (e.getMessage().contains("P0011") || e.getMessage().contains("N006")) {
             errorResponse.setStatusMessage("Invalid Bank Type Id!");
         } else if ((e.getMessage().contains("E404"))) {
             errorResponse.setStatusMessage("Entity Not Found!");

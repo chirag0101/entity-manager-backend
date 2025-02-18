@@ -27,18 +27,18 @@ public class EntityController {
         return new ResponseEntity<>(entityService.getEntities(), HttpStatus.OK);
     }
 
-    @GetMapping("/viewEntry/{entityName}")
-    public ResponseEntity<?> viewEntity(@PathVariable String entityName) {
+    @GetMapping("/viewEntry/{entityId}")
+    public ResponseEntity<?> viewEntity(@PathVariable int entityId) {
         try {
-            return entityService.getEntity(entityName);
+            return entityService.getEntity(entityId);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    @DeleteMapping("/deleteEntry/{entityName}")
-    public ResponseEntity<?> deleteEntity(@PathVariable String entityName) {
-        return entityService.deleteEntity(entityName);
+    @DeleteMapping("/deleteEntry/{entityId}")
+    public ResponseEntity<?> deleteEntity(@PathVariable int entityId) {
+        return entityService.deleteEntity(entityId);
     }
 
     @DeleteMapping("/deleteEntries")
@@ -46,10 +46,10 @@ public class EntityController {
         return entityService.deleteEntities();
     }
 
-    @PutMapping("/modifyEntry/{entityName}")
-    public ResponseEntity<?> updateEntity(@Valid @RequestBody EntityDto entityDto, @PathVariable String entityName) {
+    @PutMapping("/modifyEntry/{entityId}")
+    public ResponseEntity<?> updateEntity(@Valid @RequestBody EntityDto entityDto, @PathVariable int entityId) {
         try {
-            return entityService.updateEntity(entityName, entityDto);
+            return entityService.updateEntity(entityId, entityDto);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

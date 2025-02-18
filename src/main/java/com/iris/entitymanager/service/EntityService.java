@@ -25,28 +25,27 @@ public class EntityService {
 
     //create new entity entry - done
     @Transactional
-    public ResponseEntity<?> createNewEntity(@Valid EntityDto EntityDto) {
+    public ResponseEntity<?> createNewEntity(@Valid EntityDto entityDto) {
         try {
             Entityentity entity = new Entityentity();
 
-            entity.setEntityName(EntityDto.getEntityName());
-            entity.setEntityShortName(EntityDto.getEntityShortName());
-            entity.setEntityCode(EntityDto.getEntityCode());
-            entity.setIfscCode(EntityDto.getEntityCode());
-            entity.setCompTypeId(EntityDto.getCompTypeId());
-            entity.setCategoryId(EntityDto.getCategoryId());
-            entity.setSubCategoryId(EntityDto.getSubCategoryId());
-            entity.setEntityEmailId(EntityDto.getEntityEmailId());
+            entity.setEntityName(entityDto.getEntityName());
+            entity.setEntityShortName(entityDto.getEntityShortName());
+            entity.setEntityCode(entityDto.getEntityCode());
+            entity.setIfscCode(entityDto.getEntityCode());
+            entity.setCategoryId(entityDto.getCategoryId());
+            entity.setSubCategoryId(entityDto.getSubCategoryId());
+            entity.setEntityEmailId(entityDto.getEntityEmailId());
             entity.setIsActive(true);
-            entity.setCreatedBy(EntityDto.getCreatedBy());
+            entity.setCreatedBy(entityDto.getCreatedBy());
             entity.setCreatedOn(new Date());
-            entity.setLastModifiedBy(EntityDto.getLastModifiedBy());
+            entity.setLastModifiedBy(entityDto.getLastModifiedBy());
             entity.setLastModifiedOn(new Date());
-            entity.setEntityPhoneNo(EntityDto.getEntityPhoneNo());
+            entity.setEntityPhoneNo(entityDto.getEntityPhoneNo());
             entity.setUpdatedOn(new Date());
-            entity.setEntityNameBil(EntityDto.getEntityName());
-            entity.setEntityShortNameBil(EntityDto.getEntityShortName());
-            entity.setBankType(EntityDto.getBankType());
+            entity.setEntityNameBil(entityDto.getEntityName());
+            entity.setEntityShortNameBil(entityDto.getEntityShortName());
+            entity.setBankType(entityDto.getBankType());
 
             entityRepository.save(entity);
         } catch (Exception e) {
@@ -71,7 +70,6 @@ public class EntityService {
             entityDto.setEntityName(entity.getEntityName());
             entityDto.setEntityShortName(entity.getEntityShortName());
             entityDto.setEntityCode(entity.getEntityCode());
-            entityDto.setCompTypeId(entity.getCompTypeId());
             entityDto.setCategoryId(entity.getCategoryId());
             entityDto.setSubCategoryId(entity.getSubCategoryId());
             entityDto.setEntityEmailId(entity.getEntityEmailId());
@@ -85,8 +83,8 @@ public class EntityService {
         return EntityDtos;
     }
 
-    public ResponseEntity<?> getEntity(String entityName) throws Exception {
-        Optional<Entityentity> entityInDb = entityRepository.findByEntityName(entityName);
+    public ResponseEntity<?> getEntity(int entityId) throws Exception {
+        Optional<Entityentity> entityInDb = entityRepository.findById(entityId);
         if (entityInDb.isEmpty()) {
             throw new GlobalException("E404");
         }
@@ -104,7 +102,6 @@ public class EntityService {
         entityDto.setEntityName(entity.getEntityName());
         entityDto.setEntityShortName(entity.getEntityShortName());
         entityDto.setEntityCode(entity.getEntityCode());
-        entityDto.setCompTypeId(entity.getCompTypeId());
         entityDto.setCategoryId(entity.getCategoryId());
         entityDto.setSubCategoryId(entity.getSubCategoryId());
         entityDto.setEntityEmailId(entity.getEntityEmailId());
@@ -117,8 +114,8 @@ public class EntityService {
 
     //delete entity-done
     @Transactional
-    public ResponseEntity<?> deleteEntity(String entityName) {
-        Optional<Entityentity> entity = entityRepository.findByEntityName(entityName);
+    public ResponseEntity<?> deleteEntity(int entityId) {
+        Optional<Entityentity> entity = entityRepository.findById(entityId);
         if (entity.isEmpty()) {
             throw new GlobalException("E404");
         }
@@ -139,8 +136,8 @@ public class EntityService {
 
     //update entity
     @Transactional
-    public ResponseEntity<?> updateEntity(String entityName,@Valid EntityDto entityDto) throws Exception{
-        Optional<Entityentity> entity = entityRepository.findByEntityName(entityName);
+    public ResponseEntity<?> updateEntity(int entityId,@Valid EntityDto entityDto) throws Exception{
+        Optional<Entityentity> entity = entityRepository.findById(entityId);
 
         if (entity.isEmpty()) {
             throw new GlobalException("E404");
@@ -151,7 +148,6 @@ public class EntityService {
         entityInDb.setEntityShortName(entityDto.getEntityShortName());
         entityInDb.setEntityCode(entityDto.getEntityCode());
         entityInDb.setIfscCode(entityDto.getEntityCode());
-        entityInDb.setCompTypeId(entityDto.getCompTypeId());
         entityInDb.setCategoryId(entityDto.getCategoryId());
         entityInDb.setSubCategoryId(entityDto.getSubCategoryId());
         entityInDb.setEntityEmailId(entityDto.getEntityEmailId());
