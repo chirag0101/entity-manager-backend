@@ -62,7 +62,7 @@ public class EntityService {
             throw new GlobalException("No Users Found!");
         }
 
-        List<EntityDto> EntityDtos = new ArrayList<>();
+        List<EntityDto> entityDtos = new ArrayList<>();
 
         for (Entityentity entity : entitiesList) {
             EntityDto entityDto = new EntityDto();
@@ -78,12 +78,12 @@ public class EntityService {
             entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
             entityDto.setBankType(entity.getBankType());
 
-            EntityDtos.add(entityDto);
+            entityDtos.add(entityDto);
         }
-        return EntityDtos;
+        return entityDtos;
     }
 
-    public ResponseEntity<?> getEntity(int entityId) throws Exception {
+    public ResponseEntity<?> getEntity(int entityId) throws GlobalException {
         Optional<Entityentity> entityInDb = entityRepository.findById(entityId);
         if (entityInDb.isEmpty()) {
             throw new GlobalException("E404");
@@ -136,7 +136,7 @@ public class EntityService {
 
     //update entity
     @Transactional
-    public ResponseEntity<?> updateEntity(int entityId,@Valid EntityDto entityDto) throws Exception{
+    public ResponseEntity<?> updateEntity(int entityId, @Valid EntityDto entityDto) throws GlobalException {
         Optional<Entityentity> entity = entityRepository.findById(entityId);
 
         if (entity.isEmpty()) {
