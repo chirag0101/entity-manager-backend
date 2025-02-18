@@ -3,8 +3,11 @@ package com.iris.entitymanager.service;
 import com.iris.entitymanager.dto.EntityDto;
 import com.iris.entitymanager.entity.Entityentity;
 import com.iris.entitymanager.dto.ApiResponse;
+import com.iris.entitymanager.entity.Errorentity;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.repository.EntityRepository;
+import com.iris.entitymanager.repository.ErrorRepository;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,16 +16,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.parser.Entity;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EntityService {
 
     @Autowired
     private EntityRepository entityRepository;
+
+    @Autowired
+    private ErrorRepository errorRepository;
 
     //create new entity entry - done
     @Transactional
@@ -60,7 +63,7 @@ public class EntityService {
         List<Entityentity> entitiesList = entityRepository.findAll();
 
         if (entitiesList.isEmpty()) {
-            throw new GlobalException("No Users Found!");
+            throw new GlobalException("E005");
         }
 
         List<EntityDto> entityDtos = new ArrayList<>();
@@ -152,7 +155,7 @@ public class EntityService {
             }
 
         } catch (Exception e) {
-            throw new GlobalException("Unable to Delete Entities!");
+            throw new GlobalException("E006");
         }
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
     }
