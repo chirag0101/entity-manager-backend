@@ -27,7 +27,7 @@ public class Entityentity {
     private String ifscCode;
 
     @Column(name = "COMP_TYPE_ID")
-    private int comTypeId;
+    private int compTypeId;
 
     @Column(name = "CATEGORY_ID")
     private int categoryId;
@@ -72,13 +72,13 @@ public class Entityentity {
 
     }
 
-    public Entityentity(Integer id, String entityName, String entityShortName, String entityCode, int comTypeId, int categoryId, int subCategoryId, String entityEmailId, boolean isActive, int createdBy, Date createdOn, int lastModifiedBy, Date lastModifiedOn, String entityPhoneNo, Date updatedOn, int bankType) {
+    public Entityentity(Integer id, String entityName, String entityShortName, String entityCode, int compTypeId, int categoryId, int subCategoryId, String entityEmailId, boolean isActive, int createdBy, Date createdOn, int lastModifiedBy, Date lastModifiedOn, String entityPhoneNo, Date updatedOn, int bankType) {
         this.id = id;
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
         this.ifscCode = entityCode;
-        this.comTypeId = comTypeId;
+        this.compTypeId = compTypeId;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
         this.entityEmailId = entityEmailId;
@@ -134,12 +134,12 @@ public class Entityentity {
         this.ifscCode = ifscCode;
     }
 
-    public int getComTypeId() {
-        return comTypeId;
+    public int getCompTypeId() {
+        return compTypeId;
     }
 
-    public void setComTypeId(int comTypeId) {
-        this.comTypeId = comTypeId;
+    public void setCompTypeId(int comTypeId) {
+        this.compTypeId = comTypeId;
     }
 
     public int getCategoryId() {

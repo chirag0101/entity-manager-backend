@@ -5,6 +5,7 @@ import com.iris.entitymanager.entity.Entityentity;
 import com.iris.entitymanager.dto.ApiResponse;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.repository.EntityRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class EntityService {
 
     //create new entity entry - done
     @Transactional
-    public ResponseEntity<?> createNewEntity(EntityDto EntityDto) {
+    public ResponseEntity<?> createNewEntity(@Valid EntityDto EntityDto) {
         try {
             Entityentity entity = new Entityentity();
 
@@ -32,7 +33,7 @@ public class EntityService {
             entity.setEntityShortName(EntityDto.getEntityShortName());
             entity.setEntityCode(EntityDto.getEntityCode());
             entity.setIfscCode(EntityDto.getEntityCode());
-            entity.setComTypeId(EntityDto.getComTypeId());
+            entity.setCompTypeId(EntityDto.getCompTypeId());
             entity.setCategoryId(EntityDto.getCategoryId());
             entity.setSubCategoryId(EntityDto.getSubCategoryId());
             entity.setEntityEmailId(EntityDto.getEntityEmailId());
@@ -70,7 +71,7 @@ public class EntityService {
             entityDto.setEntityName(entity.getEntityName());
             entityDto.setEntityShortName(entity.getEntityShortName());
             entityDto.setEntityCode(entity.getEntityCode());
-            entityDto.setComTypeId(entity.getComTypeId());
+            entityDto.setCompTypeId(entity.getCompTypeId());
             entityDto.setCategoryId(entity.getCategoryId());
             entityDto.setSubCategoryId(entity.getSubCategoryId());
             entityDto.setEntityEmailId(entity.getEntityEmailId());
@@ -103,7 +104,7 @@ public class EntityService {
         entityDto.setEntityName(entity.getEntityName());
         entityDto.setEntityShortName(entity.getEntityShortName());
         entityDto.setEntityCode(entity.getEntityCode());
-        entityDto.setComTypeId(entity.getComTypeId());
+        entityDto.setCompTypeId(entity.getCompTypeId());
         entityDto.setCategoryId(entity.getCategoryId());
         entityDto.setSubCategoryId(entity.getSubCategoryId());
         entityDto.setEntityEmailId(entity.getEntityEmailId());
@@ -138,7 +139,7 @@ public class EntityService {
 
     //update entity
     @Transactional
-    public ResponseEntity<?> updateEntity(String entityName, EntityDto entityDto) throws Exception{
+    public ResponseEntity<?> updateEntity(String entityName,@Valid EntityDto entityDto) throws Exception{
         Optional<Entityentity> entity = entityRepository.findByEntityName(entityName);
 
         if (entity.isEmpty()) {
@@ -150,7 +151,7 @@ public class EntityService {
         entityInDb.setEntityShortName(entityDto.getEntityShortName());
         entityInDb.setEntityCode(entityDto.getEntityCode());
         entityInDb.setIfscCode(entityDto.getEntityCode());
-        entityInDb.setComTypeId(entityDto.getComTypeId());
+        entityInDb.setCompTypeId(entityDto.getCompTypeId());
         entityInDb.setCategoryId(entityDto.getCategoryId());
         entityInDb.setSubCategoryId(entityDto.getSubCategoryId());
         entityInDb.setEntityEmailId(entityDto.getEntityEmailId());
