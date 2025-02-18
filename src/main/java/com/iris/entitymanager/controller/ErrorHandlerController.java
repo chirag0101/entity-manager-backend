@@ -19,7 +19,7 @@ public class ErrorHandlerController {
 
         errorResponse.setStatus(false);
 
-        errorLoader.error.forEach(
+        errorLoader.errors.forEach(
                 (k, v) -> {
                     if (e.getMessage().contains(k)) {
                         errorResponse.setStatusCode(k);
