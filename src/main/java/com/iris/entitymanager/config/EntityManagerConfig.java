@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import java.net.http.HttpRequest;
+
 @Configuration
 public class EntityManagerConfig {
     @Bean
@@ -18,4 +20,9 @@ public class EntityManagerConfig {
 
         return new InMemoryUserDetailsManager(chirag);
     }
+
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpRequest http){
+//
+//    }
 }

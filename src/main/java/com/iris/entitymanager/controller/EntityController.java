@@ -21,10 +21,6 @@ public class EntityController {
     private EntityService entityService;
 
     private static final Logger logger = LogManager.getLogger(EntityController.class);
-//    @GetMapping("/log")
-//    public void logExample(){
-//        logger.trace("something");
-//    }
 
     @PostMapping("/addEntity")
     public ResponseEntity<?> createEntity(@Valid @RequestBody EntityDto EntityDto) {
@@ -60,15 +56,6 @@ public class EntityController {
         try {
             return entityService.updateEntity(entityId, entityDto);
         } catch (RuntimeException e) {
-            throw new GlobalException(e.getMessage());
-        }
-    }
-
-    @PostMapping(value = "/newEntry")
-    public ResponseEntity<?> addEntry(@RequestBody EntityDto entityDto){
-        try{
-            return entityService.createNewEntity(entityDto);
-        }catch(Exception e){
             throw new GlobalException(e.getMessage());
         }
     }
