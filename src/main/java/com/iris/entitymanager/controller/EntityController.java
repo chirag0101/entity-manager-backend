@@ -1,6 +1,5 @@
 package com.iris.entitymanager.controller;
 
-import com.iris.entitymanager.dto.ApiResponse;
 import com.iris.entitymanager.dto.EntityDto;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.service.EntityService;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 //done: validations checking!
 
@@ -62,6 +60,15 @@ public class EntityController {
         try {
             return entityService.updateEntity(entityId, entityDto);
         } catch (RuntimeException e) {
+            throw new GlobalException(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/newEntry")
+    public ResponseEntity<?> addEntry(@RequestBody EntityDto entityDto){
+        try{
+            return entityService.createNewEntity(entityDto);
+        }catch(Exception e){
             throw new GlobalException(e.getMessage());
         }
     }

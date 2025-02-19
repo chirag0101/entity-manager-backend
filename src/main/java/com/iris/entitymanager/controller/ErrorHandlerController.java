@@ -22,13 +22,13 @@ public class ErrorHandlerController {
 
         System.out.println("Exception: " + e.getMessage());
 
-            errorLoader.errors.forEach((k, v) -> {
-                        if (e.getMessage().contains(k)) {
-                            errorResponse.setStatusCode(k);
-                            errorResponse.setStatusMessage(v);
-                        }
+        errorLoader.errors.forEach((k, v) -> {
+                    if (e.getMessage().contains(k)) {
+                        errorResponse.setStatusCode(k);
+                        errorResponse.setStatusMessage(v);
                     }
-            );
+                }
+        );
         errorResponse.setResponse(null);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
