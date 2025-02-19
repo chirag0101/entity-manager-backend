@@ -1,5 +1,6 @@
 package com.iris.entitymanager.service;
 
+import com.iris.entitymanager.controller.EntityController;
 import com.iris.entitymanager.dto.EntityDto;
 import com.iris.entitymanager.entity.Entityentity;
 import com.iris.entitymanager.dto.ApiResponse;
@@ -9,6 +10,8 @@ import com.iris.entitymanager.repository.EntityRepository;
 import com.iris.entitymanager.repository.ErrorRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,7 @@ public class EntityService {
     @Autowired
     private ErrorRepository errorRepository;
 
+    Logger logger= LogManager.getLogger(EntityController.class);
     //create new entity entry - done
     @Transactional
     public ResponseEntity<?> createNewEntity(@Valid EntityDto entityDto) {
@@ -162,8 +166,9 @@ public class EntityService {
 
     //update entity
     @Transactional
-    public ResponseEntity<?> updateEntity(int entityId, @Valid EntityDto entityDto) throws GlobalException {
+    public ResponseEntity<?> updateEntity(Integer entityId, EntityDto entityDto) throws GlobalException {
         Optional<Entityentity> entity = entityRepository.findById(entityId);
+        logger.trace(entity);
 
         if (entity.isEmpty()) {
             throw new GlobalException("E404");

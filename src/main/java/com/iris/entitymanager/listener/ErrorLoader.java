@@ -22,7 +22,6 @@ public class ErrorLoader implements ApplicationListener<ContextRefreshedEvent> {
         List<Errorentity> errorList = errorRepository.findAll();
 
         for (Errorentity errorEntity : errorList) {
-//            System.out.println(errorEntity.getErrorCode()+" : "+errorEntity.getErrorMessage());
             errors.put(errorEntity.getErrorCode(), errorEntity.getErrorMessage());
         }
     }
