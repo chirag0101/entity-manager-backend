@@ -16,7 +16,7 @@ public class EntityDto {
 
     //  @NotEmpty(message = "Entity Code can't be empty")
     @NotEmpty(message = "E003")
-    @Pattern(regexp = "^[a-zA-Z0-9.&\\s]{4,24}$", message = "P003!")    //change
+    @Pattern(regexp = "^[a-zA-Z0-9.&\\s]{4,24}$", message = "P003")    //change
     private String entityCode;
 
     @NotNull(message = "N002")

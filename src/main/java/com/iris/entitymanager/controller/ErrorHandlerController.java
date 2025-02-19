@@ -20,15 +20,22 @@ public class ErrorHandlerController {
 
         errorResponse.setStatus(false);
 
-        System.out.println("Exception: "+e.getMessage());
+        System.out.println("Exception: " + e.getMessage());
 
-        errorLoader.errors.forEach((k, v) -> {
-                    if (e.getMessage().contains(k)) {
-                        errorResponse.setStatusCode(k);
-                        errorResponse.setStatusMessage(v);
+        String invalidValue = e.getMessage();
+
+        if (!invalidValue.matches("-?\\d+")) {
+            errorResponse.setStatusCode("P012");
+            errorResponse.setStatusMessage(errorLoader.errors.get("P012"));
+        } else {
+            errorLoader.errors.forEach((k, v) -> {
+                        if (e.getMessage().contains(k)) {
+                            errorResponse.setStatusCode(k);
+                            errorResponse.setStatusMessage(v);
+                        }
                     }
-                }
-        );
+            );
+        }
 
         errorResponse.setResponse(null);
 
@@ -36,11 +43,13 @@ public class ErrorHandlerController {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<ApiResponse> handleArgumentTypeMismatchException(RuntimeException e) {
+    public ResponseEntity<ApiResponse> handleArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         ApiResponse errorResponse = new ApiResponse();
         errorResponse.setStatus(false);
+
         errorResponse.setStatusCode("E404");  // Bad Request
         errorResponse.setStatusMessage(errorLoader.errors.get("E404"));
+
         errorResponse.setResponse(null);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
