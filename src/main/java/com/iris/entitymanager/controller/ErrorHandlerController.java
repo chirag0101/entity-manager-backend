@@ -22,12 +22,6 @@ public class ErrorHandlerController {
 
         System.out.println("Exception: " + e.getMessage());
 
-        String invalidValue = e.getMessage();
-
-        if (!invalidValue.matches("-?\\d+")) {
-            errorResponse.setStatusCode("P012");
-            errorResponse.setStatusMessage(errorLoader.errors.get("P012"));
-        } else {
             errorLoader.errors.forEach((k, v) -> {
                         if (e.getMessage().contains(k)) {
                             errorResponse.setStatusCode(k);
@@ -35,8 +29,6 @@ public class ErrorHandlerController {
                         }
                     }
             );
-        }
-
         errorResponse.setResponse(null);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
