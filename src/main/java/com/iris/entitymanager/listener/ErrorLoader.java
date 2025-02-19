@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//to load data about the error_keys and their messages from DB
 @Component
 public class ErrorLoader implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
@@ -19,8 +20,10 @@ public class ErrorLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+
         List<Errorentity> errorList = errorRepository.findAll();
 
+        //Storing keys:values in map
         for (Errorentity errorEntity : errorList) {
             errors.put(errorEntity.getErrorCode(), errorEntity.getErrorMessage());
         }

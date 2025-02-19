@@ -4,11 +4,9 @@ import com.iris.entitymanager.controller.EntityController;
 import com.iris.entitymanager.dto.EntityDto;
 import com.iris.entitymanager.entity.Entityentity;
 import com.iris.entitymanager.dto.ApiResponse;
-import com.iris.entitymanager.entity.Errorentity;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.repository.EntityRepository;
 import com.iris.entitymanager.repository.ErrorRepository;
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,8 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.parser.Entity;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EntityService {
@@ -30,7 +30,8 @@ public class EntityService {
     @Autowired
     private ErrorRepository errorRepository;
 
-    Logger logger= LogManager.getLogger(EntityController.class);
+    Logger logger = LogManager.getLogger(EntityController.class);
+
     //create new entity entry - done
     @Transactional
     public ResponseEntity<?> createNewEntity(@Valid EntityDto entityDto) {
@@ -73,7 +74,7 @@ public class EntityService {
         List<EntityDto> entityDtos = new ArrayList<>();
 
         for (Entityentity entity : entitiesList) {
-            if(entity.getIsActive()){
+            if (entity.getIsActive()) {
                 EntityDto entityDto = new EntityDto();
 
                 entityDto.setEntityName(entity.getEntityName());
@@ -101,7 +102,7 @@ public class EntityService {
         }
 
         Entityentity entity = entityInDb.get();
-        if(entity.getIsActive()){
+        if (entity.getIsActive()) {
             EntityDto entityDto = getEntityDto(entity);
             return new ResponseEntity<>(new ApiResponse(entityDto), HttpStatus.OK);
         }
@@ -134,13 +135,11 @@ public class EntityService {
             throw new GlobalException("E404");
         }
 
-//        entityRepository.set(entity.get());
+        Entityentity entityInDb = entity.get();
 
-        Entityentity entityInDb=entity.get();
-
-        if(entityInDb.getIsActive()){
+        if (entityInDb.getIsActive()) {
             entityInDb.setIsActive(false);
-        }else{
+        } else {
             throw new GlobalException("E004");
         }
 
@@ -152,9 +151,9 @@ public class EntityService {
     public ResponseEntity<?> deleteEntities() {
         try {
 //            entityRepository.deleteAll();
-            List<Entityentity> entities=entityRepository.findAll();
+            List<Entityentity> entities = entityRepository.findAll();
 
-            for(Entityentity entity:entities){
+            for (Entityentity entity : entities) {
                 entity.setIsActive(false);
             }
 

@@ -1,7 +1,6 @@
 package com.iris.entitymanager.controller;
 
 import com.iris.entitymanager.dto.ApiResponse;
-import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.listener.ErrorLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

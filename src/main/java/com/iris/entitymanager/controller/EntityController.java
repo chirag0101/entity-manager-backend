@@ -61,10 +61,8 @@ public class EntityController {
     public ResponseEntity<?> updateEntity(@Valid @RequestBody EntityDto entityDto, @PathVariable("entityId") Integer entityId) {
         try {
             return entityService.updateEntity(entityId, entityDto);
-        } catch (MethodArgumentTypeMismatchException e) {
-            throw new GlobalException(e.getMessage());
         } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new GlobalException(e.getMessage());
         }
     }
 }
