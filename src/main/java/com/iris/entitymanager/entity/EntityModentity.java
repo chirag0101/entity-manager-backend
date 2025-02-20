@@ -8,15 +8,13 @@ import java.util.Date;
 @Table(name = "TBL_ENTITY_MOD")
 public class EntityModentity {
     //    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "ENTITY_MOD_ID")
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity_mod_seq")
-    @SequenceGenerator(name = "entity_mod_seq", sequenceName = "SEQ_ENTITY_MOD_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENC)
     @Column(name = "ENTITY_MOD_ID")
     private int entityModId;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
+    //    @ManyToOne(cascade = CascadeType.ALL)
     @ManyToOne
     @JoinColumn(name = "ENTITY_ID_FK", referencedColumnName = "ENTITY_ID")
     private Entityentity entityIdFk;

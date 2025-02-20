@@ -157,10 +157,15 @@ public class EntityService {
         Optional<Entityentity> entityOptional = entityRepository.findById(entityId);
 
         if (entityOptional.isEmpty()) {
-            throw new GlobalException("Entity not found");
+            throw new GlobalException("E404");
         }
 
         Entityentity entityInDb = entityOptional.get();
+
+        if (!(entityInDb.getIsActive())) {
+            throw new GlobalException("E404");
+        }
+
 
         //checking if bank name has changed
         if (!entityInDb.getEntityName().equals(entityDto.getEntityName())) {
@@ -173,8 +178,9 @@ public class EntityService {
             entityModentity.setEntityIdFk(entityInDb);
             entityModentity.setLastModifiedByFk(entityInDb);
             entityModentity.setLastModifiedOn(new Date());
-            entityModentity.setPrevDataJson(entityInDb.toString());
-//            entityModentity.setPrevDataJson(previousDataJson);
+            //entityModentity.setPrevDataJson(entityInDb.toString());
+
+            entityModentity.setPrevDataJson(previousDataJson);
 
             entityModRepository.save(entityModentity);
 
@@ -219,31 +225,32 @@ public class EntityService {
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
     }
 
+    //method for converting object data json
     private String preparePreviousDataJson(Entityentity entityInDb) {
 
-        Map<String, Object> previousData = new HashMap<>();
-        previousData.put("entityId", entityInDb.getEntityName());
-        previousData.put("entityName", entityInDb.getEntityName());
-        previousData.put("entityShortName", entityInDb.getEntityShortName());
-        previousData.put("entityCode", entityInDb.getEntityCode());
-        previousData.put("ifscCode", entityInDb.getIfscCode());
-        previousData.put("categoryId", entityInDb.getCategoryId());
-        previousData.put("subCategoryId", entityInDb.getSubCategoryId());
-        previousData.put("createdBy", entityInDb.getCreatedBy());
-        previousData.put("lastModifiedBy", entityInDb.getLastModifiedBy());
-        previousData.put("lastModifiedOn", entityInDb.getLastModifiedOn());
-        previousData.put("phoneNo", entityInDb.getEntityPhoneNo());
-        previousData.put("updatedOn", entityInDb.getUpdatedOn());
-        previousData.put("entityNameBil", entityInDb.getEntityNameBil());
-        previousData.put("entityShortNameBil", entityInDb.getEntityShortNameBil());
-        previousData.put("entityBankType", entityInDb.getBankType());
-
-        // Convert the map to JSON (you can use any JSON library like Jackson)
+//        Map<String, Object> previousData = new HashMap<>();
+//        previousData.put("entityId", entityInDb.getEntityName());
+//        previousData.put("entityName", entityInDb.getEntityName());
+//        previousData.put("entityShortName", entityInDb.getEntityShortName());
+//        previousData.put("entityCode", entityInDb.getEntityCode());
+//        previousData.put("ifscCode", entityInDb.getIfscCode());
+//        previousData.put("categoryId", entityInDb.getCategoryId());
+//        previousData.put("subCategoryId", entityInDb.getSubCategoryId());
+//        previousData.put("createdBy", entityInDb.getCreatedBy());
+//        previousData.put("lastModifiedBy", entityInDb.getLastModifiedBy());
+//        previousData.put("lastModifiedOn", entityInDb.getLastModifiedOn());
+//        previousData.put("phoneNo", entityInDb.getEntityPhoneNo());
+//        previousData.put("updatedOn", entityInDb.getUpdatedOn());
+//        previousData.put("entityNameBil", entityInDb.getEntityNameBil());
+//        previousData.put("entityShortNameBil", entityInDb.getEntityShortNameBil());
+//        previousData.put("entityBankType", entityInDb.getBankType());
+//
+        // Convert the map to JSON
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.writeValueAsString(previousData);
+            return objectMapper.writeValueAsString(entityInDb);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e);
             return "{}";
         }
     }
