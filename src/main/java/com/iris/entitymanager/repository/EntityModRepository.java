@@ -1,10 +1,9 @@
 package com.iris.entitymanager.repository;
 
-import com.iris.entitymanager.entity.Errorentity;
+import com.iris.entitymanager.entity.EntityModentity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ErrorRepository extends JpaRepository<Errorentity,String> {
-//    List<Errorentity> findByErrorCode();
+public interface EntityModRepository extends JpaRepository<EntityModentity, Integer> {
 }

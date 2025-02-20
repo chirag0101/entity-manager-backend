@@ -2,7 +2,9 @@ package com.iris.entitymanager.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "TBL_ENTITY")
@@ -67,6 +69,10 @@ public class Entityentity {
 
     @Column(name = "BANK_TYPE")
     private int bankType;
+
+    // Cascade settings for related child entities (TBL_ENTITY_MOD)
+    @OneToMany(mappedBy = "entityIdFk", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EntityModentity> entityMods = new ArrayList<>();
 
     public Entityentity() {
 
@@ -244,5 +250,39 @@ public class Entityentity {
 
     public void setBankType(int bankType) {
         this.bankType = bankType;
+    }
+
+    public List<EntityModentity> getEntityMods() {
+        return entityMods;
+    }
+
+    public void setEntityMods(List<EntityModentity> entityMods) {
+        this.entityMods = entityMods;
+    }
+
+    @Override
+    public String toString() {
+        return "Entityentity{" +
+                "id=" + id +
+                ", entityName='" + entityName + '\'' +
+                ", entityShortName='" + entityShortName + '\'' +
+                ", entityCode='" + entityCode + '\'' +
+                ", ifscCode='" + ifscCode + '\'' +
+                ", compTypeId=" + compTypeId +
+                ", categoryId=" + categoryId +
+                ", subCategoryId=" + subCategoryId +
+                ", entityEmailId='" + entityEmailId + '\'' +
+                ", isActive=" + isActive +
+                ", createdBy=" + createdBy +
+                ", createdOn=" + createdOn +
+                ", lastModifiedBy=" + lastModifiedBy +
+                ", lastModifiedOn=" + lastModifiedOn +
+                ", entityPhoneNo='" + entityPhoneNo + '\'' +
+                ", updatedOn=" + updatedOn +
+                ", entityNameBil='" + entityNameBil + '\'' +
+                ", entityShortNameBil='" + entityShortNameBil + '\'' +
+                ", bankType=" + bankType +
+                ", entityMods=" + entityMods +
+                '}';
     }
 }

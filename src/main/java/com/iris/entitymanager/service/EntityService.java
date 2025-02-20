@@ -1,10 +1,14 @@
 package com.iris.entitymanager.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iris.entitymanager.controller.EntityController;
 import com.iris.entitymanager.dto.EntityDto;
+import com.iris.entitymanager.entity.EntityModentity;
 import com.iris.entitymanager.entity.Entityentity;
 import com.iris.entitymanager.dto.ApiResponse;
 import com.iris.entitymanager.exceptions.GlobalException;
+import com.iris.entitymanager.repository.EntityModRepository;
 import com.iris.entitymanager.repository.EntityRepository;
 import com.iris.entitymanager.repository.ErrorRepository;
 import jakarta.validation.Valid;
@@ -16,10 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EntityService {
@@ -29,6 +30,9 @@ public class EntityService {
 
     @Autowired
     private ErrorRepository errorRepository;
+
+    @Autowired
+    private EntityModRepository entityModRepository;
 
     Logger logger = LogManager.getLogger(EntityController.class);
 
@@ -147,40 +151,86 @@ public class EntityService {
     }
 
     //update entity
+
     @Transactional
     public ResponseEntity<?> updateEntity(Integer entityId, EntityDto entityDto) throws GlobalException {
-        Optional<Entityentity> entity = entityRepository.findById(entityId);
+        // Find the entity from the database
+        Optional<Entityentity> entityOptional = entityRepository.findById(entityId);
 
-        if (entity.isEmpty()) {
-            throw new GlobalException("E404");
+        if (entityOptional.isEmpty()) {
+            throw new GlobalException("Entity not found");
         }
 
-        Entityentity entityInDb = entity.get();
+        Entityentity entityInDb = entityOptional.get();
 
-        if (!(entityInDb.getEntityName().equals(entityDto.getEntityName()))) {
+        // Check if the entity name has changed
+        if (!entityInDb.getEntityName().equals(entityDto.getEntityName())) {
 
+            // Prepare the previous data in JSON format
+            String previousDataJson = preparePreviousDataJson(entityInDb);
+
+            // Save the previous data in the EntityMod table
+            EntityModentity entityModentity = new EntityModentity();
+            entityModentity.setEntityIdFk(entityInDb);  // Set the parent entity
+            entityModentity.setLastModifiedByFk(entityInDb);  // Set who modified
+            entityModentity.setLastModifiedOn(new Date());  // Set the current timestamp
+            entityModentity.setPrevDataJson(previousDataJson);  // Store previous data as JSON
+
+            // Save the modification entry
+            entityModRepository.save(entityModentity);
+
+            // Now update the entity with the new values
+            entityInDb.setEntityName(entityDto.getEntityName());
+            entityInDb.setEntityShortName(entityDto.getEntityShortName());
+            entityInDb.setEntityCode(entityDto.getEntityCode());
+            entityInDb.setIfscCode(entityDto.getEntityCode());
+            entityInDb.setCategoryId(entityDto.getCategoryId());
+            entityInDb.setSubCategoryId(entityDto.getSubCategoryId());
+            entityInDb.setEntityEmailId(entityDto.getEntityEmailId());
+            entityInDb.setCreatedBy(entityDto.getCreatedBy());
+            entityInDb.setLastModifiedBy(entityDto.getLastModifiedBy());
+            entityInDb.setLastModifiedOn(new Date());
+            entityInDb.setEntityPhoneNo(entityDto.getEntityPhoneNo());
+            entityInDb.setUpdatedOn(new Date());
+            entityInDb.setEntityNameBil(entityDto.getEntityName());
+            entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
+            entityInDb.setBankType(entityDto.getBankType());
+
+            // Save the updated entity
+            entityRepository.save(entityInDb);
         }
 
-        entityInDb.setEntityName(entityDto.getEntityName());
-        entityInDb.setEntityShortName(entityDto.getEntityShortName());
-        entityInDb.setEntityCode(entityDto.getEntityCode());
-        entityInDb.setIfscCode(entityDto.getEntityCode());
-        entityInDb.setCategoryId(entityDto.getCategoryId());
-        entityInDb.setSubCategoryId(entityDto.getSubCategoryId());
-        entityInDb.setEntityEmailId(entityDto.getEntityEmailId());
-        entityInDb.setCreatedBy(entityDto.getCreatedBy());
-        entityInDb.setLastModifiedBy(entityDto.getLastModifiedBy());
-        entityInDb.setLastModifiedOn(new Date());
-        entityInDb.setEntityPhoneNo(entityDto.getEntityPhoneNo());
-        entityInDb.setUpdatedOn(new Date());
-        entityInDb.setEntityNameBil(entityDto.getEntityName());
-        entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
-        entityInDb.setBankType(entityDto.getBankType());
-
-        logger.trace(entity);
-
-        entityRepository.save(entityInDb);
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
+    }
+
+    // Utility method to prepare previous data in JSON format
+    private String preparePreviousDataJson(Entityentity entityInDb) {
+        // You can include the fields you want to track in the JSON
+        Map<String, Object> previousData = new HashMap<>();
+        previousData.put("entityId", entityInDb.getEntityName());
+        previousData.put("entityName", entityInDb.getEntityName());
+        previousData.put("entityShortName", entityInDb.getEntityShortName());
+        previousData.put("entityCode", entityInDb.getEntityCode());
+        previousData.put("ifscCode", entityInDb.getIfscCode());
+        previousData.put("categoryId", entityInDb.getCategoryId());
+        previousData.put("subCategoryId", entityInDb.getSubCategoryId());
+        previousData.put("createdBy", entityInDb.getCreatedBy());
+        previousData.put("lastModifiedBy", entityInDb.getLastModifiedBy());
+        previousData.put("lastModifiedOn", entityInDb.getLastModifiedOn());
+        previousData.put("phoneNo", entityInDb.getEntityPhoneNo());
+        previousData.put("updatedOn", entityInDb.getUpdatedOn());
+        previousData.put("entityNameBil", entityInDb.getEntityNameBil());
+        previousData.put("entityShortNameBil", entityInDb.getEntityShortNameBil());
+        previousData.put("entityBankType", entityInDb.getBankType());
+
+        // Convert the map to JSON (you can use any JSON library like Jackson)
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(previousData);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "{}";  // Return an empty JSON object in case of error
+        }
     }
 
     //method to get EntityDto from an entity
