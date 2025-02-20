@@ -132,9 +132,7 @@ public class Entityentity {
         this.entityCode = entityCode;
     }
 
-    public String getIfscCode() {
-        return ifscCode;
-    }
+    public String getIfscCode() {return ifscCode;}
 
     public void setIfscCode(String ifscCode) {
         this.ifscCode = ifscCode;
@@ -176,9 +174,7 @@ public class Entityentity {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
+    public void setIsActive(boolean isActive) {this.isActive = isActive;}
 
     public int getCreatedBy() {
         return createdBy;
@@ -252,17 +248,13 @@ public class Entityentity {
         this.bankType = bankType;
     }
 
-    public List<EntityModentity> getEntityMods() {
-        return entityMods;
-    }
+    public List<EntityModentity> getEntityMods() {return entityMods;}
 
-    public void setEntityMods(List<EntityModentity> entityMods) {
-        this.entityMods = entityMods;
-    }
+    public void setEntityMods(List<EntityModentity> entityMods) {this.entityMods = entityMods;}
 
     @Override
     public String toString() {
-        return "Entityentity{" +
+        return "{" +
                 "id=" + id +
                 ", entityName='" + entityName + '\'' +
                 ", entityShortName='" + entityShortName + '\'' +
@@ -282,7 +274,6 @@ public class Entityentity {
                 ", entityNameBil='" + entityNameBil + '\'' +
                 ", entityShortNameBil='" + entityShortNameBil + '\'' +
                 ", bankType=" + bankType +
-                ", entityMods=" + entityMods +
                 '}';
     }
 }

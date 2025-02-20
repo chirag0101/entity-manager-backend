@@ -154,7 +154,6 @@ public class EntityService {
 
     @Transactional
     public ResponseEntity<?> updateEntity(Integer entityId, EntityDto entityDto) throws GlobalException {
-        // Find the entity from the database
         Optional<Entityentity> entityOptional = entityRepository.findById(entityId);
 
         if (entityOptional.isEmpty()) {
@@ -163,23 +162,23 @@ public class EntityService {
 
         Entityentity entityInDb = entityOptional.get();
 
-        // Check if the entity name has changed
+        //checking if bank name has changed
         if (!entityInDb.getEntityName().equals(entityDto.getEntityName())) {
 
-            // Prepare the previous data in JSON format
+            // processing previous data as Json
             String previousDataJson = preparePreviousDataJson(entityInDb);
 
-            // Save the previous data in the EntityMod table
+            // Saving the previous data in the EntityMod table
             EntityModentity entityModentity = new EntityModentity();
-            entityModentity.setEntityIdFk(entityInDb);  // Set the parent entity
-            entityModentity.setLastModifiedByFk(entityInDb);  // Set who modified
-            entityModentity.setLastModifiedOn(new Date());  // Set the current timestamp
-            entityModentity.setPrevDataJson(previousDataJson);  // Store previous data as JSON
+            entityModentity.setEntityIdFk(entityInDb);
+            entityModentity.setLastModifiedByFk(entityInDb);
+            entityModentity.setLastModifiedOn(new Date());
+            entityModentity.setPrevDataJson(entityInDb.toString());
+//            entityModentity.setPrevDataJson(previousDataJson);
 
-            // Save the modification entry
             entityModRepository.save(entityModentity);
 
-            // Now update the entity with the new values
+            //updating new updates in Entity Table
             entityInDb.setEntityName(entityDto.getEntityName());
             entityInDb.setEntityShortName(entityDto.getEntityShortName());
             entityInDb.setEntityCode(entityDto.getEntityCode());
@@ -196,16 +195,32 @@ public class EntityService {
             entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
             entityInDb.setBankType(entityDto.getBankType());
 
-            // Save the updated entity
+            entityRepository.save(entityInDb);
+        } else {
+            //updating new updates in Entity Table
+            entityInDb.setEntityShortName(entityDto.getEntityShortName());
+            entityInDb.setEntityCode(entityDto.getEntityCode());
+            entityInDb.setIfscCode(entityDto.getEntityCode());
+            entityInDb.setCategoryId(entityDto.getCategoryId());
+            entityInDb.setSubCategoryId(entityDto.getSubCategoryId());
+            entityInDb.setEntityEmailId(entityDto.getEntityEmailId());
+            entityInDb.setCreatedBy(entityDto.getCreatedBy());
+            entityInDb.setLastModifiedBy(entityDto.getLastModifiedBy());
+            entityInDb.setLastModifiedOn(new Date());
+            entityInDb.setEntityPhoneNo(entityDto.getEntityPhoneNo());
+            entityInDb.setUpdatedOn(new Date());
+            entityInDb.setEntityNameBil(entityDto.getEntityName());
+            entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
+            entityInDb.setBankType(entityDto.getBankType());
+
             entityRepository.save(entityInDb);
         }
 
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
     }
 
-    // Utility method to prepare previous data in JSON format
     private String preparePreviousDataJson(Entityentity entityInDb) {
-        // You can include the fields you want to track in the JSON
+
         Map<String, Object> previousData = new HashMap<>();
         previousData.put("entityId", entityInDb.getEntityName());
         previousData.put("entityName", entityInDb.getEntityName());
@@ -229,7 +244,7 @@ public class EntityService {
             return objectMapper.writeValueAsString(previousData);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            return "{}";  // Return an empty JSON object in case of error
+            return "{}";
         }
     }
 
