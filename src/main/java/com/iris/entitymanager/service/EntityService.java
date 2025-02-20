@@ -110,23 +110,6 @@ public class EntityService {
         throw new GlobalException("E404");
     }
 
-    //method to get EntityDto from an entity
-    private static EntityDto getEntityDto(Entityentity entity) {
-        EntityDto entityDto = new EntityDto();
-
-        entityDto.setEntityName(entity.getEntityName());
-        entityDto.setEntityShortName(entity.getEntityShortName());
-        entityDto.setEntityCode(entity.getEntityCode());
-        entityDto.setCategoryId(entity.getCategoryId());
-        entityDto.setSubCategoryId(entity.getSubCategoryId());
-        entityDto.setEntityEmailId(entity.getEntityEmailId());
-        entityDto.setCreatedBy(entity.getCreatedBy());
-        entityDto.setLastModifiedBy(entity.getLastModifiedBy());
-        entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
-        entityDto.setBankType(entity.getBankType());
-        return entityDto;
-    }
-
     //delete entity-done
     @Transactional
     public ResponseEntity<?> deleteEntity(int entityId) {
@@ -167,13 +150,17 @@ public class EntityService {
     @Transactional
     public ResponseEntity<?> updateEntity(Integer entityId, EntityDto entityDto) throws GlobalException {
         Optional<Entityentity> entity = entityRepository.findById(entityId);
-        logger.trace(entity);
 
         if (entity.isEmpty()) {
             throw new GlobalException("E404");
         }
 
         Entityentity entityInDb = entity.get();
+
+        if (!(entityInDb.getEntityName().equals(entityDto.getEntityName()))) {
+
+        }
+
         entityInDb.setEntityName(entityDto.getEntityName());
         entityInDb.setEntityShortName(entityDto.getEntityShortName());
         entityInDb.setEntityCode(entityDto.getEntityCode());
@@ -190,7 +177,26 @@ public class EntityService {
         entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
         entityInDb.setBankType(entityDto.getBankType());
 
+        logger.trace(entity);
+
         entityRepository.save(entityInDb);
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
+    }
+
+    //method to get EntityDto from an entity
+    private EntityDto getEntityDto(Entityentity entity) {
+        EntityDto entityDto = new EntityDto();
+
+        entityDto.setEntityName(entity.getEntityName());
+        entityDto.setEntityShortName(entity.getEntityShortName());
+        entityDto.setEntityCode(entity.getEntityCode());
+        entityDto.setCategoryId(entity.getCategoryId());
+        entityDto.setSubCategoryId(entity.getSubCategoryId());
+        entityDto.setEntityEmailId(entity.getEntityEmailId());
+        entityDto.setCreatedBy(entity.getCreatedBy());
+        entityDto.setLastModifiedBy(entity.getLastModifiedBy());
+        entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
+        entityDto.setBankType(entity.getBankType());
+        return entityDto;
     }
 }
