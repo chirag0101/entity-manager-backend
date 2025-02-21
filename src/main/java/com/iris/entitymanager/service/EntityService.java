@@ -41,6 +41,12 @@ public class EntityService {
     @Transactional
     public ResponseEntity<?> createNewEntity(@Valid EntityDto entityDto) {
         try {
+            Optional<Entityentity> entityIndB = entityRepository.findByEntityName(entityDto.getEntityName());
+
+            if (entityIndB.isPresent()) {
+                throw new GlobalException("E302");
+            }
+
             Entityentity entity = new Entityentity();
 
             entity.setEntityName(entityDto.getEntityName());
@@ -53,8 +59,8 @@ public class EntityService {
             entity.setIsActive(true);
             entity.setCreatedBy(entityDto.getCreatedBy());
             entity.setCreatedOn(new Date());
-            entity.setLastModifiedBy(entityDto.getLastModifiedBy());
-            entity.setLastModifiedOn(new Date());
+            entity.setLastModifiedBy(null);
+            entity.setLastModifiedOn(null);
             entity.setEntityPhoneNo(entityDto.getEntityPhoneNo());
             entity.setUpdatedOn(new Date());
             entity.setEntityNameBil(entityDto.getEntityName());
@@ -167,9 +173,18 @@ public class EntityService {
             throw new GlobalException("E404");
         }
 
-
         //checking if bank name has changed
-        if (!(entityInDb.getEntityName().equals(entityDto.getEntityName()))) {
+        if (!(entityInDb.getEntityName().equals(entityDto.getEntityName()))
+                || !(entityInDb.getEntityShortName().equals(entityDto.getEntityShortName()))
+                || !(entityInDb.getEntityCode().equals(entityDto.getEntityCode()))
+                || !(entityInDb.getCategoryId() == entityDto.getCategoryId())
+                || !(entityInDb.getSubCategoryId() == (entityDto.getSubCategoryId()))
+                || !(entityInDb.getEntityEmailId().equals(entityDto.getEntityEmailId()))
+                || !(entityInDb.getCreatedBy() == (entityDto.getCreatedBy()))
+                || !(entityInDb.getLastModifiedBy().equals(entityDto.getLastModifiedBy()))
+                || !(entityInDb.getEntityPhoneNo().equals(entityDto.getEntityPhoneNo()))
+                || !(entityInDb.getBankType() == (entityDto.getBankType()))
+        ) {
 
             // processing previous data as Json
             String previousDataJson = preparePreviousDataJson(entityInDb);
@@ -177,13 +192,9 @@ public class EntityService {
             // Saving the previous data in the EntityMod table
             EntityModentity entityModentity = new EntityModentity();
             entityModentity.setEntityIdFk(entityInDb);
-            entityModentity.setLastModifiedByFk(entityInDb.getLastModifiedBy());
-            entityModentity.setLastModifiedOn(new Date());
+
             //entityModentity.setPrevDataJson(entityInDb.toString());
 
-            entityModentity.setPrevDataJson(previousDataJson);
-
-            entityModRepository.save(entityModentity);
 
             //updating new updates in Entity Table
             entityInDb.setEntityName(entityDto.getEntityName());
@@ -201,28 +212,33 @@ public class EntityService {
             entityInDb.setEntityNameBil(entityDto.getEntityName());
             entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
             entityInDb.setBankType(entityDto.getBankType());
-//            entityInDb.getEntityMods().add(entityModentity);
 
-            entityRepository.save(entityInDb);
-        } else {
-            //updating new updates in Entity Table
-            entityInDb.setEntityShortName(entityDto.getEntityShortName());
-            entityInDb.setEntityCode(entityDto.getEntityCode());
-            entityInDb.setIfscCode(entityDto.getEntityCode());
-            entityInDb.setCategoryId(entityDto.getCategoryId());
-            entityInDb.setSubCategoryId(entityDto.getSubCategoryId());
-            entityInDb.setEntityEmailId(entityDto.getEntityEmailId());
-            entityInDb.setCreatedBy(entityDto.getCreatedBy());
-            entityInDb.setLastModifiedBy(entityDto.getLastModifiedBy());
-            entityInDb.setLastModifiedOn(new Date());
-            entityInDb.setEntityPhoneNo(entityDto.getEntityPhoneNo());
-            entityInDb.setUpdatedOn(new Date());
-            entityInDb.setEntityNameBil(entityDto.getEntityName());
-            entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
-            entityInDb.setBankType(entityDto.getBankType());
+            entityModentity.setLastModifiedByFk(entityInDb.getLastModifiedBy());
+            entityModentity.setLastModifiedOn(entityInDb.getLastModifiedOn());
+            entityModentity.setPrevDataJson(previousDataJson);
+            entityModRepository.save(entityModentity);
 
             entityRepository.save(entityInDb);
         }
+//        else {
+//            //updating new updates in Entity Table
+//            entityInDb.setEntityShortName(entityDto.getEntityShortName());
+//            entityInDb.setEntityCode(entityDto.getEntityCode());
+//            entityInDb.setIfscCode(entityDto.getEntityCode());
+//            entityInDb.setCategoryId(entityDto.getCategoryId());
+//            entityInDb.setSubCategoryId(entityDto.getSubCategoryId());
+//            entityInDb.setEntityEmailId(entityDto.getEntityEmailId());
+//            entityInDb.setCreatedBy(entityDto.getCreatedBy());
+//            entityInDb.setLastModifiedBy(entityDto.getLastModifiedBy());
+//            entityInDb.setLastModifiedOn(new Date());
+//            entityInDb.setEntityPhoneNo(entityDto.getEntityPhoneNo());
+//            entityInDb.setUpdatedOn(new Date());
+//            entityInDb.setEntityNameBil(entityDto.getEntityName());
+//            entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
+//            entityInDb.setBankType(entityDto.getBankType());
+//
+//            entityRepository.save(entityInDb);
+//        }
 
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
     }

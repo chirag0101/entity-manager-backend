@@ -48,9 +48,10 @@ public class Entityentity {
 
     @Column(name = "LAST_MODIFIED_BY")
     @JsonIgnore //to ignore lastModifiedBy while converting object to json for storing in TBL_ENTITY_MOD
-    private int lastModifiedBy;
+    private Integer lastModifiedBy;
 
     @Column(name = "LAST_MODIFIED_ON")
+    @JsonIgnore
     private Date lastModifiedOn;
 
     @Column(name = "ENTITY_PHONE_NO")
@@ -186,11 +187,11 @@ public class Entityentity {
         this.createdOn = createdOn;
     }
 
-    public int getLastModifiedBy() {
+    public Integer getLastModifiedBy() {
         return lastModifiedBy;
     }
 
-    public void setLastModifiedBy(int lastModifiedBy) {
+    public void setLastModifiedBy(Integer lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
     }
 

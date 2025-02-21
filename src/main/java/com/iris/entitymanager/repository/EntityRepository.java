@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface EntityRepository extends JpaRepository<Entityentity, Integer> {
     Optional<Entityentity> findById(int id);
+    Optional<Entityentity> findByEntityName(String entityName);
 }

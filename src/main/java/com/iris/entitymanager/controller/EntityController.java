@@ -51,7 +51,7 @@ public class EntityController {
         return entityService.deleteEntities();
     }
 
-    @PutMapping("/modifyEntity/{entityId}")
+    @PostMapping("/modifyEntity/{entityId}")
     public ResponseEntity<?> updateEntity(@Valid @RequestBody EntityDto entityDto, @PathVariable("entityId") Integer entityId) {
         try {
             return entityService.updateEntity(entityId, entityDto);

@@ -10,7 +10,6 @@ public class EntityModentity {
 
     @Id
     @Column(name = "ENTITY_MOD_ID")
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity_mod_seq")
     @SequenceGenerator(name = "entity_mod_seq", sequenceName = "SEQ_ENTITY_MOD_ID", allocationSize = 1)
     private int entityModId;
@@ -20,10 +19,7 @@ public class EntityModentity {
     private Entityentity entityIdFk;
 
     @Column(name = "LAST_MODIFIED_BY_FK")
-    private int lastModifiedByFk;
-//    @ManyToOne
-//    @JoinColumn(name="LAST_MODIFIED_BY_FK")
-//    private Entityentity lastModifiedByFk;
+    private Integer lastModifiedByFk;
 
     @Column(name = "LAST_MODIFIED_ON")
     private Date lastModifiedOn;
@@ -36,7 +32,7 @@ public class EntityModentity {
 
     }
 
-    public EntityModentity(int entityModId, Entityentity entityIdFk, int lastModifiedByFk, Date lastModifiedOn, String prevDataJson) {
+    public EntityModentity(int entityModId, Entityentity entityIdFk, Integer lastModifiedByFk, Date lastModifiedOn, String prevDataJson) {
         this.entityModId = entityModId;
         this.entityIdFk = entityIdFk;
         this.lastModifiedByFk = lastModifiedByFk;
@@ -60,21 +56,13 @@ public class EntityModentity {
         this.entityIdFk = entityIdFk;
     }
 
-    public int getLastModifiedByFk() {
+    public Integer getLastModifiedByFk() {
         return lastModifiedByFk;
     }
 
-    public void setLastModifiedByFk(int lastModifiedByFk) {
+    public void setLastModifiedByFk(Integer lastModifiedByFk) {
         this.lastModifiedByFk = lastModifiedByFk;
     }
-
-    //    public Entityentity getLastModifiedByFk() {
-//        return lastModifiedByFk;
-//    }
-//
-//    public void setLastModifiedByFk(Entityentity entityLastModifiedByFk) {
-//        this.lastModifiedByFk = entityLastModifiedByFk;
-//    }
 
     public Date getLastModifiedOn() {
         return lastModifiedOn;
