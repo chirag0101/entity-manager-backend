@@ -124,6 +124,7 @@ public class EntityService {
 
     public ResponseEntity<?> getEntityMods(int entityId) throws GlobalException {
 //      query does this for us, saving looping time
+
         List<EntityModentity> entityModentities = entityModRepository.findAll(entityId);
 
         if(entityModentities.isEmpty()){
