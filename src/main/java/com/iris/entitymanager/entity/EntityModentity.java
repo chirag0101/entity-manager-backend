@@ -7,33 +7,36 @@ import java.util.Date;
 @Entity
 @Table(name = "TBL_ENTITY_MOD")
 public class EntityModentity {
-    //    @Id
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENC)
     @Column(name = "ENTITY_MOD_ID")
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity_mod_seq")
+    @SequenceGenerator(name = "entity_mod_seq", sequenceName = "SEQ_ENTITY_MOD_ID", allocationSize = 1)
     private int entityModId;
 
-    //    @ManyToOne(cascade = CascadeType.ALL)
     @ManyToOne
-    @JoinColumn(name = "ENTITY_ID_FK", referencedColumnName = "ENTITY_ID")
+    @JoinColumn(name = "ENTITY_ID_FK")
     private Entityentity entityIdFk;
 
-    @ManyToOne
-    @JoinColumn(name = "LAST_MODIFIED_BY_FK", referencedColumnName = "LAST_MODIFIED_BY")
-    private Entityentity lastModifiedByFk;
+    @Column(name = "LAST_MODIFIED_BY_FK")
+    private int lastModifiedByFk;
+//    @ManyToOne
+//    @JoinColumn(name="LAST_MODIFIED_BY_FK")
+//    private Entityentity lastModifiedByFk;
 
     @Column(name = "LAST_MODIFIED_ON")
     private Date lastModifiedOn;
 
     @Lob
+    @Column(name = "PREV_DATA_JSON")
     private String prevDataJson;
 
     public EntityModentity() {
 
     }
 
-    public EntityModentity(int entityModId, Entityentity entityIdFk, Entityentity lastModifiedByFk, Date lastModifiedOn, String prevDataJson) {
+    public EntityModentity(int entityModId, Entityentity entityIdFk, int lastModifiedByFk, Date lastModifiedOn, String prevDataJson) {
         this.entityModId = entityModId;
         this.entityIdFk = entityIdFk;
         this.lastModifiedByFk = lastModifiedByFk;
@@ -57,13 +60,21 @@ public class EntityModentity {
         this.entityIdFk = entityIdFk;
     }
 
-    public Entityentity getLastModifiedByFk() {
+    public int getLastModifiedByFk() {
         return lastModifiedByFk;
     }
 
-    public void setLastModifiedByFk(Entityentity entityLastModifiedByFk) {
-        this.lastModifiedByFk = entityLastModifiedByFk;
+    public void setLastModifiedByFk(int lastModifiedByFk) {
+        this.lastModifiedByFk = lastModifiedByFk;
     }
+
+    //    public Entityentity getLastModifiedByFk() {
+//        return lastModifiedByFk;
+//    }
+//
+//    public void setLastModifiedByFk(Entityentity entityLastModifiedByFk) {
+//        this.lastModifiedByFk = entityLastModifiedByFk;
+//    }
 
     public Date getLastModifiedOn() {
         return lastModifiedOn;

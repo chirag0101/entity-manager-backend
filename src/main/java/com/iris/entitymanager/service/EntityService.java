@@ -1,6 +1,7 @@
 package com.iris.entitymanager.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iris.entitymanager.controller.EntityController;
 import com.iris.entitymanager.dto.EntityDto;
@@ -168,7 +169,7 @@ public class EntityService {
 
 
         //checking if bank name has changed
-        if (!entityInDb.getEntityName().equals(entityDto.getEntityName())) {
+        if (!(entityInDb.getEntityName().equals(entityDto.getEntityName()))) {
 
             // processing previous data as Json
             String previousDataJson = preparePreviousDataJson(entityInDb);
@@ -176,7 +177,7 @@ public class EntityService {
             // Saving the previous data in the EntityMod table
             EntityModentity entityModentity = new EntityModentity();
             entityModentity.setEntityIdFk(entityInDb);
-            entityModentity.setLastModifiedByFk(entityInDb);
+            entityModentity.setLastModifiedByFk(entityInDb.getLastModifiedBy());
             entityModentity.setLastModifiedOn(new Date());
             //entityModentity.setPrevDataJson(entityInDb.toString());
 
@@ -200,6 +201,7 @@ public class EntityService {
             entityInDb.setEntityNameBil(entityDto.getEntityName());
             entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
             entityInDb.setBankType(entityDto.getBankType());
+//            entityInDb.getEntityMods().add(entityModentity);
 
             entityRepository.save(entityInDb);
         } else {

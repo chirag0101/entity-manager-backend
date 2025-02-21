@@ -1,14 +1,11 @@
 package com.iris.entitymanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "TBL_ENTITY")
-//@SequenceGenerator(name = "my_sequence", sequenceName = "MY_SEQ", allocationSize = 1)
 public class Entityentity {
 
     @Id
@@ -50,6 +47,7 @@ public class Entityentity {
     private Date createdOn;
 
     @Column(name = "LAST_MODIFIED_BY")
+    @JsonIgnore //to ignore lastModifiedBy while converting object to json for storing in TBL_ENTITY_MOD
     private int lastModifiedBy;
 
     @Column(name = "LAST_MODIFIED_ON")
@@ -69,10 +67,6 @@ public class Entityentity {
 
     @Column(name = "BANK_TYPE")
     private int bankType;
-
-    // Cascade settings for related child entities (TBL_ENTITY_MOD)
-    @OneToMany(mappedBy = "entityIdFk", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EntityModentity> entityMods = new ArrayList<>();
 
     public Entityentity() {
 
@@ -248,9 +242,9 @@ public class Entityentity {
         this.bankType = bankType;
     }
 
-    public List<EntityModentity> getEntityMods() {return entityMods;}
-
-    public void setEntityMods(List<EntityModentity> entityMods) {this.entityMods = entityMods;}
+//    public List<EntityModentity> getEntityMods() {return entityMods;}
+//
+//    public void setEntityMods(List<EntityModentity> entityMods) {this.entityMods = entityMods;}
 
     @Override
     public String toString() {

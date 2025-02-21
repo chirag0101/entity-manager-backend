@@ -39,7 +39,6 @@ public class EntityDto {
 
     @NotNull(message = "N005")
     @Min(value = 0, message = "P009")
-    @JsonIgnore
     private int lastModifiedBy;
 
     @Pattern(regexp = "^(\\+\\d{1,4})?\\d{10,15}$", message = "P0010")
