@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EntityModRepository extends JpaRepository<EntityModentity, Integer> {
+//    EntityModentity findByEntityIdFk(Integer entityIdFk);
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Optional;
+
 //done: validations checking!
 
 @RestController
@@ -38,6 +40,15 @@ public class EntityController {
             return entityService.getEntity(entityId);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/viewEntity/viewModifications/{entityId}")
+    public ResponseEntity<?> viewEntityModifications(@PathVariable int entityId){
+        try{
+            return entityService.getEntityMods(entityId);
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
         }
     }
 

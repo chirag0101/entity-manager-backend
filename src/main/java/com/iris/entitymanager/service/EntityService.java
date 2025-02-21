@@ -117,10 +117,25 @@ public class EntityService {
         Entityentity entity = entityInDb.get();
         if (entity.getIsActive()) {
             EntityDto entityDto = getEntityDto(entity);
-            return new ResponseEntity<>(new ApiResponse(entityDto), HttpStatus.OK);
+            List<EntityDto> entityDtoList = new ArrayList<>();
+            entityDtoList.add(entityDto);
+            return new ResponseEntity<>(new ApiResponse(entityDtoList), HttpStatus.OK);
         }
 
         throw new GlobalException("E404");
+    }
+
+    public ResponseEntity<?> getEntityMods(int entityId) throws GlobalException {
+        List<EntityModentity> entityModentities = entityModRepository.findAll();
+        List<EntityModentity> entityModForentityId = new ArrayList<>();
+
+        for (EntityModentity e : entityModentities) {
+            if (e.getEntityIdFk() == (entityId)) {
+                    entityModForentityId.add(e);
+            }
+        }
+
+        return new ResponseEntity<>(new ApiResponse<>(entityModForentityId), HttpStatus.OK);
     }
 
     //delete entity-done

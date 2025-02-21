@@ -1,20 +1,18 @@
 package com.iris.entitymanager.dto;
 
-public class ApiResponse {
+import java.util.List;
+
+public class ApiResponse<T> {
     private boolean status = true;
     private String statusCode = "00";
     private String statusMessage = "Success";
-    private EntityDto response = null;
+    private List<T> response = null;
 
     public ApiResponse() {
     }
 
-    public ApiResponse(EntityDto EntityDto) {
-        this.response = EntityDto;
-    }
-
-    public ApiResponse(String statusCode) {
-        this.statusCode = statusCode;
+    public ApiResponse(List<T> response){
+        this.response=response;
     }
 
     public boolean isStatus() {
@@ -41,11 +39,11 @@ public class ApiResponse {
         this.statusMessage = statusMessage;
     }
 
-    public EntityDto getResponse() {
+    public List<?> getResponse() {
         return response;
     }
 
-    public void setResponse(EntityDto response) {
+    public void setResponse(List<T> response) {
         this.response = response;
     }
 }

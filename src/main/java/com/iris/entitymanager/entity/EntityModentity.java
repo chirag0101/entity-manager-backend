@@ -48,8 +48,8 @@ public class EntityModentity {
         this.entityModId = entityModId;
     }
 
-    public Entityentity getEntityIdFk() {
-        return entityIdFk;
+    public int getEntityIdFk() {
+        return entityIdFk.getId();
     }
 
     public void setEntityIdFk(Entityentity entityIdFk) {
