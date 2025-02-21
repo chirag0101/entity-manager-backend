@@ -6,13 +6,13 @@ public class ApiResponse<T> {
     private boolean status = true;
     private String statusCode = "00";
     private String statusMessage = "Success";
-    private List<T> response = null;
+    private Object response = null;
 
     public ApiResponse() {
     }
 
-    public ApiResponse(List<T> response){
-        this.response=response;
+    public ApiResponse(List<T> response) {
+        this.response = response;
     }
 
     public boolean isStatus() {
@@ -39,11 +39,11 @@ public class ApiResponse<T> {
         this.statusMessage = statusMessage;
     }
 
-    public List<?> getResponse() {
+    public Object getResponse() {
         return response;
     }
 
-    public void setResponse(List<T> response) {
+    public void setResponse(Object response) {
         this.response = response;
     }
 }

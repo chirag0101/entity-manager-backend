@@ -20,10 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EntityService {
@@ -135,6 +132,10 @@ public class EntityService {
             }
         }
 
+        if(entityModForentityId.isEmpty()){
+            throw new GlobalException("E404");
+        }
+
         return new ResponseEntity<>(new ApiResponse<>(entityModForentityId), HttpStatus.OK);
     }
 
@@ -203,7 +204,6 @@ public class EntityService {
                 || !(entityInDb.getBankType() == (entityDto.getBankType()))
         ) {
 
-            // processing previous data as Json
             String previousDataJson = preparePreviousDataJson(entityInDb);
 
             // Saving the previous data in the EntityMod table
@@ -211,7 +211,6 @@ public class EntityService {
             entityModentity.setEntityIdFk(entityInDb);
 
             //entityModentity.setPrevDataJson(entityInDb.toString());
-
 
             //updating new updates in Entity Table
             entityInDb.setEntityName(entityDto.getEntityName());
