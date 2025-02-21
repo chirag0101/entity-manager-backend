@@ -123,20 +123,14 @@ public class EntityService {
     }
 
     public ResponseEntity<?> getEntityMods(int entityId) throws GlobalException {
-        List<EntityModentity> entityModentities = entityModRepository.findAll();
-        List<EntityModentity> entityModForentityId = new ArrayList<>();
+//      query does this for us, saving looping time
+        List<EntityModentity> entityModentities = entityModRepository.findAll(entityId);
 
-        for (EntityModentity e : entityModentities) {
-            if (e.getEntityIdFk() == (entityId)) {
-                    entityModForentityId.add(e);
-            }
-        }
-
-        if(entityModForentityId.isEmpty()){
+        if(entityModentities.isEmpty()){
             throw new GlobalException("E404");
         }
 
-        return new ResponseEntity<>(new ApiResponse<>(entityModForentityId), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(entityModentities), HttpStatus.OK);
     }
 
     //delete entity-done
