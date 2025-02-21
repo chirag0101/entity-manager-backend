@@ -1,7 +1,6 @@
 package com.iris.entitymanager.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iris.entitymanager.controller.EntityController;
 import com.iris.entitymanager.dto.EntityDto;
@@ -21,7 +20,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EntityService {
@@ -220,49 +222,12 @@ public class EntityService {
 
             entityRepository.save(entityInDb);
         }
-//        else {
-//            //updating new updates in Entity Table
-//            entityInDb.setEntityShortName(entityDto.getEntityShortName());
-//            entityInDb.setEntityCode(entityDto.getEntityCode());
-//            entityInDb.setIfscCode(entityDto.getEntityCode());
-//            entityInDb.setCategoryId(entityDto.getCategoryId());
-//            entityInDb.setSubCategoryId(entityDto.getSubCategoryId());
-//            entityInDb.setEntityEmailId(entityDto.getEntityEmailId());
-//            entityInDb.setCreatedBy(entityDto.getCreatedBy());
-//            entityInDb.setLastModifiedBy(entityDto.getLastModifiedBy());
-//            entityInDb.setLastModifiedOn(new Date());
-//            entityInDb.setEntityPhoneNo(entityDto.getEntityPhoneNo());
-//            entityInDb.setUpdatedOn(new Date());
-//            entityInDb.setEntityNameBil(entityDto.getEntityName());
-//            entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
-//            entityInDb.setBankType(entityDto.getBankType());
-//
-//            entityRepository.save(entityInDb);
-//        }
-
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
     }
 
     //method for converting object data json
     private String preparePreviousDataJson(Entityentity entityInDb) {
 
-//        Map<String, Object> previousData = new HashMap<>();
-//        previousData.put("entityId", entityInDb.getEntityName());
-//        previousData.put("entityName", entityInDb.getEntityName());
-//        previousData.put("entityShortName", entityInDb.getEntityShortName());
-//        previousData.put("entityCode", entityInDb.getEntityCode());
-//        previousData.put("ifscCode", entityInDb.getIfscCode());
-//        previousData.put("categoryId", entityInDb.getCategoryId());
-//        previousData.put("subCategoryId", entityInDb.getSubCategoryId());
-//        previousData.put("createdBy", entityInDb.getCreatedBy());
-//        previousData.put("lastModifiedBy", entityInDb.getLastModifiedBy());
-//        previousData.put("lastModifiedOn", entityInDb.getLastModifiedOn());
-//        previousData.put("phoneNo", entityInDb.getEntityPhoneNo());
-//        previousData.put("updatedOn", entityInDb.getUpdatedOn());
-//        previousData.put("entityNameBil", entityInDb.getEntityNameBil());
-//        previousData.put("entityShortNameBil", entityInDb.getEntityShortNameBil());
-//        previousData.put("entityBankType", entityInDb.getBankType());
-//
         // Convert the map to JSON
         ObjectMapper objectMapper = new ObjectMapper();
         try {
