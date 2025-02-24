@@ -1,9 +1,9 @@
 package com.iris.entitymanager.controller;
 
 import com.iris.entitymanager.dto.EntityDto;
+import com.iris.entitymanager.entity.LangEntity;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.service.EntityService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 //done: validations checking!
 
@@ -58,6 +56,16 @@ public class EntityController {
         return entityService.getLabelEntries(langId);
     }
 
+    @GetMapping("/getLabelMods/{labelId}")
+    public ResponseEntity<?> getLabelMods(@PathVariable Integer labelId){
+        return entityService.getLabelMod(labelId);
+    }
+
+    @GetMapping("/getActiveLang")
+    public ResponseEntity<?> getActiveLang(){
+        return entityService.getAllActiveLang();
+    }
+
     @DeleteMapping("/deleteEntity/{entityId}")
     public ResponseEntity<?> deleteEntity(@PathVariable int entityId) {
         return entityService.deleteEntity(entityId);
@@ -76,4 +84,15 @@ public class EntityController {
             throw new GlobalException(e.getMessage());
         }
     }
+
+    @PostMapping("/addNewLang")
+    public ResponseEntity<?> newLang(@RequestBody LangEntity langEntity){
+        return entityService.createNewLang(langEntity);
+    }
+
+    @PostMapping("/updateLang/{langId}")
+    public ResponseEntity<?> updateLang(@PathVariable Integer langId,@RequestBody LangEntity langEntity){
+        return entityService.modifyLang(langId,langEntity);
+    }
+
 }

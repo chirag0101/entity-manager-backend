@@ -1,5 +1,6 @@
 package com.iris.entitymanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -7,12 +8,11 @@ import jakarta.persistence.*;
 public class LangEntity {
     @Id
     @Column(name = "LANG_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity_mod_seq")
-    @SequenceGenerator(name = "entity_mod_seq", sequenceName = "SEQ_ENTITY_MOD_ID", allocationSize = 1)
     private Integer langId;
 
     @Column(name = "IS_ACTIVE")
-    private Boolean isActive;
+    @JsonIgnore
+    private boolean isActive=true;
 
     @Column(name = "LANG")
     private String language;
@@ -21,7 +21,7 @@ public class LangEntity {
 
     }
 
-    public LangEntity(Integer langId, Integer labelIdFk, Boolean isActive, String language) {
+    public LangEntity(Integer langId, Integer labelIdFk, boolean isActive, String language) {
         this.langId = langId;
         this.isActive = isActive;
         this.language = language;
@@ -35,11 +35,11 @@ public class LangEntity {
         this.langId = langId;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
     }
 
