@@ -4,13 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iris.entitymanager.controller.EntityController;
 import com.iris.entitymanager.dto.EntityDto;
+import com.iris.entitymanager.entity.EntityLabelModentity;
+import com.iris.entitymanager.entity.EntityLabelentity;
 import com.iris.entitymanager.entity.EntityModentity;
 import com.iris.entitymanager.entity.Entityentity;
 import com.iris.entitymanager.dto.ApiResponse;
 import com.iris.entitymanager.exceptions.GlobalException;
-import com.iris.entitymanager.repository.EntityModRepository;
-import com.iris.entitymanager.repository.EntityRepository;
-import com.iris.entitymanager.repository.ErrorRepository;
+import com.iris.entitymanager.repository.*;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,6 +33,12 @@ public class EntityService {
 
     @Autowired
     private EntityModRepository entityModRepository;
+
+    @Autowired
+    private LabelRepository labelRepository;
+
+    @Autowired
+    private LabelModRepository labelModRepository;
 
     Logger logger = LogManager.getLogger(EntityController.class);
 
@@ -65,6 +71,15 @@ public class EntityService {
             entity.setEntityNameBil(entityDto.getEntityName());
             entity.setEntityShortNameBil(entityDto.getEntityShortName());
             entity.setBankType(entityDto.getBankType());
+            entity.setLabel(entityDto.getLabel());
+
+            //setting up label
+            EntityLabelentity entityLabelentity = new EntityLabelentity();
+            entityLabelentity.setEntityIdFk(entity);
+            entityLabelentity.setLabel(entity.getLabel());
+            entityLabelentity.setLastModifiedOn(null);
+            entityLabelentity.setLastModifiedBy(null);
+            labelRepository.save(entityLabelentity);
 
             entityRepository.save(entity);
         } catch (Exception e) {
@@ -97,6 +112,7 @@ public class EntityService {
                 entityDto.setLastModifiedBy(entity.getLastModifiedBy());
                 entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
                 entityDto.setBankType(entity.getBankType());
+                entityDto.setLabel(entity.getLabel());
 
                 entityDtos.add(entityDto);
             }
@@ -127,7 +143,7 @@ public class EntityService {
 
         List<EntityModentity> entityModentities = entityModRepository.findAll(entityId);
 
-        if(entityModentities.isEmpty()){
+        if (entityModentities.isEmpty()) {
             throw new GlobalException("E404");
         }
 
@@ -197,6 +213,7 @@ public class EntityService {
                 || !(entityInDb.getLastModifiedBy().equals(entityDto.getLastModifiedBy()))
                 || !(entityInDb.getEntityPhoneNo().equals(entityDto.getEntityPhoneNo()))
                 || !(entityInDb.getBankType() == (entityDto.getBankType()))
+                || !(entityInDb.getLabel().equals(entityDto.getLabel()))
         ) {
 
             String previousDataJson = preparePreviousDataJson(entityInDb);
@@ -205,7 +222,30 @@ public class EntityService {
             EntityModentity entityModentity = new EntityModentity();
             entityModentity.setEntityIdFk(entityInDb);
 
-            //entityModentity.setPrevDataJson(entityInDb.toString());
+            if(!(entityInDb.getLabel().equals(entityDto.getLabel()))){
+
+                Optional<EntityLabelentity> entityLabelInDb=labelRepository.findById(entityId);
+                if(entityLabelInDb.isEmpty()){
+                    throw new GlobalException("E404");
+                }
+
+                EntityLabelentity entityLabelentity=entityLabelInDb.get();
+
+                String prevLabelDataJson=preparePreviousDataJson(entityLabelentity);
+
+                EntityLabelModentity entityLabelModentity=new EntityLabelModentity();
+                entityLabelModentity.setEntityLabelIdFk(entityLabelentity);
+                entityLabelModentity.setLastModifiedOn(new Date());
+                entityLabelModentity.setLastModifiedByFk(entityDto.getLastModifiedBy());
+                entityLabelModentity.setPrevDataJson(prevLabelDataJson);
+                labelModRepository.save(entityLabelModentity);
+
+                entityLabelentity.setLabel(entityDto.getLabel());
+                entityLabelentity.setLastModifiedBy(entityDto.getLastModifiedBy());
+                entityLabelentity.setLastModifiedOn(entityLabelModentity.getLastModifiedOn());
+                labelRepository.save(entityLabelentity);
+
+            }
 
             //updating new updates in Entity Table
             entityInDb.setEntityName(entityDto.getEntityName());
@@ -223,6 +263,7 @@ public class EntityService {
             entityInDb.setEntityNameBil(entityDto.getEntityName());
             entityInDb.setEntityShortNameBil(entityDto.getEntityShortName());
             entityInDb.setBankType(entityDto.getBankType());
+            entityInDb.setLabel(entityDto.getLabel());
 
             entityModentity.setLastModifiedByFk(entityInDb.getLastModifiedBy());
             entityModentity.setLastModifiedOn(entityInDb.getLastModifiedOn());
@@ -235,7 +276,7 @@ public class EntityService {
     }
 
     //method for converting object data json
-    private String preparePreviousDataJson(Entityentity entityInDb) {
+    private String preparePreviousDataJson(Object entityInDb) {
 
         // Convert the map to JSON
         ObjectMapper objectMapper = new ObjectMapper();

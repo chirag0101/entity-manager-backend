@@ -45,10 +45,15 @@ public class EntityDto {
     @Min(value = 0, message = "P0011")
     private int bankType;
 
+    @NotEmpty(message = "E007")
+    @Pattern(regexp = "^[a-zA-Z1-9.&\\s]{1,100}$", message = "P013")
+    private String label;
+
+
     public EntityDto() {
     }
 
-    public EntityDto(String entityName, String entityShortName, String entityCode, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType) {
+    public EntityDto(String entityName, String entityShortName, String entityCode, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType, String label) {
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
@@ -59,6 +64,7 @@ public class EntityDto {
         this.lastModifiedBy = lastModifiedBy;
         this.entityPhoneNo = entityPhoneNo;
         this.bankType = bankType;
+        this.label=label;
     }
 
     public String getEntityName() {
@@ -140,29 +146,12 @@ public class EntityDto {
     public void setBankType(int bankType) {
         this.bankType = bankType;
     }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }
-
-
-    /*error codes:
-        notEmpty:
-            E001
-            E002
-            E003
-        pattern:
-            P001
-            P002
-            P003
-            P004
-            P005
-            P006
-            P007
-            P008
-            P009
-        notNull:
-            N001
-            N002
-            N003
-            N004
-            N005
-            N006
-    */

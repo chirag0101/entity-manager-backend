@@ -2,6 +2,7 @@ package com.iris.entitymanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 import java.util.Date;
 
 @Entity
@@ -69,11 +70,14 @@ public class Entityentity {
     @Column(name = "BANK_TYPE")
     private int bankType;
 
+    @Column(name = "LABEL")
+    private String label;
+
     public Entityentity() {
 
     }
 
-    public Entityentity(Integer id, String entityName, String entityShortName, String entityCode, int compTypeId, int categoryId, int subCategoryId, String entityEmailId, boolean isActive, int createdBy, Date createdOn, int lastModifiedBy, Date lastModifiedOn, String entityPhoneNo, Date updatedOn, int bankType) {
+    public Entityentity(Integer id, String entityName, String entityShortName, String label, String entityCode, int compTypeId, int categoryId, int subCategoryId, String entityEmailId, boolean isActive, int createdBy, Date createdOn, int lastModifiedBy, Date lastModifiedOn, String entityPhoneNo, Date updatedOn, int bankType) {
         this.id = id;
         this.entityName = entityName;
         this.entityShortName = entityShortName;
@@ -93,6 +97,7 @@ public class Entityentity {
         this.entityNameBil = entityName;
         this.entityShortNameBil = entityShortName;
         this.bankType = bankType;
+        this.label = label;
     }
 
     public int getId() {
@@ -119,6 +124,14 @@ public class Entityentity {
         this.entityShortName = entityShortName;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        this.isActive = active;
+    }
+
     public String getEntityCode() {
         return entityCode;
     }
@@ -127,7 +140,9 @@ public class Entityentity {
         this.entityCode = entityCode;
     }
 
-    public String getIfscCode() {return ifscCode;}
+    public String getIfscCode() {
+        return ifscCode;
+    }
 
     public void setIfscCode(String ifscCode) {
         this.ifscCode = ifscCode;
@@ -169,7 +184,9 @@ public class Entityentity {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive) {this.isActive = isActive;}
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
 
     public int getCreatedBy() {
         return createdBy;
@@ -241,6 +258,14 @@ public class Entityentity {
 
     public void setBankType(int bankType) {
         this.bankType = bankType;
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
 //    public List<EntityModentity> getEntityMods() {return entityMods;}
