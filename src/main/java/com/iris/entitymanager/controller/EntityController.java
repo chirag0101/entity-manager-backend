@@ -3,6 +3,7 @@ package com.iris.entitymanager.controller;
 import com.iris.entitymanager.dto.EntityDto;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.service.EntityService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Optional;
+import java.util.List;
 
 //done: validations checking!
 
@@ -50,6 +51,11 @@ public class EntityController {
         }catch (Exception e){
             throw new GlobalException(e.getMessage());
         }
+    }
+
+    @GetMapping("/getLangEntries/{langId}")
+    public ResponseEntity<?> getLangEntries(@PathVariable Integer langId){
+        return entityService.getLabelEntries(langId);
     }
 
     @DeleteMapping("/deleteEntity/{entityId}")

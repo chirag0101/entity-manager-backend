@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iris.entitymanager.controller.EntityController;
 import com.iris.entitymanager.dto.EntityDto;
-import com.iris.entitymanager.entity.EntityLabelModentity;
-import com.iris.entitymanager.entity.EntityLabelentity;
-import com.iris.entitymanager.entity.EntityModentity;
-import com.iris.entitymanager.entity.Entityentity;
+import com.iris.entitymanager.entity.*;
 import com.iris.entitymanager.dto.ApiResponse;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.repository.*;
@@ -40,6 +37,9 @@ public class EntityService {
     @Autowired
     private LabelModRepository labelModRepository;
 
+    @Autowired
+    private LangRepository langRepository;
+
     Logger logger = LogManager.getLogger(EntityController.class);
 
     //create new entity entry - done
@@ -71,15 +71,39 @@ public class EntityService {
             entity.setEntityNameBil(entityDto.getEntityName());
             entity.setEntityShortNameBil(entityDto.getEntityShortName());
             entity.setBankType(entityDto.getBankType());
-            entity.setLabel(entityDto.getLabel());
 
-            //setting up label
-            EntityLabelentity entityLabelentity = new EntityLabelentity();
-            entityLabelentity.setEntityIdFk(entity);
-            entityLabelentity.setLabel(entity.getLabel());
-            entityLabelentity.setLastModifiedOn(null);
-            entityLabelentity.setLastModifiedBy(null);
-            labelRepository.save(entityLabelentity);
+            //checking if given label is active or not
+            if (!(langRepository.findByisActive(entityDto.getLabel()))) {
+                throw new GlobalException("Label is inactive!");
+            }else if((langRepository.findByisActive("en")) && (langRepository.findByisActive("hin"))){
+                entity.setLabel(entityDto.getLabel());
+
+                List<LangEntity> lang=langRepository.findAll();
+
+                int length=lang.size();
+                while(length!=0){
+                    //setting up label
+                    EntityLabelentity entityLabelentity = new EntityLabelentity();
+                    entityLabelentity.setEntityIdFk(entity);
+                    entityLabelentity.setLabel(entity.getLabel());
+                    entityLabelentity.setLastModifiedOn(null);
+                    entityLabelentity.setLastModifiedBy(null);
+                    entityLabelentity.setLangIdFk(langRepository.findByLanguage(String.valueOf(lang.get(length-1))));
+                    labelRepository.saveAndFlush(entityLabelentity);
+
+                    length--;
+                }
+            }else{
+                entity.setLabel(entityDto.getLabel());
+                //setting up label
+                EntityLabelentity entityLabelentity = new EntityLabelentity();
+                entityLabelentity.setEntityIdFk(entity);
+                entityLabelentity.setLabel(entity.getLabel());
+                entityLabelentity.setLastModifiedOn(null);
+                entityLabelentity.setLastModifiedBy(null);
+                entityLabelentity.setLangIdFk(langRepository.findByLanguage(entity.getLabel()));
+                labelRepository.save(entityLabelentity);
+            }
 
             entityRepository.save(entity);
         } catch (Exception e) {
@@ -148,6 +172,11 @@ public class EntityService {
         }
 
         return new ResponseEntity<>(new ApiResponse<>(entityModentities), HttpStatus.OK);
+    }
+
+    //get entries based on Lang-id
+    public ResponseEntity<?> getLabelEntries(Integer langId){
+        return new ResponseEntity<>(labelRepository.findBylangIdFk(langId),HttpStatus.OK);
     }
 
     //delete entity-done
@@ -222,18 +251,19 @@ public class EntityService {
             EntityModentity entityModentity = new EntityModentity();
             entityModentity.setEntityIdFk(entityInDb);
 
-            if(!(entityInDb.getLabel().equals(entityDto.getLabel()))){
+            //if label is different than adding mod in label_mod table
+            if (!(entityInDb.getLabel().equals(entityDto.getLabel()))) {
 
-                Optional<EntityLabelentity> entityLabelInDb=labelRepository.findById(entityId);
-                if(entityLabelInDb.isEmpty()){
+                Optional<EntityLabelentity> entityLabelInDb = labelRepository.findById(entityId);
+                if (entityLabelInDb.isEmpty()) {
                     throw new GlobalException("E404");
                 }
 
-                EntityLabelentity entityLabelentity=entityLabelInDb.get();
+                EntityLabelentity entityLabelentity = entityLabelInDb.get();
 
-                String prevLabelDataJson=preparePreviousDataJson(entityLabelentity);
+                String prevLabelDataJson = preparePreviousDataJson(entityLabelentity);
 
-                EntityLabelModentity entityLabelModentity=new EntityLabelModentity();
+                EntityLabelModentity entityLabelModentity = new EntityLabelModentity();
                 entityLabelModentity.setEntityLabelIdFk(entityLabelentity);
                 entityLabelModentity.setLastModifiedOn(new Date());
                 entityLabelModentity.setLastModifiedByFk(entityDto.getLastModifiedBy());
@@ -243,8 +273,14 @@ public class EntityService {
                 entityLabelentity.setLabel(entityDto.getLabel());
                 entityLabelentity.setLastModifiedBy(entityDto.getLastModifiedBy());
                 entityLabelentity.setLastModifiedOn(entityLabelModentity.getLastModifiedOn());
-                labelRepository.save(entityLabelentity);
 
+                //checking if given label is active or not
+                if (!(langRepository.findByisActive(entityDto.getLabel()))) {
+                    throw new GlobalException("Label is inactive!");
+                }
+
+                entityLabelentity.setLangIdFk(langRepository.findByLanguage(entityDto.getLabel()));
+                labelRepository.save(entityLabelentity);
             }
 
             //updating new updates in Entity Table
@@ -304,4 +340,5 @@ public class EntityService {
         entityDto.setBankType(entity.getBankType());
         return entityDto;
     }
+
 }

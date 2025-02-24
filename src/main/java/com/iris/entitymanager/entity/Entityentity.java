@@ -268,10 +268,6 @@ public class Entityentity {
         this.label = label;
     }
 
-//    public List<EntityModentity> getEntityMods() {return entityMods;}
-//
-//    public void setEntityMods(List<EntityModentity> entityMods) {this.entityMods = entityMods;}
-
     @Override
     public String toString() {
         return "{" +

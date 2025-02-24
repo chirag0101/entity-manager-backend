@@ -3,6 +3,7 @@ package com.iris.entitymanager.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "TBL_LANG")
 public class LangEntity {
     @Id
     @Column(name = "LANG_ID")
@@ -20,7 +21,7 @@ public class LangEntity {
 
     }
 
-    public LangEntity(Integer langId, Boolean isActive, String language) {
+    public LangEntity(Integer langId, Integer labelIdFk, Boolean isActive, String language) {
         this.langId = langId;
         this.isActive = isActive;
         this.language = language;

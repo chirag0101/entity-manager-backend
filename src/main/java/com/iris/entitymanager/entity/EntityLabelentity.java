@@ -2,6 +2,8 @@ package com.iris.entitymanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+
 import java.util.Date;
 
 @Entity
@@ -41,6 +43,14 @@ public class EntityLabelentity {
         this.label = label;
         this.lastModifiedBy = lastModifiedBy;
         this.lastModifiedOn = lastModifiedOn;
+        this.langIdFk=langIdFk;
+    }
+
+    public Integer getLangIdFk() {
+        return langIdFk;
+    }
+
+    public void setLangIdFk(Integer langIdFk) {
         this.langIdFk = langIdFk;
     }
 
@@ -82,13 +92,5 @@ public class EntityLabelentity {
 
     public void setLastModifiedOn(Date lastModifiedOn) {
         this.lastModifiedOn = lastModifiedOn;
-    }
-
-    public Integer getLangIdFk() {
-        return langIdFk;
-    }
-
-    public void setLangIdFk(Integer langIdFk) {
-        this.langIdFk = langIdFk;
     }
 }
