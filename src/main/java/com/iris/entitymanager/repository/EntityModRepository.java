@@ -11,4 +11,6 @@ import java.util.List;
 public interface EntityModRepository extends JpaRepository<EntityModentity, Integer> {
     @Query("FROM EntityModentity WHERE entityIdFk.id=?1 ORDER BY lastModifiedOn DESC")
     List<EntityModentity> findAll(int id);
+
+//    List<EntityModentity> findByApiName(String apiName);
 }

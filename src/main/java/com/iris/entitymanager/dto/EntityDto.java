@@ -1,6 +1,5 @@
 package com.iris.entitymanager.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.*;
 
 public class EntityDto {

@@ -15,6 +15,10 @@ public class ApiResponse<T> {
         this.response = response;
     }
 
+    public ApiResponse(Object o){
+        this.response=o;
+    }
+
     public boolean isStatus() {
         return status;
     }

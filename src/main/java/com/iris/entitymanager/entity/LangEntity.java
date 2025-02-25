@@ -12,7 +12,7 @@ public class LangEntity {
 
     @Column(name = "IS_ACTIVE")
     @JsonIgnore
-    private boolean isActive=true;
+    private boolean isActive;
 
     @Column(name = "LANG")
     private String language;

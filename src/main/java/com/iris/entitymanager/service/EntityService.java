@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iris.entitymanager.controller.EntityController;
 import com.iris.entitymanager.dto.EntityDto;
+import com.iris.entitymanager.dto.EntityModDto;
 import com.iris.entitymanager.entity.*;
 import com.iris.entitymanager.dto.ApiResponse;
 import com.iris.entitymanager.exceptions.GlobalException;
@@ -12,11 +13,14 @@ import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.*;
 
 @Service
@@ -40,20 +44,26 @@ public class EntityService {
     @Autowired
     private LangRepository langRepository;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private ApiRepository apiRepository;
+
     Logger logger = LogManager.getLogger(EntityController.class);
 
     //create new entity entry - done
     @Transactional
     public ResponseEntity<?> createNewEntity(@Valid EntityDto entityDto) {
         try {
-            Optional<Entityentity> entityIndB = entityRepository.findByEntityName(entityDto.getEntityName());
-
-            if (entityIndB.isPresent()) {
-                throw new GlobalException("E302");
+            // Check if the entity with the same name already exists
+            Optional<Entityentity> entityInDb = entityRepository.findByEntityName(entityDto.getEntityName());
+            if (entityInDb.isPresent()) {
+                throw new GlobalException("E302"); // Entity already exists
             }
 
+            // Create a new entity from the DTO
             Entityentity entity = new Entityentity();
-
             entity.setEntityName(entityDto.getEntityName());
             entity.setEntityShortName(entityDto.getEntityShortName());
             entity.setEntityCode(entityDto.getEntityCode());
@@ -72,52 +82,60 @@ public class EntityService {
             entity.setEntityShortNameBil(entityDto.getEntityShortName());
             entity.setBankType(entityDto.getBankType());
 
-            //checking if given label is active or not
-            if (!(langRepository.findByisActive(entityDto.getLabel()))) {
-                throw new GlobalException("Language is inactive!");
-            } else if ((langRepository.findByisActive("en")) && (langRepository.findByisActive("hin"))) {
-                entity.setLabel(entityDto.getLabel());
+            // Ensure that LABEL is set before saving the entity
+            if (entityDto.getLabel() == null || entityDto.getLabel().isEmpty()) {
+                throw new GlobalException("Label cannot be null or empty!");
+            }
+            entity.setLabel(entityDto.getLabel());
 
-                List<LangEntity> lang = langRepository.findAll();
+            // Persist the Entityentity first
+            entityRepository.save(entity);
 
-                int length = lang.size();
-                while (length != 0) {
-                    //setting up label
-                    EntityLabelentity entityLabelentity = new EntityLabelentity();
-                    entityLabelentity.setEntityIdFk(entity);
-                    entityLabelentity.setLabel(entity.getLabel());
-                    entityLabelentity.setLastModifiedOn(null);
-                    entityLabelentity.setLastModifiedBy(null);
-                    entityLabelentity.setLangIdFk(langRepository.findByLanguage(String.valueOf(lang.get(length - 1))));
-                    labelRepository.saveAndFlush(entityLabelentity);
+            // Fetch the language entity based on the label (language name)
+            Optional<LangEntity> langEntity = langRepository.findByLanguageName(entityDto.getLabel());
 
-                    length--;
-                }
-            } else {
-                entity.setLabel(entityDto.getLabel());
-                //setting up label
-                EntityLabelentity entityLabelentity = new EntityLabelentity();
-                entityLabelentity.setEntityIdFk(entity);
-                entityLabelentity.setLabel(entity.getLabel());
-                entityLabelentity.setLastModifiedOn(null);
-                entityLabelentity.setLastModifiedBy(null);
-                entityLabelentity.setLangIdFk(langRepository.findByLanguage(entity.getLabel()));
-                labelRepository.save(entityLabelentity);
+            if (!langEntity.isPresent() || !langEntity.get().getIsActive()) {
+                throw new GlobalException("Language is inactive!"); // If language is inactive or not found
             }
 
+            // Set the label if both English and Hindi languages are active
+            List<LangEntity> activeLangEntities = langRepository.findAllisActive();
+            if (activeLangEntities.stream().allMatch(lang -> lang.getIsActive())) {
+                for (LangEntity lang : activeLangEntities) {
+                    EntityLabelentity entityLabel = new EntityLabelentity();
+                    entityLabel.setEntityIdFk(entity); // Ensure the entity is saved first
+                    entityLabel.setLabel(entity.getLabel());
+                    entityLabel.setLastModifiedOn(null);
+                    entityLabel.setLastModifiedBy(null);
+                    entityLabel.setLangIdFk(lang.getLangId());
+                    labelRepository.saveAndFlush(entityLabel);
+                }
+            } else {
+                // If only the given label is active, save it
+                EntityLabelentity entityLabel = new EntityLabelentity();
+                entityLabel.setEntityIdFk(entity); // Ensure the entity is saved first
+                entityLabel.setLabel(entity.getLabel());
+                entityLabel.setLastModifiedOn(null);
+                entityLabel.setLastModifiedBy(null);
+                entityLabel.setLangIdFk(langEntity.get().getLangId());
+                labelRepository.save(entityLabel);
+            }
+
+            // Save the entity (if not already done in the process)
             entityRepository.save(entity);
+
         } catch (Exception e) {
-            throw new GlobalException(e.getMessage());
+            throw new GlobalException(e.getMessage()); // Handle any exceptions
         }
-        return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK); // Return success response
     }
 
     //create new languages
     public ResponseEntity<?> createNewLang(LangEntity langEntity) {
         List<LangEntity> existingLang = langRepository.findAll();
 
-        for(LangEntity l: existingLang){
-            if(l.getLanguage().equals(langEntity.getLanguage())){
+        for (LangEntity l : existingLang) {
+            if (l.getLanguage().equals(langEntity.getLanguage())) {
                 throw new GlobalException("Language Already Exists!");
             }
         }
@@ -158,7 +176,7 @@ public class EntityService {
         return entityDtos;
     }
 
-    public ResponseEntity<?> getEntity(int entityId) throws GlobalException {
+    public EntityDto getEntity(int entityId) throws GlobalException {
         Optional<Entityentity> entityInDb = entityRepository.findById(entityId);
 
         if (entityInDb.isEmpty()) {
@@ -168,15 +186,16 @@ public class EntityService {
         Entityentity entity = entityInDb.get();
         if (entity.getIsActive()) {
             EntityDto entityDto = getEntityDto(entity);
-            List<EntityDto> entityDtoList = new ArrayList<>();
-            entityDtoList.add(entityDto);
-            return new ResponseEntity<>(new ApiResponse(entityDtoList), HttpStatus.OK);
+            return entityDto;
+//            List<EntityDto> entityDtoList = new ArrayList<>();
+//            entityDtoList.add(entityDto);
+//            return new ResponseEntity<>(new ApiResponse(entityDtoList), HttpStatus.OK);
         }
 
         throw new GlobalException("E404");
     }
 
-    public ResponseEntity<?> getEntityMods(int entityId) throws GlobalException {
+    public List<EntityModentity> getEntityMods(int entityId) throws GlobalException {
 //      query does this for us, saving looping time
 
         List<EntityModentity> entityModentities = entityModRepository.findAll(entityId);
@@ -185,7 +204,39 @@ public class EntityService {
             throw new GlobalException("E404");
         }
 
-        return new ResponseEntity<>(new ApiResponse<>(entityModentities), HttpStatus.OK);
+        return entityModentities;
+        // return new ResponseEntity<>(new ApiResponse<>(entityModentities), HttpStatus.OK);
+    }
+
+    //get entry with mods
+    public ResponseEntity<?> getEntityWithMods(Integer entityId) {
+        try {
+            Apientity apientity = apiRepository.findByApiName("viewEntity");
+
+            Apientity apiEntityForMod = apiRepository.findByApiName("viewModifications");
+
+            if (apientity == null) {
+                throw new GlobalException("E404");
+            }
+
+            ResponseEntity<EntityDto> entityDtoResponse = restTemplate.getForEntity(
+                    apientity.getApiUrl() + entityId, EntityDto.class);
+
+            List entityModEntities = restTemplate.getForObject(
+                    apiEntityForMod.getApiUrl() + entityId,
+                    List.class
+            );
+
+            // setting data in the EntityModDto
+            EntityModDto entityModDto = new EntityModDto();
+            entityModDto.setEntityDto(entityDtoResponse.getBody());
+            entityModDto.setEntityModentities(entityModEntities);
+
+            return new ResponseEntity<>(new ApiResponse<>(entityModDto), HttpStatus.OK);
+
+        } catch (GlobalException e) {
+            throw new GlobalException("E404");
+        }
     }
 
     //get entries based on Lang-id
@@ -249,8 +300,8 @@ public class EntityService {
 
         List<LangEntity> existingLangs = langRepository.findAll();
 
-        for(LangEntity l: existingLangs){
-            if(l.getLanguage().equals(langEntity.getLanguage())){
+        for (LangEntity l : existingLangs) {
+            if (l.getLanguage().equals(langEntity.getLanguage())) {
                 throw new GlobalException("Language Already Exists!");
             }
         }
@@ -321,8 +372,10 @@ public class EntityService {
                 entityLabelentity.setLastModifiedBy(entityDto.getLastModifiedBy());
                 entityLabelentity.setLastModifiedOn(entityLabelModentity.getLastModifiedOn());
 
+                Optional<LangEntity> langEntity = langRepository.findByLanguageName(entityDto.getLabel());
+
                 //checking if given label is active or not
-                if (!(langRepository.findByisActive(entityDto.getLabel()))) {
+                if (!(langEntity.get().getIsActive())) {
                     throw new GlobalException("Language is inactive!");
                 }
 
@@ -385,6 +438,7 @@ public class EntityService {
         entityDto.setLastModifiedBy(entity.getLastModifiedBy());
         entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
         entityDto.setBankType(entity.getBankType());
+        entityDto.setLabel(entity.getLabel());
         return entityDto;
     }
 

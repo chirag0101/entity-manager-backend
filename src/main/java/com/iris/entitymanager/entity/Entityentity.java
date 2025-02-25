@@ -270,7 +270,7 @@ public class Entityentity {
 
     @Override
     public String toString() {
-        return "{" +
+        return "Entityentity{" +
                 "id=" + id +
                 ", entityName='" + entityName + '\'' +
                 ", entityShortName='" + entityShortName + '\'' +
@@ -290,6 +290,7 @@ public class Entityentity {
                 ", entityNameBil='" + entityNameBil + '\'' +
                 ", entityShortNameBil='" + entityShortNameBil + '\'' +
                 ", bankType=" + bankType +
+                ", label='" + label + '\'' +
                 '}';
     }
 }
