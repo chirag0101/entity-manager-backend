@@ -81,29 +81,22 @@ public class EntityService {
             entity.setEntityNameBil(entityDto.getEntityName());
             entity.setEntityShortNameBil(entityDto.getEntityShortName());
             entity.setBankType(entityDto.getBankType());
-
-            // Ensure that LABEL is set before saving the entity
-            if (entityDto.getLabel() == null || entityDto.getLabel().isEmpty()) {
-                throw new GlobalException("Label cannot be null or empty!");
-            }
             entity.setLabel(entityDto.getLabel());
 
-            // Persist the Entityentity first
             entityRepository.save(entity);
 
-            // Fetch the language entity based on the label (language name)
+            //checking if the language isActive
             Optional<LangEntity> langEntity = langRepository.findByLanguageName(entityDto.getLabel());
-
             if (!langEntity.isPresent() || !langEntity.get().getIsActive()) {
                 throw new GlobalException("Language is inactive!"); // If language is inactive or not found
             }
 
-            // Set the label if both English and Hindi languages are active
+            //setting if both are active
             List<LangEntity> activeLangEntities = langRepository.findAllisActive();
             if (activeLangEntities.stream().allMatch(lang -> lang.getIsActive())) {
                 for (LangEntity lang : activeLangEntities) {
                     EntityLabelentity entityLabel = new EntityLabelentity();
-                    entityLabel.setEntityIdFk(entity); // Ensure the entity is saved first
+                    entityLabel.setEntityIdFk(entity);
                     entityLabel.setLabel(entity.getLabel());
                     entityLabel.setLastModifiedOn(null);
                     entityLabel.setLastModifiedBy(null);
@@ -113,7 +106,7 @@ public class EntityService {
             } else {
                 // If only the given label is active, save it
                 EntityLabelentity entityLabel = new EntityLabelentity();
-                entityLabel.setEntityIdFk(entity); // Ensure the entity is saved first
+                entityLabel.setEntityIdFk(entity);
                 entityLabel.setLabel(entity.getLabel());
                 entityLabel.setLastModifiedOn(null);
                 entityLabel.setLastModifiedBy(null);
@@ -121,13 +114,12 @@ public class EntityService {
                 labelRepository.save(entityLabel);
             }
 
-            // Save the entity (if not already done in the process)
             entityRepository.save(entity);
 
         } catch (Exception e) {
-            throw new GlobalException(e.getMessage()); // Handle any exceptions
+            throw new GlobalException(e.getMessage());
         }
-        return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK); // Return success response
+        return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
     }
 
     //create new languages

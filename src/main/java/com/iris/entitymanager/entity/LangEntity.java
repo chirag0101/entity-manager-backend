@@ -8,11 +8,13 @@ import jakarta.persistence.*;
 public class LangEntity {
     @Id
     @Column(name = "LANG_ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity_mod_seq")
+    @SequenceGenerator(name = "entity_mod_seq", sequenceName = "SEQ_ENTITY_MOD_ID", allocationSize = 1)
     private Integer langId;
 
     @Column(name = "IS_ACTIVE")
     @JsonIgnore
-    private boolean isActive;
+    private boolean isActive=true;
 
     @Column(name = "LANG")
     private String language;
