@@ -203,26 +203,27 @@ public class EntityService {
     //get entry with mods
     public ResponseEntity<?> getEntityWithMods(Integer entityId) {
         try {
+            EntityModDto entityModDto = new EntityModDto();
+
             Apientity apientity = apiRepository.findByApiName("viewEntity");
 
             Apientity apiEntityForMod = apiRepository.findByApiName("viewModifications");
 
-            if (apientity == null) {
-                throw new GlobalException("E404");
-            }
-
             ResponseEntity<EntityDto> entityDtoResponse = restTemplate.getForEntity(
                     apientity.getApiUrl() + entityId, EntityDto.class);
 
-            List entityModEntities = restTemplate.getForObject(
-                    apiEntityForMod.getApiUrl() + entityId,
-                    List.class
-            );
-
-            // setting data in the EntityModDto
-            EntityModDto entityModDto = new EntityModDto();
             entityModDto.setEntityDto(entityDtoResponse.getBody());
-            entityModDto.setEntityModentities(entityModEntities);
+
+            if((entityDtoResponse.getBody().getLastModifiedBy()!=null)){
+                List entityModEntities = restTemplate.getForObject(
+                        apiEntityForMod.getApiUrl() + entityId,
+                        List.class
+                );
+
+                entityModDto.setEntityModentities(entityModEntities);
+            }else{
+                entityModDto.setEntityModentities(List.of());
+            }
 
             return new ResponseEntity<>(new ApiResponse<>(entityModDto), HttpStatus.OK);
 
@@ -426,8 +427,8 @@ public class EntityService {
         entityDto.setCategoryId(entity.getCategoryId());
         entityDto.setSubCategoryId(entity.getSubCategoryId());
         entityDto.setEntityEmailId(entity.getEntityEmailId());
-        entityDto.setCreatedBy(entity.getCreatedBy());
         entityDto.setLastModifiedBy(entity.getLastModifiedBy());
+        entityDto.setCreatedBy(entity.getCreatedBy());
         entityDto.setEntityPhoneNo(entity.getEntityPhoneNo());
         entityDto.setBankType(entity.getBankType());
         entityDto.setLabel(entity.getLabel());

@@ -35,7 +35,7 @@ public class EntityDto {
 
     @NotNull(message = "N005")
     @Min(value = 0, message = "P009")
-    private int lastModifiedBy;
+    private Integer lastModifiedBy;
 
     @Pattern(regexp = "^(\\+\\d{1,4})?\\d{10,15}$", message = "P0010")
     private String entityPhoneNo;
@@ -52,7 +52,7 @@ public class EntityDto {
     public EntityDto() {
     }
 
-    public EntityDto(String entityName, String entityShortName, String entityCode, int categoryId, int subCategoryId, String entityEmailId, int createdBy, int lastModifiedBy, String entityPhoneNo, int bankType, String label) {
+    public EntityDto(String entityName, String entityShortName, String entityCode, int categoryId, int subCategoryId, String entityEmailId, int createdBy, Integer lastModifiedBy, String entityPhoneNo, int bankType, String label) {
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
@@ -122,11 +122,11 @@ public class EntityDto {
         this.createdBy = createdBy;
     }
 
-    public int getLastModifiedBy() {
+    public Integer getLastModifiedBy() {
         return lastModifiedBy;
     }
 
-    public void setLastModifiedBy(int lastModifiedBy) {
+    public void setLastModifiedBy(Integer lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
     }
 

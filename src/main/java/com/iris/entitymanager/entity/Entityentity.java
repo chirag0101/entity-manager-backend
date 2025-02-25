@@ -205,7 +205,7 @@ public class Entityentity {
     }
 
     public Integer getLastModifiedBy() {
-        return lastModifiedBy;
+        return this.lastModifiedBy;
     }
 
     public void setLastModifiedBy(Integer lastModifiedBy) {
@@ -213,7 +213,7 @@ public class Entityentity {
     }
 
     public Date getLastModifiedOn() {
-        return lastModifiedOn;
+        return this.lastModifiedOn;
     }
 
     public void setLastModifiedOn(Date lastModifiedOn) {
