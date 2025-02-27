@@ -1,6 +1,15 @@
 package com.iris.entitymanager.dto;
 
+import com.iris.entitymanager.config.AESV2;
 import jakarta.validation.constraints.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class EntityDto {
 
@@ -48,11 +57,12 @@ public class EntityDto {
     @Pattern(regexp = "^[a-zA-Z1-9.&\\s]{1,100}$", message = "P013")
     private String label;
 
-
     public EntityDto() {
     }
 
     public EntityDto(String entityName, String entityShortName, String entityCode, int categoryId, int subCategoryId, String entityEmailId, int createdBy, Integer lastModifiedBy, String entityPhoneNo, int bankType, String label) {
+
+
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
@@ -63,15 +73,15 @@ public class EntityDto {
         this.lastModifiedBy = lastModifiedBy;
         this.entityPhoneNo = entityPhoneNo;
         this.bankType = bankType;
-        this.label=label;
+        this.label = label;
     }
 
-    public String getEntityName() {
-        return entityName;
+    public String getEntityName() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        return AESV2.getInstance().decrypt(entityName);
     }
 
-    public void setEntityName(String entityName) {
-        this.entityName = entityName;
+    public void setEntityName(String entityName) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        this.entityName = AESV2.getInstance().encrypt(entityName);
     }
 
     public String getEntityShortName() {

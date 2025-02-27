@@ -2,6 +2,7 @@ package com.iris.entitymanager.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.iris.entitymanager.config.AESV2;
 import com.iris.entitymanager.controller.EntityController;
 import com.iris.entitymanager.dto.EntityDto;
 import com.iris.entitymanager.dto.EntityModDto;
@@ -20,7 +21,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.text.html.parser.Entity;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.*;
 
 @Service
@@ -137,7 +146,7 @@ public class EntityService {
     }
 
     //get entities-done
-    public List<EntityDto> getEntities() {
+    public List<EntityDto> getEntities() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         List<Entityentity> entitiesList = entityRepository.findAll();
 
         if (entitiesList.isEmpty()) {
@@ -168,7 +177,7 @@ public class EntityService {
         return entityDtos;
     }
 
-    public EntityDto getEntity(int entityId) throws GlobalException {
+    public EntityDto getEntity(int entityId) throws GlobalException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         Optional<Entityentity> entityInDb = entityRepository.findById(entityId);
 
         if (entityInDb.isEmpty()) {
@@ -214,14 +223,14 @@ public class EntityService {
 
             entityModDto.setEntityDto(entityDtoResponse.getBody());
 
-            if((entityDtoResponse.getBody().getLastModifiedBy()!=null)){
+            if ((entityDtoResponse.getBody().getLastModifiedBy() != null)) {
                 List entityModEntities = restTemplate.getForObject(
                         apiEntityForMod.getApiUrl() + entityId,
                         List.class
                 );
 
                 entityModDto.setEntityModentities(entityModEntities);
-            }else{
+            } else {
                 entityModDto.setEntityModentities(List.of());
             }
 
@@ -309,7 +318,7 @@ public class EntityService {
     //update entity
 
     @Transactional
-    public ResponseEntity<?> updateEntity(Integer entityId, EntityDto entityDto) throws GlobalException {
+    public ResponseEntity<?> updateEntity(Integer entityId, EntityDto entityDto) throws GlobalException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         Optional<Entityentity> entityOptional = entityRepository.findById(entityId);
 
         if (entityOptional.isEmpty()) {
@@ -418,7 +427,7 @@ public class EntityService {
     }
 
     //method to get EntityDto from an entity
-    private EntityDto getEntityDto(Entityentity entity) {
+    private EntityDto getEntityDto(Entityentity entity) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         EntityDto entityDto = new EntityDto();
 
         entityDto.setEntityName(entity.getEntityName());

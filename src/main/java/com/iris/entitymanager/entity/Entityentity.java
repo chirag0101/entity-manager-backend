@@ -1,8 +1,17 @@
 package com.iris.entitymanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.iris.entitymanager.config.AESV2;
 import jakarta.persistence.*;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 
 @Entity
@@ -108,11 +117,11 @@ public class Entityentity {
         this.id = id;
     }
 
-    public String getEntityName() {
+    public String getEntityName() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         return entityName;
     }
 
-    public void setEntityName(String entityName) {
+    public void setEntityName(String entityName)         {
         this.entityName = entityName;
     }
 
