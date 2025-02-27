@@ -146,7 +146,7 @@ public class EntityService {
     }
 
     //get entities-done
-    public List<EntityDto> getEntities() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+    public List<EntityDto> getEntities() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         List<Entityentity> entitiesList = entityRepository.findAll();
 
         if (entitiesList.isEmpty()) {
@@ -177,7 +177,7 @@ public class EntityService {
         return entityDtos;
     }
 
-    public EntityDto getEntity(int entityId) throws GlobalException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+    public EntityDto getEntity(int entityId) throws GlobalException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         Optional<Entityentity> entityInDb = entityRepository.findById(entityId);
 
         if (entityInDb.isEmpty()) {
@@ -427,7 +427,7 @@ public class EntityService {
     }
 
     //method to get EntityDto from an entity
-    private EntityDto getEntityDto(Entityentity entity) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+    private EntityDto getEntityDto(Entityentity entity) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         EntityDto entityDto = new EntityDto();
 
         entityDto.setEntityName(entity.getEntityName());

@@ -2,6 +2,7 @@ package com.iris.entitymanager.dto;
 
 import com.iris.entitymanager.config.AESV2;
 import jakarta.validation.constraints.*;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -61,8 +62,6 @@ public class EntityDto {
     }
 
     public EntityDto(String entityName, String entityShortName, String entityCode, int categoryId, int subCategoryId, String entityEmailId, int createdBy, Integer lastModifiedBy, String entityPhoneNo, int bankType, String label) {
-
-
         this.entityName = entityName;
         this.entityShortName = entityShortName;
         this.entityCode = entityCode;
