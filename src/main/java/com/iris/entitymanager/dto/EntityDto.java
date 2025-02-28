@@ -76,11 +76,13 @@ public class EntityDto {
     }
 
     public String getEntityName() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        return AESV2.getInstance().decrypt(entityName);
+        return entityName;
+        //return AESV2.getInstance().decrypt(entityName);
     }
 
     public void setEntityName(String entityName) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        this.entityName = AESV2.getInstance().encrypt(entityName);
+        this.entityName=entityName;
+        //this.entityName = AESV2.getInstance().encrypt(entityName);
     }
 
     public String getEntityShortName() {

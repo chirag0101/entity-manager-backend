@@ -48,7 +48,7 @@ public class EntityController {
     }
 
     @GetMapping("/viewEntities")
-    public ResponseEntity<?> viewEntities() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+    public ResponseEntity<?> viewEntities() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         return new ResponseEntity<>(entityService.getEntities(), HttpStatus.OK);
     }
 
