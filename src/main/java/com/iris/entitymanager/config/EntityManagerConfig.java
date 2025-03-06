@@ -8,6 +8,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 public class EntityManagerConfig {
+
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
         UserDetails chirag = User.builder()
@@ -15,7 +16,6 @@ public class EntityManagerConfig {
                 .password("{noop}cs@01")
                 .roles("EMPLOYEE")
                 .build();
-
         return new InMemoryUserDetailsManager(chirag);
     }
 
