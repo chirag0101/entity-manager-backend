@@ -1,18 +1,14 @@
 package com.iris.entitymanager.controller;
 
 import com.iris.entitymanager.dto.EntityDto;
-import com.iris.entitymanager.dto.EntityModDto;
 import com.iris.entitymanager.entity.EntityModentity;
-import com.iris.entitymanager.entity.Entityentity;
 import com.iris.entitymanager.entity.LangEntity;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.service.EntityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
