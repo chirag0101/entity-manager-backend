@@ -30,7 +30,7 @@ public class ErrorHandlerController {
                 }
         );
 
-        if(errorResponse.getStatusMessage().equals("Success")){
+        if (errorResponse.getStatusMessage().equals("Success")) {
             errorResponse.setStatusMessage(e.getMessage());
         }
         errorResponse.setResponse(null);
