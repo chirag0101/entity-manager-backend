@@ -38,8 +38,8 @@ public class EntityService {
     @Autowired
     private EntityRepository entityRepository;
 
-    @Autowired
-    private ErrorRepository errorRepository;
+//    @Autowired
+//    private ErrorRepository errorRepository;
 
     @Autowired
     private EntityModRepository entityModRepository;
