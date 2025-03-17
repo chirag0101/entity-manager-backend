@@ -1,13 +1,11 @@
 package com.iris.entitymanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.iris.entitymanager.config.AESV2;
 import jakarta.persistence.*;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
