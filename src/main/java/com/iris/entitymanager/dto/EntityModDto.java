@@ -9,7 +9,7 @@ public class EntityModDto {
 
     private List<EntityModentity> entityModentities;
 
-    public EntityModDto(){
+    public EntityModDto() {
 
     }
 

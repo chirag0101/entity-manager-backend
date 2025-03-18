@@ -119,7 +119,7 @@ public class Entityentity {
         return entityName;
     }
 
-    public void setEntityName(String entityName)         {
+    public void setEntityName(String entityName) {
         this.entityName = entityName;
     }
 

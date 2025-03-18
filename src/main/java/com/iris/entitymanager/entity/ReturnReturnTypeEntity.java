@@ -29,7 +29,8 @@ public class ReturnReturnTypeEntity {
     @Column(name = "MODIFIED_BY")
     private Long modifiedBy;
 
-    public ReturnReturnTypeEntity(){}
+    public ReturnReturnTypeEntity() {
+    }
 
     public ReturnReturnTypeEntity(Long returnReturnTypeId, ReturnEntity returnIdFk, ReturnTypeEntity returnTypeIdFk, Boolean isActive, Date modifiedOn, Long modifiedBy) {
         this.returnReturnTypeId = returnReturnTypeId;

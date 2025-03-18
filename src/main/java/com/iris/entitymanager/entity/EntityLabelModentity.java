@@ -28,7 +28,8 @@ public class EntityLabelModentity {
     @Column(name = "LABEL_LAST_MODIFIED_ON")
     private Date lastModifiedOn;
 
-    public EntityLabelModentity(){}
+    public EntityLabelModentity() {
+    }
 
     public EntityLabelModentity(int labelModEntityId, EntityLabelentity entityLabelIdFk, Integer lastModifiedByFk, String prevDataJson, Date lastModifiedOn) {
         this.labelModEntityId = labelModEntityId;

@@ -203,7 +203,7 @@ public class ReturnService {
                 5)
             */
 
-            Date d=new Date();
+            Date d = new Date();
 
             for (Long i : updateReturnDTO.getReturnTypeList()) {
 
@@ -228,10 +228,10 @@ public class ReturnService {
                 }
             }
 
-            List<ReturnReturnTypeEntity> returnTypeList=returnReturnTypeRepo.findAllByReturnIdFk(toUpdateReturn.getReturnId());
-            for(ReturnReturnTypeEntity r: returnTypeList){
+            List<ReturnReturnTypeEntity> returnTypeList = returnReturnTypeRepo.findAllByReturnIdFk(toUpdateReturn.getReturnId());
+            for (ReturnReturnTypeEntity r : returnTypeList) {
                 //check if the already existing returnTypeId's are present in request list, if not than set them as inactive
-                if(!(updateReturnDTO.getReturnTypeList().contains(r.getReturnTypeIdFk().getReturnTypeId()))){
+                if (!(updateReturnDTO.getReturnTypeList().contains(r.getReturnTypeIdFk().getReturnTypeId()))) {
                     r.setIsActive(false);
                     r.setModifiedOn(d);
                     returnReturnTypeRepo.saveAndFlush(r);

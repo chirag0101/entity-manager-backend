@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ReturnRepo extends JpaRepository<ReturnEntity, Long> {
     Optional<ReturnEntity> findByReturnCode(String returnCode);
+
     Optional<ReturnEntity> findByReturnName(String returnName);
 }

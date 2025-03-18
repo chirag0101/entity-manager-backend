@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface ReturnTypeRepo extends JpaRepository<ReturnTypeEntity, Long> {
     Optional<ReturnTypeEntity> findByReturnTypeIdAndIsActive(Long id, Boolean isActive);
+
     ReturnTypeEntity findByReturnTypeId(Long id);
 
     @Query("SELECT rte.returnTypeId FROM ReturnTypeEntity rte WHERE rte.isActive=true")

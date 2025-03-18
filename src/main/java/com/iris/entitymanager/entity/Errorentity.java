@@ -13,10 +13,11 @@ public class Errorentity {
     @Column(name = "ERROR_CODE")
     private String errorCode;
 
-    @Column(name="ERROR_STATUS")
+    @Column(name = "ERROR_STATUS")
     private String errorMessage;
 
-    public Errorentity(){}
+    public Errorentity() {
+    }
 
     public Errorentity(String errorCode, String errorMessage) {
         this.errorCode = errorCode;

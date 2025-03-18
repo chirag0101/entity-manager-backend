@@ -16,7 +16,7 @@ public class ReturnController {
     private ReturnService returnService;
 
     @GetMapping("/returnType/getAllReturnType")
-    public ResponseEntity<?> getAllReturns(){
+    public ResponseEntity<?> getAllReturns() {
         return returnService.getAllReturns();
     }
 
@@ -26,7 +26,7 @@ public class ReturnController {
     }
 
     @PostMapping("/returnService/updateReturnData")
-    public ResponseEntity<?> updateReturn(@Valid @RequestBody UpdateReturnDTO updateReturnDTO){
+    public ResponseEntity<?> updateReturn(@Valid @RequestBody UpdateReturnDTO updateReturnDTO) {
         return returnService.updateReturn(updateReturnDTO);
     }
 }

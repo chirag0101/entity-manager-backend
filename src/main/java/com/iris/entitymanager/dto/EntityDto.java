@@ -1,6 +1,5 @@
 package com.iris.entitymanager.dto;
 
-import com.iris.entitymanager.config.AESV2;
 import jakarta.validation.constraints.*;
 
 import javax.crypto.BadPaddingException;
@@ -81,7 +80,7 @@ public class EntityDto {
     }
 
     public void setEntityName(String entityName) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        this.entityName=entityName;
+        this.entityName = entityName;
         //this.entityName = AESV2.getInstance().encrypt(entityName);
     }
 

@@ -1,6 +1,5 @@
 package com.iris.entitymanager.entity;
 
-import com.iris.entitymanager.dto.ApiResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,7 +15,8 @@ public class Apientity {
     @Column(name = "API_URL")
     private String apiUrl;
 
-    public Apientity(){}
+    public Apientity() {
+    }
 
     public Apientity(String apiName, String apiUrl) {
         this.apiName = apiName;

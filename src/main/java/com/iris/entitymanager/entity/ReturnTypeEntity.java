@@ -16,7 +16,8 @@ public class ReturnTypeEntity {
     @Column(name = "IS_ACTIVE")
     private Boolean isActive;
 
-    public ReturnTypeEntity(){}
+    public ReturnTypeEntity() {
+    }
 
     public ReturnTypeEntity(Long returnTypeId, String returnTypeDesc, Boolean isActive) {
         this.returnTypeId = returnTypeId;

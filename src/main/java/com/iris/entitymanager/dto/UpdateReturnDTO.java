@@ -23,7 +23,8 @@ public class UpdateReturnDTO {
 
     private Boolean isActive;
 
-    public UpdateReturnDTO(){}
+    public UpdateReturnDTO() {
+    }
 
     public UpdateReturnDTO(String returnName, String returnCode, String frequencyCode, List<Long> returnTypeList, Long maxAllowedRevisions, Boolean allowRevision, Boolean isActive) {
         this.returnName = returnName;
@@ -31,7 +32,7 @@ public class UpdateReturnDTO {
         this.frequencyCode = frequencyCode;
         this.returnTypeList = returnTypeList;
         this.maxAllowedRevisions = maxAllowedRevisions;
-        this.allowRevision=allowRevision;
+        this.allowRevision = allowRevision;
         this.isActive = isActive;
     }
 

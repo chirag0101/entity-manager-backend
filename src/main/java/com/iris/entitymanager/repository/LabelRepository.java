@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LabelRepository extends JpaRepository<EntityLabelentity,Integer> {
+public interface LabelRepository extends JpaRepository<EntityLabelentity, Integer> {
     @Query(value = "from EntityLabelentity where entityIdFk.id=?1")
     Optional<EntityLabelentity> findById(Integer entityIdFk);
 

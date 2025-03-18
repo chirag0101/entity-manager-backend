@@ -109,7 +109,8 @@ public class ReturnEntity {
     @Column(name = "ALLOW_NILL_FILLING")
     private Boolean allowNillFilling;
 
-    public ReturnEntity() {}
+    public ReturnEntity() {
+    }
 
     public ReturnEntity(Long returnId, String returnName, String returnCode, String modRetCode, FrequencyEntity frequencyIdFk, Boolean isParent, Boolean isActive, UserEntity createdByFk, Boolean allowRevision, Date createdOn, UserEntity lastModifiedByFk, Date lastModifiedOn, UserEntity lastApprovedByFk, Date lastApprovedOn, Date lastUpdateOn, Boolean isBulkUpload, Boolean isNonXbrl, String formulaFileName, String delayCriteriaFileName, String returnTemplateName, Long errorCount, Long warningCount, String excelReadJson, Long maxRevisionReqDays, Long maxUnlockReqDays, Long maxRevisionCount, String oldReturnCode, String returnDocId, Boolean applicableForDynamicWebform, String returnDocIdFailed, Boolean isLotApplicable, Boolean allowNillFilling) {
         this.returnId = returnId;

@@ -25,7 +25,8 @@ public class ReturnMod {
     @Column(name = "LAST_MODIFIED_ON")
     private Date lastModifiedOn;
 
-    public ReturnMod(){}
+    public ReturnMod() {
+    }
 
     public ReturnMod(Long modId, ReturnEntity returnIdFk, Long lastModifiedBy, String prevDataJson, Date lastModifiedOn) {
         this.modId = modId;

@@ -11,7 +11,8 @@ public class AddReturnDTO {
     private Boolean allowRevision;
     private Boolean isActive;
 
-    public AddReturnDTO(){}
+    public AddReturnDTO() {
+    }
 
     public AddReturnDTO(String returnName, String returnCode, Long frequencyId, List<Long> returnTypeList, Long maxAllowedRevisions, Boolean allowRevision, Boolean isActive) {
         this.returnName = returnName;
@@ -19,7 +20,7 @@ public class AddReturnDTO {
         this.frequencyId = frequencyId;
         this.returnTypeList = returnTypeList;
         this.maxAllowedRevisions = maxAllowedRevisions;
-        this.allowRevision=allowRevision;
+        this.allowRevision = allowRevision;
         this.isActive = isActive;
     }
 

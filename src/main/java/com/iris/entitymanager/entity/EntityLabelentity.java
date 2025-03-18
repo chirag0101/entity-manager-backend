@@ -34,7 +34,8 @@ public class EntityLabelentity {
     @Column(name = "LANG_ID_FK")
     private Integer langIdFk;
 
-    public EntityLabelentity(){}
+    public EntityLabelentity() {
+    }
 
     public EntityLabelentity(int labelEntityId, Entityentity entityIdFk, String label, Integer lastModifiedBy, Date lastModifiedOn, Integer langIdFk) {
         this.labelEntityId = labelEntityId;
@@ -42,7 +43,7 @@ public class EntityLabelentity {
         this.label = label;
         this.lastModifiedBy = lastModifiedBy;
         this.lastModifiedOn = lastModifiedOn;
-        this.langIdFk=langIdFk;
+        this.langIdFk = langIdFk;
     }
 
     public Integer getLangIdFk() {
