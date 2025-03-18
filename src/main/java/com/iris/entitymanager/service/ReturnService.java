@@ -203,6 +203,8 @@ public class ReturnService {
                 5)
             */
 
+            Date d=new Date();
+
             for (Long i : updateReturnDTO.getReturnTypeList()) {
 
                 //if return type exists in both list i.e. (list of all active returnTypes & list of current returnReturnType returnIds) then set it as active
@@ -210,7 +212,7 @@ public class ReturnService {
                     ReturnReturnTypeEntity returnReturnType = returnReturnTypeRepo.findByReturnTypeIdFk(i, toUpdateReturn.getReturnId());
 
                     returnReturnType.setIsActive(true);
-                    returnReturnType.setModifiedOn(new Date());
+                    returnReturnType.setModifiedOn(d);
 
                     returnReturnTypeRepo.saveAndFlush(returnReturnType);
                 } else if ((defaultReturnTypeIds.contains(i)) && !(returnTypeIds.contains(i))) {    //if returnType exists in returnType_tbl & isActive but not in current returnReturnType's_tbl then save new entry
@@ -231,7 +233,7 @@ public class ReturnService {
                 //check if the already existing returnTypeId's are present in request list, if not than set them as inactive
                 if(!(updateReturnDTO.getReturnTypeList().contains(r.getReturnTypeIdFk().getReturnTypeId()))){
                     r.setIsActive(false);
-                    r.setModifiedOn(new Date());
+                    r.setModifiedOn(d);
                     returnReturnTypeRepo.saveAndFlush(r);
                 }
             }
