@@ -214,12 +214,12 @@ public class EntityService {
         try {
             EntityModDto entityModDto = new EntityModDto();
 
-            Apientity apientity = apiRepository.findByApiName("viewEntity");
+            ApiNameWithURL apiNameWithURLForMod = apiRepository.findByApiName("viewEntity");
 
-            Apientity apiEntityForMod = apiRepository.findByApiName("viewModifications");
+            ApiNameWithURL apiEntityForMod = apiRepository.findByApiName("viewModifications");
 
             ResponseEntity<EntityDto> entityDtoResponse = restTemplate.getForEntity(
-                    apientity.getApiUrl() + entityId, EntityDto.class);
+                    apiNameWithURLForMod.getApiUrl() + entityId, EntityDto.class);
 
             entityModDto.setEntityDto(entityDtoResponse.getBody());
 

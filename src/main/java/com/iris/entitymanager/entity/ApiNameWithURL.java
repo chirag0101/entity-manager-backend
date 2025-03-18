@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TBL_API")
-public class Apientity {
+public class ApiNameWithURL {
     @Id
     @Column(name = "API_NAME")
     private String apiName;
@@ -15,10 +15,10 @@ public class Apientity {
     @Column(name = "API_URL")
     private String apiUrl;
 
-    public Apientity() {
+    public ApiNameWithURL() {
     }
 
-    public Apientity(String apiName, String apiUrl) {
+    public ApiNameWithURL(String apiName, String apiUrl) {
         this.apiName = apiName;
         this.apiUrl = apiUrl;
     }

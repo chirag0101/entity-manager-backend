@@ -1,10 +1,10 @@
 package com.iris.entitymanager.repository;
 
-import com.iris.entitymanager.entity.Apientity;
+import com.iris.entitymanager.entity.ApiNameWithURL;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface ApiRepository extends JpaRepository<Apientity, String> {
-    @Query("from Apientity where apiName=?1")
-    Apientity findByApiName(String apiName);
+public interface ApiRepository extends JpaRepository<ApiNameWithURL, String> {
+    @Query("from ApiNameWithURL where apiName=?1")
+    ApiNameWithURL findByApiName(String apiName);
 }
