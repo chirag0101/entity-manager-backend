@@ -195,16 +195,6 @@ public class ReturnService {
             //getting all returnTypeIds from returnType table
             List<Long> defaultReturnTypeIds = returnTypeRepo.findAllIdsAndIsActive();
 
-            //setting all isActive true to false
-            for (Long i : returnTypeIds) {
-                ReturnReturnTypeEntity returnReturnType = returnReturnTypeRepo.findByReturnTypeIdFk(i, toUpdateReturn.getReturnId());
-                if (returnReturnType.getIsActive()) {
-                    returnReturnType.setIsActive(false);
-                    returnReturnType.setModifiedOn(new Date());
-                }
-                returnReturnTypeRepo.saveAndFlush(returnReturnType);
-            }
-
             /*
                 1) looping over the request returnType list
                 2) checking if it exists in both the lists i.e. returnType_tbl & returnReturnType_tbl & isActive in returnType_tbl & isActive is false, if yes than set it's status as active
@@ -223,8 +213,6 @@ public class ReturnService {
                     returnReturnType.setModifiedOn(new Date());
 
                     returnReturnTypeRepo.saveAndFlush(returnReturnType);
-                } else if (!(defaultReturnTypeIds.contains(i))) {   //if the returnTypeId doesn't exist in returnType tbl
-                    throw new GlobalException("E010");
                 } else if ((defaultReturnTypeIds.contains(i)) && !(returnTypeIds.contains(i))) {    //if returnType exists in returnType_tbl & isActive but not in current returnReturnType's_tbl then save new entry
                     ReturnReturnTypeEntity newReturnReturnType = new ReturnReturnTypeEntity();
                     newReturnReturnType.setReturnIdFk(toUpdateReturn);
@@ -233,11 +221,18 @@ public class ReturnService {
                     newReturnReturnType.setModifiedOn(null);
                     newReturnReturnType.setModifiedBy(user.getUserId());
                     returnReturnTypeRepo.saveAndFlush(newReturnReturnType);
-                } else {
-                    ReturnReturnTypeEntity returnReturnType = returnReturnTypeRepo.findByReturnTypeIdFk(i, toUpdateReturn.getReturnId());
-                    returnReturnType.setIsActive(false);
-                    returnReturnType.setModifiedOn(new Date());
-                    returnReturnTypeRepo.save(returnReturnType);
+                } else if (!(defaultReturnTypeIds.contains(i))) {   //if the returnTypeId doesn't exist in returnType tbl
+                    throw new GlobalException("E010");
+                }
+            }
+
+            List<ReturnReturnTypeEntity> returnTypeList=returnReturnTypeRepo.findAllByReturnIdFk(toUpdateReturn.getReturnId());
+            for(ReturnReturnTypeEntity r: returnTypeList){
+                //check if the already existing returnTypeId's are present in request list, if not than set them as inactive
+                if(!(updateReturnDTO.getReturnTypeList().contains(r.getReturnTypeIdFk().getReturnTypeId()))){
+                    r.setIsActive(false);
+                    r.setModifiedOn(new Date());
+                    returnReturnTypeRepo.saveAndFlush(r);
                 }
             }
 

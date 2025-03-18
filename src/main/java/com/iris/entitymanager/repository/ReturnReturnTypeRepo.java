@@ -12,7 +12,8 @@ public interface ReturnReturnTypeRepo extends JpaRepository<ReturnReturnTypeEnti
     @Query("SELECT rrte.returnTypeIdFk.returnTypeId FROM ReturnReturnTypeEntity rrte WHERE rrte.returnIdFk.returnId=:id ORDER BY rrte.returnTypeIdFk.returnTypeId")
     List<Long> findByReturnIdFk(Long id);
 
-    //List<ReturnReturnTypeEntity> findAllByReturnIdFk(Long id);
+    @Query("FROM ReturnReturnTypeEntity rrte WHERE rrte.returnIdFk.returnId=:id")
+    List<ReturnReturnTypeEntity> findAllByReturnIdFk(Long id);
 
     @Query("FROM ReturnReturnTypeEntity rrte WHERE rrte.returnTypeIdFk.returnTypeId=:returnTypeId AND rrte.returnIdFk.returnId=:returnId")
     ReturnReturnTypeEntity findByReturnTypeIdFk(Long returnTypeId,Long returnId);
