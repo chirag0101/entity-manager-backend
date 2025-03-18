@@ -1,7 +1,7 @@
 package com.iris.entitymanager.controller;
 
 import com.iris.entitymanager.dto.EntityDto;
-import com.iris.entitymanager.entity.EntityModentity;
+import com.iris.entitymanager.entity.EntityMod;
 import com.iris.entitymanager.entity.LangEntity;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.service.EntityService;
@@ -58,7 +58,7 @@ public class EntityController {
     }
 
     @GetMapping("/viewEntity/viewModifications/{entityId}")
-    public List<EntityModentity> viewEntityModifications(@PathVariable int entityId) {
+    public List<EntityMod> viewEntityModifications(@PathVariable int entityId) {
         try {
             return entityService.getEntityMods(entityId);
         } catch (Exception e) {

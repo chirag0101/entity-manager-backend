@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TBL_ENTITY_MOD")
-public class EntityModentity {
+public class EntityMod {
 
     @Id
     @Column(name = "ENTITY_MOD_ID")
@@ -28,11 +28,11 @@ public class EntityModentity {
     @Column(name = "PREV_DATA_JSON")
     private String prevDataJson;
 
-    public EntityModentity() {
+    public EntityMod() {
 
     }
 
-    public EntityModentity(int entityModId, Entityentity entityIdFk, Integer lastModifiedByFk, Date lastModifiedOn, String prevDataJson) {
+    public EntityMod(int entityModId, Entityentity entityIdFk, Integer lastModifiedByFk, Date lastModifiedOn, String prevDataJson) {
         this.entityModId = entityModId;
         this.entityIdFk = entityIdFk;
         this.lastModifiedByFk = lastModifiedByFk;

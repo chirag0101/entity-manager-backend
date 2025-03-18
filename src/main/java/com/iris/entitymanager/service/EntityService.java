@@ -196,10 +196,10 @@ public class EntityService {
         throw new GlobalException("E404");
     }
 
-    public List<EntityModentity> getEntityMods(int entityId) throws GlobalException {
+    public List<EntityMod> getEntityMods(int entityId) throws GlobalException {
 //      query does this for us, saving looping time
 
-        List<EntityModentity> entityModentities = entityModRepository.findAll(entityId);
+        List<EntityMod> entityModentities = entityModRepository.findAll(entityId);
 
         if (entityModentities.isEmpty()) {
             throw new GlobalException("E404");
@@ -348,8 +348,8 @@ public class EntityService {
             String previousDataJson = preparePreviousDataJson(entityInDb);
 
             // Saving the previous data in the EntityMod table
-            EntityModentity entityModentity = new EntityModentity();
-            entityModentity.setEntityIdFk(entityInDb);
+            EntityMod entityMod = new EntityMod();
+            entityMod.setEntityIdFk(entityInDb);
 
             //if label is different than adding mod in label_mod table
             if (!(entityInDb.getLabel().equals(entityDto.getLabel()))) {
@@ -403,10 +403,10 @@ public class EntityService {
             entityInDb.setBankType(entityDto.getBankType());
             entityInDb.setLabel(entityDto.getLabel());
 
-            entityModentity.setLastModifiedByFk(entityInDb.getLastModifiedBy());
-            entityModentity.setLastModifiedOn(entityInDb.getLastModifiedOn());
-            entityModentity.setPrevDataJson(previousDataJson);
-            entityModRepository.save(entityModentity);
+            entityMod.setLastModifiedByFk(entityInDb.getLastModifiedBy());
+            entityMod.setLastModifiedOn(entityInDb.getLastModifiedOn());
+            entityMod.setPrevDataJson(previousDataJson);
+            entityModRepository.save(entityMod);
 
             entityRepository.save(entityInDb);
         }

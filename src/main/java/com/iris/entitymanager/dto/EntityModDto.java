@@ -1,19 +1,19 @@
 package com.iris.entitymanager.dto;
 
-import com.iris.entitymanager.entity.EntityModentity;
+import com.iris.entitymanager.entity.EntityMod;
 
 import java.util.List;
 
 public class EntityModDto {
     private EntityDto entityDto;
 
-    private List<EntityModentity> entityModentities;
+    private List<EntityMod> entityModentities;
 
     public EntityModDto() {
 
     }
 
-    public EntityModDto(EntityDto entityDto, List<EntityModentity> entityModentities) {
+    public EntityModDto(EntityDto entityDto, List<EntityMod> entityModentities) {
         this.entityDto = entityDto;
         this.entityModentities = entityModentities;
     }
@@ -26,11 +26,11 @@ public class EntityModDto {
         this.entityDto = entityDto;
     }
 
-    public List<EntityModentity> getEntityModentities() {
+    public List<EntityMod> getEntityModentities() {
         return entityModentities;
     }
 
-    public void setEntityModentities(List<EntityModentity> entityModentities) {
+    public void setEntityModentities(List<EntityMod> entityModentities) {
         this.entityModentities = entityModentities;
     }
 }
