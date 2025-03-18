@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("CIMSCustomizationService/service")
+@RequestMapping("/service")
 public class ReturnController {
 
     @Autowired
