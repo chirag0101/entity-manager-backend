@@ -16,7 +16,7 @@ public class EntityLabelModentity {
 
     @ManyToOne
     @JoinColumn(name = "LABEL_ID_FK")
-    private EntityLabelentity entityLabelIdFk;
+    private EntityLabel entityLabelIdFk;
 
     @Column(name = "LABEL_LAST_MODIFIED_BY")
     private Integer lastModifiedByFk;
@@ -31,7 +31,7 @@ public class EntityLabelModentity {
     public EntityLabelModentity() {
     }
 
-    public EntityLabelModentity(int labelModEntityId, EntityLabelentity entityLabelIdFk, Integer lastModifiedByFk, String prevDataJson, Date lastModifiedOn) {
+    public EntityLabelModentity(int labelModEntityId, EntityLabel entityLabelIdFk, Integer lastModifiedByFk, String prevDataJson, Date lastModifiedOn) {
         this.labelModEntityId = labelModEntityId;
         this.entityLabelIdFk = entityLabelIdFk;
         this.lastModifiedByFk = lastModifiedByFk;
@@ -47,11 +47,11 @@ public class EntityLabelModentity {
         this.labelModEntityId = labelModEntityId;
     }
 
-    public EntityLabelentity getEntityLabelIdFk() {
+    public EntityLabel getEntityLabelIdFk() {
         return entityLabelIdFk;
     }
 
-    public void setEntityLabelIdFk(EntityLabelentity entityLabelIdFk) {
+    public void setEntityLabelIdFk(EntityLabel entityLabelIdFk) {
         this.entityLabelIdFk = entityLabelIdFk;
     }
 

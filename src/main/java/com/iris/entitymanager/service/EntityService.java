@@ -104,7 +104,7 @@ public class EntityService {
             List<LangEntity> activeLangEntities = langRepository.findAllisActive();
             if (activeLangEntities.stream().allMatch(lang -> lang.getIsActive())) {
                 for (LangEntity lang : activeLangEntities) {
-                    EntityLabelentity entityLabel = new EntityLabelentity();
+                    EntityLabel entityLabel = new EntityLabel();
                     entityLabel.setEntityIdFk(entity);
                     entityLabel.setLabel(entity.getLabel());
                     entityLabel.setLastModifiedOn(null);
@@ -114,7 +114,7 @@ public class EntityService {
                 }
             } else {
                 // If only the given label is active, save it
-                EntityLabelentity entityLabel = new EntityLabelentity();
+                EntityLabel entityLabel = new EntityLabel();
                 entityLabel.setEntityIdFk(entity);
                 entityLabel.setLabel(entity.getLabel());
                 entityLabel.setLastModifiedOn(null);
@@ -354,25 +354,25 @@ public class EntityService {
             //if label is different than adding mod in label_mod table
             if (!(entityInDb.getLabel().equals(entityDto.getLabel()))) {
 
-                Optional<EntityLabelentity> entityLabelInDb = labelRepository.findById(entityId);
+                Optional<EntityLabel> entityLabelInDb = labelRepository.findById(entityId);
                 if (entityLabelInDb.isEmpty()) {
                     throw new GlobalException("E404");
                 }
 
-                EntityLabelentity entityLabelentity = entityLabelInDb.get();
+                EntityLabel entityLabel = entityLabelInDb.get();
 
-                String prevLabelDataJson = preparePreviousDataJson(entityLabelentity);
+                String prevLabelDataJson = preparePreviousDataJson(entityLabel);
 
                 EntityLabelModentity entityLabelModentity = new EntityLabelModentity();
-                entityLabelModentity.setEntityLabelIdFk(entityLabelentity);
+                entityLabelModentity.setEntityLabelIdFk(entityLabel);
                 entityLabelModentity.setLastModifiedOn(new Date());
                 entityLabelModentity.setLastModifiedByFk(entityDto.getLastModifiedBy());
                 entityLabelModentity.setPrevDataJson(prevLabelDataJson);
                 labelModRepository.save(entityLabelModentity);
 
-                entityLabelentity.setLabel(entityDto.getLabel());
-                entityLabelentity.setLastModifiedBy(entityDto.getLastModifiedBy());
-                entityLabelentity.setLastModifiedOn(entityLabelModentity.getLastModifiedOn());
+                entityLabel.setLabel(entityDto.getLabel());
+                entityLabel.setLastModifiedBy(entityDto.getLastModifiedBy());
+                entityLabel.setLastModifiedOn(entityLabelModentity.getLastModifiedOn());
 
                 Optional<LangEntity> langEntity = langRepository.findByLanguageName(entityDto.getLabel());
 
@@ -381,8 +381,8 @@ public class EntityService {
                     throw new GlobalException("Language is inactive!");
                 }
 
-                entityLabelentity.setLangIdFk(langRepository.findByLanguage(entityDto.getLabel()));
-                labelRepository.save(entityLabelentity);
+                entityLabel.setLangIdFk(langRepository.findByLanguage(entityDto.getLabel()));
+                labelRepository.save(entityLabel);
             }
 
             //updating new updates in Entity Table

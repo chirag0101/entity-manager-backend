@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TBL_ENTITY_LABEL")
-public class EntityLabelentity {
+public class EntityLabel {
 
     @Id
     @Column(name = "ENTITY_LABEL_ID")
@@ -34,10 +34,10 @@ public class EntityLabelentity {
     @Column(name = "LANG_ID_FK")
     private Integer langIdFk;
 
-    public EntityLabelentity() {
+    public EntityLabel() {
     }
 
-    public EntityLabelentity(int labelEntityId, Entityentity entityIdFk, String label, Integer lastModifiedBy, Date lastModifiedOn, Integer langIdFk) {
+    public EntityLabel(int labelEntityId, Entityentity entityIdFk, String label, Integer lastModifiedBy, Date lastModifiedOn, Integer langIdFk) {
         this.labelEntityId = labelEntityId;
         this.entityIdFk = entityIdFk;
         this.label = label;
