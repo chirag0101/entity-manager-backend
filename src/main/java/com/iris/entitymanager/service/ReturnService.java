@@ -63,7 +63,7 @@ public class ReturnService {
 
                 returnReturnType.setReturnIdFk(returnEntity);
 
-                Optional<ReturnTypeEntity> returnType = returnTypeRepo.findByReturnTypeIdAndIsActive((returnDTO.getReturnTypeList().get(i)), true);
+                Optional<ReturnType> returnType = returnTypeRepo.findByReturnTypeIdAndIsActive((returnDTO.getReturnTypeList().get(i)), true);
                 if (returnType.isEmpty()) {
                     throw new GlobalException("Invalid Return Type Id or Id inactive!");
                 }
@@ -133,7 +133,7 @@ public class ReturnService {
             List<AddReturnDTO> returns = new ArrayList<>();
 
             for (ReturnEntity r : returnsInDb) {
-                List<Long> returnReturnTypeEntityList = returnReturnTypeRepo.findByReturnIdFk(r.getReturnId());
+                List<Long> returnReturnTypeEntityList = returnReturnTypeRepo.findByReturnIdFkAndIsActive(r.getReturnId());
                 returns.add(new AddReturnDTO(r.getReturnName(), r.getReturnCode(), r.getFrequencyIdFk().getFrequencyId(), returnReturnTypeEntityList, r.getMaxRevisionCount(), r.getAllowRevision(), r.getIsActive()));
             }
 

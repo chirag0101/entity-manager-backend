@@ -18,7 +18,7 @@ public class ReturnReturnTypeEntity {
 
     @OneToOne
     @JoinColumn(name = "RETURN_TYPE_ID")
-    private ReturnTypeEntity returnTypeIdFk;
+    private ReturnType returnTypeIdFk;
 
     @Column(name = "IS_ACTIVE")
     private Boolean isActive;
@@ -32,7 +32,7 @@ public class ReturnReturnTypeEntity {
     public ReturnReturnTypeEntity() {
     }
 
-    public ReturnReturnTypeEntity(Long returnReturnTypeId, ReturnEntity returnIdFk, ReturnTypeEntity returnTypeIdFk, Boolean isActive, Date modifiedOn, Long modifiedBy) {
+    public ReturnReturnTypeEntity(Long returnReturnTypeId, ReturnEntity returnIdFk, ReturnType returnTypeIdFk, Boolean isActive, Date modifiedOn, Long modifiedBy) {
         this.returnReturnTypeId = returnReturnTypeId;
         this.returnIdFk = returnIdFk;
         this.returnTypeIdFk = returnTypeIdFk;
@@ -57,11 +57,11 @@ public class ReturnReturnTypeEntity {
         this.returnIdFk = returnIdFk;
     }
 
-    public ReturnTypeEntity getReturnTypeIdFk() {
+    public ReturnType getReturnTypeIdFk() {
         return returnTypeIdFk;
     }
 
-    public void setReturnTypeIdFk(ReturnTypeEntity returnTypeIdFk) {
+    public void setReturnTypeIdFk(ReturnType returnTypeIdFk) {
         this.returnTypeIdFk = returnTypeIdFk;
     }
 

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TBL_RETURN_TYPE")
-public class ReturnTypeEntity {
+public class ReturnType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RETURN_TYPE_ID")
@@ -16,10 +16,10 @@ public class ReturnTypeEntity {
     @Column(name = "IS_ACTIVE")
     private Boolean isActive;
 
-    public ReturnTypeEntity() {
+    public ReturnType() {
     }
 
-    public ReturnTypeEntity(Long returnTypeId, String returnTypeDesc, Boolean isActive) {
+    public ReturnType(Long returnTypeId, String returnTypeDesc, Boolean isActive) {
         this.returnTypeId = returnTypeId;
         this.returnTypeDesc = returnTypeDesc;
         this.isActive = isActive;
