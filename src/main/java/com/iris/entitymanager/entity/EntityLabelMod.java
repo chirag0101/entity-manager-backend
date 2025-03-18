@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TBL_ENTITY_LABEL_MOD")
-public class EntityLabelModentity {
+public class EntityLabelMod {
 
     @Id
     @Column(name = "LABEL_MOD_ID")
@@ -28,10 +28,10 @@ public class EntityLabelModentity {
     @Column(name = "LABEL_LAST_MODIFIED_ON")
     private Date lastModifiedOn;
 
-    public EntityLabelModentity() {
+    public EntityLabelMod() {
     }
 
-    public EntityLabelModentity(int labelModEntityId, EntityLabel entityLabelIdFk, Integer lastModifiedByFk, String prevDataJson, Date lastModifiedOn) {
+    public EntityLabelMod(int labelModEntityId, EntityLabel entityLabelIdFk, Integer lastModifiedByFk, String prevDataJson, Date lastModifiedOn) {
         this.labelModEntityId = labelModEntityId;
         this.entityLabelIdFk = entityLabelIdFk;
         this.lastModifiedByFk = lastModifiedByFk;

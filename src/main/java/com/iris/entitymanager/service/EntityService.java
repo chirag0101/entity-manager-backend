@@ -363,16 +363,16 @@ public class EntityService {
 
                 String prevLabelDataJson = preparePreviousDataJson(entityLabel);
 
-                EntityLabelModentity entityLabelModentity = new EntityLabelModentity();
-                entityLabelModentity.setEntityLabelIdFk(entityLabel);
-                entityLabelModentity.setLastModifiedOn(new Date());
-                entityLabelModentity.setLastModifiedByFk(entityDto.getLastModifiedBy());
-                entityLabelModentity.setPrevDataJson(prevLabelDataJson);
-                labelModRepository.save(entityLabelModentity);
+                EntityLabelMod entityLabelMod = new EntityLabelMod();
+                entityLabelMod.setEntityLabelIdFk(entityLabel);
+                entityLabelMod.setLastModifiedOn(new Date());
+                entityLabelMod.setLastModifiedByFk(entityDto.getLastModifiedBy());
+                entityLabelMod.setPrevDataJson(prevLabelDataJson);
+                labelModRepository.save(entityLabelMod);
 
                 entityLabel.setLabel(entityDto.getLabel());
                 entityLabel.setLastModifiedBy(entityDto.getLastModifiedBy());
-                entityLabel.setLastModifiedOn(entityLabelModentity.getLastModifiedOn());
+                entityLabel.setLastModifiedOn(entityLabelMod.getLastModifiedOn());
 
                 Optional<LangEntity> langEntity = langRepository.findByLanguageName(entityDto.getLabel());
 
