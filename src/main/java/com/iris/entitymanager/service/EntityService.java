@@ -95,15 +95,15 @@ public class EntityService {
             entityRepository.save(entity);
 
             //checking if the language isActive
-            Optional<LangEntity> langEntity = langRepository.findByLanguageName(entityDto.getLabel());
+            Optional<Lang> langEntity = langRepository.findByLanguageName(entityDto.getLabel());
             if (!langEntity.isPresent() || !langEntity.get().getIsActive()) {
                 throw new GlobalException("Language is inactive!"); // If language is inactive or not found
             }
 
             //setting if both are active
-            List<LangEntity> activeLangEntities = langRepository.findAllisActive();
+            List<Lang> activeLangEntities = langRepository.findAllisActive();
             if (activeLangEntities.stream().allMatch(lang -> lang.getIsActive())) {
-                for (LangEntity lang : activeLangEntities) {
+                for (Lang lang : activeLangEntities) {
                     EntityLabel entityLabel = new EntityLabel();
                     entityLabel.setEntityIdFk(entity);
                     entityLabel.setLabel(entity.getLabel());
@@ -132,10 +132,10 @@ public class EntityService {
     }
 
     //create new languages
-    public ResponseEntity<?> createNewLang(LangEntity langEntity) {
-        List<LangEntity> existingLang = langRepository.findAll();
+    public ResponseEntity<?> createNewLang(Lang langEntity) {
+        List<Lang> existingLang = langRepository.findAll();
 
-        for (LangEntity l : existingLang) {
+        for (Lang l : existingLang) {
             if (l.getLanguage().equals(langEntity.getLanguage())) {
                 throw new GlobalException("Language Already Exists!");
             }
@@ -293,22 +293,22 @@ public class EntityService {
     }
 
     //update language
-    public ResponseEntity<?> modifyLang(Integer langId, LangEntity langEntity) {
-        Optional<LangEntity> existingLang = langRepository.findById(langId);
+    public ResponseEntity<?> modifyLang(Integer langId, Lang langEntity) {
+        Optional<Lang> existingLang = langRepository.findById(langId);
 
         if (existingLang.isEmpty()) {
             throw new GlobalException("E404");
         }
 
-        List<LangEntity> existingLangs = langRepository.findAll();
+        List<Lang> existingLangs = langRepository.findAll();
 
-        for (LangEntity l : existingLangs) {
+        for (Lang l : existingLangs) {
             if (l.getLanguage().equals(langEntity.getLanguage())) {
                 throw new GlobalException("Language Already Exists!");
             }
         }
 
-        LangEntity newEntity = existingLang.get();
+        Lang newEntity = existingLang.get();
         newEntity.setLanguage(langEntity.getLanguage());
         langRepository.save(newEntity);
 
@@ -374,7 +374,7 @@ public class EntityService {
                 entityLabel.setLastModifiedBy(entityDto.getLastModifiedBy());
                 entityLabel.setLastModifiedOn(entityLabelMod.getLastModifiedOn());
 
-                Optional<LangEntity> langEntity = langRepository.findByLanguageName(entityDto.getLabel());
+                Optional<Lang> langEntity = langRepository.findByLanguageName(entityDto.getLabel());
 
                 //checking if given label is active or not
                 if (!(langEntity.get().getIsActive())) {

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TBL_LANG")
-public class LangEntity {
+public class Lang {
     @Id
     @Column(name = "LANG_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity_mod_seq")
@@ -19,11 +19,11 @@ public class LangEntity {
     @Column(name = "LANG")
     private String language;
 
-    public LangEntity() {
+    public Lang() {
 
     }
 
-    public LangEntity(Integer langId, Integer labelIdFk, boolean isActive, String language) {
+    public Lang(Integer langId, Integer labelIdFk, boolean isActive, String language) {
         this.langId = langId;
         this.isActive = isActive;
         this.language = language;

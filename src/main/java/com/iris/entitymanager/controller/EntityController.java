@@ -2,7 +2,7 @@ package com.iris.entitymanager.controller;
 
 import com.iris.entitymanager.dto.EntityDto;
 import com.iris.entitymanager.entity.EntityMod;
-import com.iris.entitymanager.entity.LangEntity;
+import com.iris.entitymanager.entity.Lang;
 import com.iris.entitymanager.exceptions.GlobalException;
 import com.iris.entitymanager.service.EntityService;
 import jakarta.validation.Valid;
@@ -103,13 +103,13 @@ public class EntityController {
     }
 
     @PostMapping("/addNewLang")
-    public ResponseEntity<?> newLang(@RequestBody LangEntity langEntity) {
-        return entityService.createNewLang(langEntity);
+    public ResponseEntity<?> newLang(@RequestBody Lang lang) {
+        return entityService.createNewLang(lang);
     }
 
     @PostMapping("/updateLang/{langId}")
-    public ResponseEntity<?> updateLang(@PathVariable Integer langId, @RequestBody LangEntity langEntity) {
-        return entityService.modifyLang(langId, langEntity);
+    public ResponseEntity<?> updateLang(@PathVariable Integer langId, @RequestBody Lang lang) {
+        return entityService.modifyLang(langId, lang);
     }
 
 }
