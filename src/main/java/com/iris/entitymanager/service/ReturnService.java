@@ -3,6 +3,7 @@ package com.iris.entitymanager.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iris.entitymanager.dto.AddReturnDTO;
 import com.iris.entitymanager.dto.ApiResponse;
+import com.iris.entitymanager.dto.ReturnResDTO;
 import com.iris.entitymanager.dto.UpdateReturnDTO;
 import com.iris.entitymanager.entity.*;
 import com.iris.entitymanager.exceptions.GlobalException;
@@ -243,4 +244,14 @@ public class ReturnService {
             throw new GlobalException(e.getMessage());
         }
     }
+
+    public ResponseEntity<?> getAllCompleteReturns(){
+        try{
+            List<ReturnResDTO> returns=returnRepo.findAllReturns();
+            return new ResponseEntity<>(new ApiResponse<>(returns),HttpStatus.OK);
+        } catch (Exception e) {
+            throw new GlobalException(e.getMessage());
+        }
+    }
+
 }

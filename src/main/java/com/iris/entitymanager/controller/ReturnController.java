@@ -29,4 +29,9 @@ public class ReturnController {
     public ResponseEntity<?> updateReturn(@Valid @RequestBody UpdateReturnDTO updateReturnDTO) {
         return returnService.updateReturn(updateReturnDTO);
     }
+
+    @GetMapping("/returnType/getAllReturns")
+    public ResponseEntity<?> getReturns(){
+        return returnService.getAllCompleteReturns();
+    }
 }
