@@ -199,8 +199,8 @@ public class ReturnService {
                 1) looping over the request returnType list
                 2) checking if it exists in both the lists i.e. returnType_tbl & returnReturnType_tbl & isActive in returnType_tbl & isActive is false, if yes than set it's status as active
                 3) checking if it exists in returnType_tbl & isActive but not present in returnReturnType_tbl so add new entry in returnReturnType_tbl
-                4) if is inactive in returnType_tbl than throw exception
-                5)
+                4) if is inactive in returnType_tbl then throw exception
+                5) then in next forloop check if returnReturnType list contains the returnType given in the request
             */
 
             Date d = new Date();
@@ -230,7 +230,7 @@ public class ReturnService {
 
             List<ReturnReturnTypeEntity> returnTypeList = returnReturnTypeRepo.findAllByReturnIdFk(toUpdateReturn.getReturnId());
             for (ReturnReturnTypeEntity r : returnTypeList) {
-                //check if the already existing returnTypeId's are present in request list, if not than set them as inactive
+                //check if request list doesn't contain the already existing returnTypeId's & setting them as inactive
                 if (!(updateReturnDTO.getReturnTypeList().contains(r.getReturnTypeIdFk().getReturnTypeId()))) {
                     r.setIsActive(false);
                     r.setModifiedOn(d);
