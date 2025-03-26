@@ -20,4 +20,5 @@ public class EntitymanagerApplication {
     public RestTemplate restTemplateBean() {
         return new RestTemplate();
     }
+
 }
